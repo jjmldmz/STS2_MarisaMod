@@ -15,7 +15,7 @@ namespace MarisaMod.scripts.Cards
 
         public override bool GainsBlock => true;
 
-        protected override HashSet<CardTag> CanonicalTags => new HashSet<CardTag> { CardTag.Defend };
+        protected override HashSet<CardTag> CanonicalTags => [CardTag.Defend];
 
         protected override IEnumerable<DynamicVar> CanonicalVars => new List<DynamicVar> { new BlockVar(5m, ValueProp.Move) };
 

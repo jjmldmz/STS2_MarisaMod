@@ -22,14 +22,14 @@ namespace marisamod.scripts.Cards.Abstract
                     if (IsAmplified && Owner.PlayerCombatState.Energy < EnergyCost.GetWithModifiers(CostModifiers.All))
                     {
                         IsAmplified = false;
-                        EnergyCost.AddThisTurnOrUntilPlayed(-KickerCost);
+                        EnergyCost.AddThisCombat(-KickerCost);
                         //TODO CardText update
                     }
 
                     if (!IsAmplified && Owner.PlayerCombatState.Energy >= EnergyCost.GetWithModifiers(CostModifiers.All) + KickerCost)
                     {
                         IsAmplified = true;
-                        EnergyCost.AddThisTurnOrUntilPlayed(KickerCost);
+                        EnergyCost.AddThisCombat(KickerCost);
                         //TODO CardText update
                     }
                 }
@@ -40,20 +40,20 @@ namespace marisamod.scripts.Cards.Abstract
         {
             if (card == this)
                 ValidateAmplify();
-            return base.AfterCardEnteredCombat(card);
+            return Task.CompletedTask;
         }
 
         public override Task AfterCardPlayed(PlayerChoiceContext context, CardPlay cardPlay)
         {
             ValidateAmplify();
-            return base.AfterCardPlayed(context, cardPlay);
+            return Task.CompletedTask;
         }
 
         public override Task AfterCardDrawn(PlayerChoiceContext choiceContext, CardModel card, bool fromHandDraw)
         {
             if (card == this)
                 ValidateAmplify();
-            return base.AfterCardDrawn(choiceContext, card, fromHandDraw);
+            return Task.CompletedTask;
         }
     }
 }
