@@ -16,9 +16,9 @@ namespace marisamod.scripts.Cards.Abstract
         public bool IsAmplified { get; protected set; }
         private bool _costModifiedForAmplify;
 
-        public override IEnumerable<CardKeyword> CanonicalKeywords => [
-            MarisaCardKeyWords.Amplify
-        ];
+        // public override IEnumerable<CardKeyword> CanonicalKeywords => [
+        //     MarisaCardKeyWords.Amplify
+        // ];
 
 
         public virtual void ValidateAmplify()

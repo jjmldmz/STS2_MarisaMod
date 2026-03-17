@@ -5,13 +5,13 @@ namespace marisamod.scripts.PatchesNModels
 {
     public static class MarisaCardKeyWords
     {
-        [CustomEnum("SPARK")]
-        public static readonly CardKeyword SPARK;
+        // [CustomEnum("SPARK")]
+        // public static readonly CardKeyword SPARK;
         
-        [CustomEnum("Amplify")]
-        public static readonly CardKeyword Amplify;
+        // [CustomEnum("Amplify")]
+        // public static readonly CardKeyword Amplify;
 
-        [CustomEnum("SPARK")]
-        public static readonly CardTag Spark;
+        // [CustomEnum("SPARK")]
+        // public static readonly CardTag Spark;
     }
 }

@@ -21,8 +21,9 @@ namespace MarisaMod.scripts.Cards
         protected override IEnumerable<DynamicVar> CanonicalVars => [
             new EnergyVar(1)
             ];
+            
 
-        //TODO CardPreview
+        public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
 
         protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
         {

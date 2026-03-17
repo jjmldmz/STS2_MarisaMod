@@ -22,7 +22,7 @@ namespace marisamod.scripts.Cards
             new CalculationBaseVar(0m),
             new ExtraDamageVar(5m),
             new CalculatedDamageVar(ValueProp.Move).WithMultiplier((card, _)=>card is AbstractAmplifiedCard { IsAmplified: true } ? 3 : 1),
-            new EnergyVar(1)
+            new EnergyVar(2)
         ];
 
         
@@ -37,7 +37,7 @@ namespace marisamod.scripts.Cards
 
         protected override void OnUpgrade()
         {
-            DynamicVars.Damage.UpgradeValueBy(2m);
+            DynamicVars.ExtraDamage.UpgradeValueBy(2m);
         }
     }
 }

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b7qq7tlpkh6tf"
-path="res://.godot/imported/marisamod-dc.png-ba258fbc927d43c34febe473fa2e2592.ctex"
+uid="uid://buhqsk0kuvat2"
+path="res://.godot/imported/marisamod-dragon_meteor.png-9883840e11206a389b4b8f6f298a7918.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://marisamod/images/cards/marisamod-dc.png"
-dest_files=["res://.godot/imported/marisamod-dc.png-ba258fbc927d43c34febe473fa2e2592.ctex"]
+source_file="res://marisamod/images/cards/marisamod-dragon_meteor.png"
+dest_files=["res://.godot/imported/marisamod-dragon_meteor.png-9883840e11206a389b4b8f6f298a7918.ctex"]
 
 [params]
 

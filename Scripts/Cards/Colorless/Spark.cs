@@ -21,6 +21,8 @@ namespace marisamod.Scripts.Cards.Colorless
         }
 
         //public override string PortraitPath => $"res://MarisaMod/img/cards/Spark_p.png";
+        
+        public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
 
         protected override IEnumerable<DynamicVar> CanonicalVars =>
         [

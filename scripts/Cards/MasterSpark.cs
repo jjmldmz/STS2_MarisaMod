@@ -14,8 +14,8 @@ namespace MarisaMod.scripts.Cards
         {
         }
 
-        protected override HashSet<CardTag> CanonicalTags => [MarisaCardKeyWords.Spark];
-        public override IEnumerable<CardKeyword> CanonicalKeywords => base.CanonicalKeywords.Concat([MarisaCardKeyWords.SPARK]);
+        // protected override HashSet<CardTag> CanonicalTags => [MarisaCardKeyWords.Spark];
+        // public override IEnumerable<CardKeyword> CanonicalKeywords => base.CanonicalKeywords.Concat([MarisaCardKeyWords.SPARK]);
 
 
         protected override IEnumerable<DynamicVar> CanonicalVars => [

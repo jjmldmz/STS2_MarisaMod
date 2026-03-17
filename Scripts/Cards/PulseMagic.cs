@@ -14,7 +14,7 @@ namespace marisamod.scripts.Cards
         {
         }
 
-        public override string PortraitPath => $"res://img/cards/pulseMagic_p.png";
+        //public override string PortraitPath => $"res://img/cards/pulseMagic_p.png";
 
         protected override IEnumerable<DynamicVar> CanonicalVars => [
             new EnergyVar("GainEnergy", 1),

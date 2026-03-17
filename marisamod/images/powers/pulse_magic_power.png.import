@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://c5b518u31fue1"
-path="res://.godot/imported/pulse_magice_power.png-646ccadcf80bcff36078ed0fd001de4d.ctex"
+path="res://.godot/imported/pulse_magic_power.png-68d681cf13deb089ec6327d52e00bca9.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://marisamod/images/powers/pulse_magice_power.png"
-dest_files=["res://.godot/imported/pulse_magice_power.png-646ccadcf80bcff36078ed0fd001de4d.ctex"]
+source_file="res://marisamod/images/powers/pulse_magic_power.png"
+dest_files=["res://.godot/imported/pulse_magic_power.png-68d681cf13deb089ec6327d52e00bca9.ctex"]
 
 [params]
 

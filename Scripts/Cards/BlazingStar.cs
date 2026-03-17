@@ -21,7 +21,7 @@ namespace marisamod.scripts.Cards
             new CalculationBaseVar(0m),
             new ExtraDamageVar(8m),
             new CalculatedDamageVar(ValueProp.Move).WithMultiplier((card, _) =>
-                (Owner.PlayerCombatState!.Hand.Cards.Count(IsBurn) + 2) * (card is AbstractAmplifiedCard { IsAmplified: true } ? 2 : 1)),
+                (card.Owner.PlayerCombatState!.Hand.Cards.Count(IsBurn) + 2) * (card is AbstractAmplifiedCard { IsAmplified: true } ? 2 : 1)),
             new EnergyVar(1)
         ];
 
