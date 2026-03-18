@@ -3,6 +3,7 @@ using marisamod.Scripts.Cards.Abstract;
 using marisamod.Scripts.Powers;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 
 namespace marisamod.scripts.Cards.Abstract
@@ -15,6 +16,10 @@ namespace marisamod.scripts.Cards.Abstract
         public bool IsAmplified { get; protected set; }
 
         private bool _costModifiedForAmplify;
+
+        protected override IEnumerable<DynamicVar> CanonicalVars => [
+            new EnergyVar(KickerCost)
+            ];
 
         // public override IEnumerable<CardKeyword> CanonicalKeywords => [
         //     MarisaCardKeyWords.Amplify
