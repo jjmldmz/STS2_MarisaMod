@@ -1,0 +1,9 @@
+[gd_resource type="ShaderMaterial" load_steps=3 format=3 uid="uid://cjy7epexf31sg"]
+
+[ext_resource type="Shader" uid="uid://lmjcpk7dsl41" path="res://marisamod/images/ui/vfx/vfx_grayscale_particle_shader.gdshader" id="1_kcef6"]
+[ext_resource type="Texture2D" uid="uid://c88i8sb0w1eyp" path="res://marisamod/images/ui/cardOrb.png" id="2_ste6e"]
+
+[resource]
+shader = ExtResource("1_kcef6")
+shader_parameter/pivot_offset = Vector2(0, 0)
+shader_parameter/lut = ExtResource("2_ste6e")

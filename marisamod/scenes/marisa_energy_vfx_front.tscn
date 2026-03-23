@@ -1,0 +1,37 @@
+[gd_scene load_steps=8 format=3 uid="uid://dh40v1kt68me"]
+
+[ext_resource type="Script" uid="uid://ctoxrl5vvme0a" path="res://Scripts/Nodes/MehParticlesContainer.cs" id="1_6hqo0"]
+[ext_resource type="Texture2D" uid="uid://c88i8sb0w1eyp" path="res://marisamod/images/ui/cardOrb.png" id="2_4vorn"]
+
+[sub_resource type="Gradient" id="Gradient_nkaa8"]
+offsets = PackedFloat32Array(0, 0.5479452, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_hvp1a"]
+gradient = SubResource("Gradient_nkaa8")
+
+[sub_resource type="Curve" id="Curve_s4hfn"]
+_limits = [0.5, 1.5, 0.0, 1.9912791]
+_data = [Vector2(0, 0.5), 0.0, 0.5316612, 0, 0, Vector2(1.9912791, 1.5), 0.57173115, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_sxqmy"]
+curve = SubResource("Curve_s4hfn")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_lgnor"]
+particle_flag_disable_z = true
+gravity = Vector3(0, 0, 0)
+scale_curve = SubResource("CurveTexture_sxqmy")
+color_ramp = SubResource("GradientTexture1D_hvp1a")
+
+[node name="marisa_energy_vfx_front" type="Node2D"]
+script = ExtResource("1_6hqo0")
+
+[node name="Particle" type="GPUParticles2D" parent="."]
+emitting = false
+amount = 1
+texture = ExtResource("2_4vorn")
+one_shot = true
+fixed_fps = 0
+draw_order = 0
+process_material = SubResource("ParticleProcessMaterial_lgnor")

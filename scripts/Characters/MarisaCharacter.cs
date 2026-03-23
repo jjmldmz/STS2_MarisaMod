@@ -23,7 +23,7 @@ public class MarisaCharacter : PlaceholderCharacterModel
     // public override string CustomIconPath => "res://scenes/ui/character_icons/ironclad_icon.tscn";
     public override string CustomIconPath => "res://marisamod/scenes/marisa_icon.tscn";
 
-    //public override string CustomEnergyCounterPath => "res://marisamod/scenes/test_energy_counter.tscn";
+    public override string CustomEnergyCounterPath => "res://marisamod/scenes/test_energy_counter.tscn";
 
     // public override string CustomRestSiteAnimPath => "res://scenes/rest_site/characters/ironclad_rest_site.tscn";
     //public override string CustomRestSiteAnimPath => "res://marisamod/scenes/marisa_rest_site.tscn";
