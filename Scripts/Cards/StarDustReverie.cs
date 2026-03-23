@@ -15,8 +15,9 @@ public class StarDustReverie : AbstractMarisaCard
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        var num = Owner.PlayerCombatState.Hand.Cards.Count;
-        foreach (var card in Owner.PlayerCombatState.Hand.Cards)
+        var hand = Owner.PlayerCombatState.Hand.Cards.ToArray();
+        var num = hand.Length;
+        foreach (var card in hand)
         {
             await CardPileCmd.Add(card, PileType.Draw, CardPilePosition.Random);
         }

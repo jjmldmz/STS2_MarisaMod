@@ -29,7 +29,6 @@ namespace marisamod.Scripts.Cards
             CardFactory.GetForCombat(Owner, Owner.Character.CardPool.GetUnlockedCards(Owner.UnlockState, Owner.RunState.CardMultiplayerConstraint), DynamicVars["Add"].IntValue, Owner.RunState.Rng.CombatCardGeneration);
             foreach (CardModel item in forCombat)
             {
-                item.SetToFreeThisCombat();
                 CardCmd.PreviewCardPileAdd(await CardPileCmd.AddGeneratedCardToCombat(item, PileType.Draw, addedByPlayer: true, CardPilePosition.Random));
             }
             await CardPileCmd.Draw(choiceContext, DynamicVars["Draw"].IntValue, Owner);

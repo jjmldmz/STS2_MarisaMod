@@ -19,7 +19,7 @@
     "MARISAMOD-ENERGY_FLOW_POWER.smartDescription": "在你的的回合结束时，获得[blue]{Amount}[/blue]层[gold]蓄力[/gold]。",
     "MARISAMOD-ESCAPE_VELOCITY_POWER.title": "第二宇宙速度",
     "MARISAMOD-ESCAPE_VELOCITY_POWER.description": "如果你回合结束时仍有[gold]手牌[/gold]，下回合抽等量的牌(最多2张)。",
-    "MARISAMOD-ESCAPE_VELOCITY_POWER.smartDescription": "如果你回合结束时仍有[gold]手牌[/gold]，下回合抽等量的牌(最多{Amount}}张)。",
+    "MARISAMOD-ESCAPE_VELOCITY_POWER.smartDescription": "如果你回合结束时仍有[gold]手牌[/gold]，下回合抽等量的牌(最多{Amount}张)。",
     "MARISAMOD-EVENT_HORIZON_POWER.title": "黑洞边缘",
     "MARISAMOD-EVENT_HORIZON_POWER.description": "每回合1次，每当你发动[gold]增幅[/gold],选择[gold]弃牌堆[/gold]一张[gold]攻击牌[/gold]加入你的[gold]手牌[/gold]。",
     "MARISAMOD-EVENT_HORIZON_POWER.smartDescription": "每回合{Amount}次，每当你发动[gold]增幅[/gold],选择[gold]弃牌堆[/gold]一张[gold]攻击牌[/gold]加入你的[gold]手牌[/gold]。 ",

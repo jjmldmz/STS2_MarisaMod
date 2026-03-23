@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://dh40v1kt68me"]
+
+[ext_resource type="Script" uid="uid://ctoxrl5vvme0a" path="res://Scripts/Nodes/MehParticlesContainer.cs" id="1_6hqo0"]
+[ext_resource type="PackedScene" uid="uid://4im3jy8gvwfx" path="res://marisamod/scenes/vfx/particle_a.tscn" id="2_6hqo0"]
+
+[node name="energy_vfx_front" type="Node2D"]
+script = ExtResource("1_6hqo0")
+
+[node name="particle_a" parent="." instance=ExtResource("2_6hqo0")]

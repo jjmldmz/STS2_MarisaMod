@@ -22,6 +22,8 @@ public class TreasureHunter : AbstractMarisaCard
     [
         new DamageVar(18, ValueProp.Move)
     ];
+    
+    public override bool CanBeGeneratedInCombat => false;
 
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
 

@@ -19,7 +19,7 @@
     "MARISAMOD-ENERGY_FLOW_POWER.smartDescription": "At the end of your turn, gain [blue]{Amount}[/blue] [gold]Charge-Up[/gold].",
     "MARISAMOD-ESCAPE_VELOCITY_POWER.title": "Escape Velocity",
     "MARISAMOD-ESCAPE_VELOCITY_POWER.description": "If you end your turn with cards in [gold]Hand[/gold],draw that many cards (up to 2}) next turn.",
-    "MARISAMOD-ESCAPE_VELOCITY_POWER.smartDescription": "If you end your turn with cards in [gold]Hand[/gold],draw that many cards (up to {Amount}}) next turn.",
+    "MARISAMOD-ESCAPE_VELOCITY_POWER.smartDescription": "If you end your turn with cards in [gold]Hand[/gold],draw that many cards (up to {Amount}) next turn.",
     "MARISAMOD-EVENT_HORIZON_POWER.title": "Event Horizon",
     "MARISAMOD-EVENT_HORIZON_POWER.description": "Once each turn,whenever you active an [gold]Amplify[/gold] effect,you may put an [gold]Attack[/gold] from [gold]Discard Pile[/gold] to [gold]Hand[/gold].",
     "MARISAMOD-EVENT_HORIZON_POWER.smartDescription": "Up to {Amount} {Amount:plural:time|times}) each turn, whenever you active an [gold]Amplify[/gold] effect,you may put an [gold]Attack[/gold] from [gold]Discard Pile[/gold] to [gold]Hand[/gold].",

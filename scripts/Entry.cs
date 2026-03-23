@@ -14,6 +14,7 @@ using MegaCrit.Sts2.Core.Models.Cards;
 using MegaCrit.Sts2.Core.Models.Events;
 using MegaCrit.Sts2.Core.Models.Monsters;
 using MegaCrit.Sts2.Core.Models.Powers;
+using MegaCrit.Sts2.Core.Nodes.Vfx.Utilities;
 using MegaCrit.Sts2.Core.Runs;
 using MegaCrit.Sts2.Core.Saves.Managers;
 
@@ -138,6 +139,20 @@ public class Entry
         }
     }
 
+    //well I just cannot make it right
+    [HarmonyPatch(typeof(NParticlesContainer), "Restart")]
+    internal static class ParticlesContainerRestartPatch
+    {
+        private static bool Prefix(TheArchitect __instance)
+        {
+            FieldInfo fieldInfo = AccessTools.Field(typeof(NParticlesContainer), "_particles");
+            if ((fieldInfo?.GetValue(__instance)) != null)
+            {
+                return true;
+            }
+            return false;
+        }
+    }
 
     // [HarmonyPatch(typeof(NCreature), "_Ready")]
     // static class NCreature_Ready_SpineReplace_Patch

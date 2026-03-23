@@ -27,6 +27,7 @@ public class MarisaCharacter : PlaceholderCharacterModel
 
     // public override string CustomRestSiteAnimPath => "res://scenes/rest_site/characters/ironclad_rest_site.tscn";
     //public override string CustomRestSiteAnimPath => "res://marisamod/scenes/marisa_rest_site.tscn";
+    
     // public override string CustomMerchantAnimPath => "res://scenes/merchant/characters/ironclad_merchant.tscn";
     public override string CustomMerchantAnimPath => "res://marisamod/scenes/marisa_merchant.tscn";
 

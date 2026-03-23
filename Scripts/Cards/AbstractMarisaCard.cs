@@ -16,8 +16,9 @@ public abstract class AbstractMarisaCard : CustomCardModel
     }
 
     protected bool IsFlashing = false;
+    public bool ShouldGlowGoldMarisaCard = false;
 
-    protected override bool ShouldGlowGoldInternal => base.ShouldGlowGoldInternal || IsFlashing;
+    protected override bool ShouldGlowGoldInternal => ShouldGlowGoldMarisaCard || IsFlashing;
 
     public async Task DoFlash()
     {
