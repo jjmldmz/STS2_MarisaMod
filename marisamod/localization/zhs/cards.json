@@ -165,6 +165,8 @@
   "MARISAMOD-ULTRA_SHORT_WAVE.description": "获得{Energy:energyIcons()}和{Power:diff()}层[gold]蓄力[/gold]。\n这张牌的能量获得增加1，[gold]蓄力[/gold]获得量增加{PowerInc:diff()}。",
   "MARISAMOD-UNSTABLE_BOMB.title": "不稳定炸弹",
   "MARISAMOD-UNSTABLE_BOMB.description": "WWWWW",
+  "MARISAMOD-WALPURGISNACHT.title": "魔女之夜",
+  "MARISAMOD-WALPURGISNACHT.description": "在你回合开始时，为{Power:diff()}张你的随机手牌添加[gold]附魔[/gold][gold]星彩[/gold]。\n每当你打出一张已[gold]附魔[/gold]的牌，在下个回合获得{Energy:energyIcons()}。",
   "MARISAMOD-WITCH_LEYLINE.title": "魔女射线",
   "MARISAMOD-WITCH_LEYLINE.description": "造成{Damage:diff()}点伤害。\n将一张[gold]灼伤[/gold]加入你的[gold]手牌[/gold]。",
   "MARISAMOD-WITCH_OF_GREED.title": "强欲魔女",

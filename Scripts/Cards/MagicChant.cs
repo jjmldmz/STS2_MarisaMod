@@ -28,7 +28,7 @@ public class MagicChant : AbstractMarisaCard
             orderby c.Rarity, c.Id
             select c).ToList();
         var cardModel = (await CardSelectCmd.FromSimpleGrid(choiceContext, cardsIn, Owner, prefs)).FirstOrDefault();
-        var enchant = MarisaCharacter.StarlitEnchantment;;
+        var enchant = ModelDb.Enchantment<StarlitEnchantment>().ToMutable();
         if (cardModel != null)
         {
             if (enchant.CanEnchant(cardModel))

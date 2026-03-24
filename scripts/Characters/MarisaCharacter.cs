@@ -85,6 +85,4 @@ public class MarisaCharacter : PlaceholderCharacterModel
         "vfx/vfx_bloody_impact",
         "vfx/vfx_rock_shatter"
     ];
-
-    public static StarlitEnchantment StarlitEnchantment { get; } = new();
 }

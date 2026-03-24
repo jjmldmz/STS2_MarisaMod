@@ -36,7 +36,6 @@ public class Entry
         harmony.PatchAll(typeof(Entry).Assembly);
         Log.Info($"{LogPrefix} Harmony PatchAll completed");
         ScriptManagerBridge.LookupScriptsInAssembly(typeof(Entry).Assembly);
-
         //const string gamePath = "res://images/atlases/ui_atlas.sprites/card/energy_test.tres";
         //const string modPath = "res://marisamod/images/atlases/ui_atlas.sprites/card/energy_test.tres";
         //Log.Info($"{LogPrefix} energy_test.tres 存在性: res://images/... = {ResourceLoader.Exists(gamePath)}, res://marisamod/images/... = {ResourceLoader.Exists(modPath)}");
@@ -144,21 +143,21 @@ public class Entry
         }
     }
 
-    //well I just cannot make it right
-    [HarmonyPatch(typeof(NParticlesContainer), "Restart")]
-    internal static class ParticlesContainerRestartPatch
-    {
-        private static bool Prefix(NParticlesContainer __instance)
-        {
-            FieldInfo fieldInfo = AccessTools.Field(typeof(NParticlesContainer), "_particles");
-            if ((fieldInfo?.GetValue(__instance)) != null)
-            {
-                return true;
-            }
+    // //well I just cannot make it right
+    // [HarmonyPatch(typeof(NParticlesContainer), "Restart")]
+    // internal static class ParticlesContainerRestartPatch
+    // {
+    //     private static bool Prefix(NParticlesContainer __instance)
+    //     {
+    //         FieldInfo fieldInfo = AccessTools.Field(typeof(NParticlesContainer), "_particles");
+    //         if ((fieldInfo?.GetValue(__instance)) != null)
+    //         {
+    //             return true;
+    //         }
 
-            return false;
-        }
-    }
+    //         return false;
+    //     }
+    // }
 
     [HarmonyPatch(typeof(TouchOfOrobas), "GetUpgradedStarterRelic")]
     internal static class TouchOfOrobasGetUpgradedStarterRelicPatch

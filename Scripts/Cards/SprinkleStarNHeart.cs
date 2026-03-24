@@ -11,6 +11,8 @@ public class SprinkleStarNHeart : AbstractAmplifiedCard
     public SprinkleStarNHeart() : base(0, 1, CardType.Skill, CardRarity.Rare, TargetType.Self)
     {
     }
+    
+    public override string PortraitPath => "res://marisamod/images/cards/marisamod-test_marisa_card.png";
 
     protected override IEnumerable<DynamicVar> CanonicalVars => base.CanonicalVars.Concat([
         new DynamicVar("Power", 3)

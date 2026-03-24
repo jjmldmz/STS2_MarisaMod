@@ -1,3 +1,5 @@
+using BaseLib.Utils;
+using marisamod.Scripts.PatchesNModels;
 using marisamod.Scripts.Powers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -7,6 +9,8 @@ using MegaCrit.Sts2.Core.Localization.DynamicVars;
 
 namespace marisamod.Scripts.Relics;
 
+
+[Pool(typeof(MarisaRelicPool))]
 public class BewitchedHakkero : AbstractMarisaRelic
 {
     public override RelicRarity Rarity => RelicRarity.Starter;

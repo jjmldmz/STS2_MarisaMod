@@ -5,6 +5,7 @@ using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
 
 namespace marisamod.Scripts.Cards;
@@ -34,7 +35,7 @@ public class MagicalR360 : AbstractMarisaCard
     {
         await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, cardPlay);
 
-        var zaEnchantment = MarisaCharacter.StarlitEnchantment; //ModelDb.Enchantment<StarlitEnchantment>();
+        var zaEnchantment = ModelDb.Enchantment<StarlitEnchantment>().ToMutable();
         var cardModel =
             (await CardSelectCmd.FromHand(
                 choiceContext,

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://nlv65blukiel"
-path="res://.godot/imported/marisamod-starlit_enchantment.png-556c102a15c102a5a7dd7f7f76226ecc.ctex"
+uid="uid://c3tjl4tttm1dh"
+path="res://.godot/imported/marisamod-walpurgisnacht_power.png-6939d8f85ed486fd1d0cd01472cb8656.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://images/enchantments/marisamod-starlit_enchantment.png"
-dest_files=["res://.godot/imported/marisamod-starlit_enchantment.png-556c102a15c102a5a7dd7f7f76226ecc.ctex"]
+source_file="res://marisamod/images/powers/marisamod-walpurgisnacht_power.png"
+dest_files=["res://.godot/imported/marisamod-walpurgisnacht_power.png-6939d8f85ed486fd1d0cd01472cb8656.ctex"]
 
 [params]
 

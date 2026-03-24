@@ -1,7 +1,9 @@
 using marisamod.Scripts.Characters;
+using marisamod.Scripts.Enchantments;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.Models;
 
 namespace marisamod.Scripts.Cards;
 
@@ -23,7 +25,7 @@ public class StarlitPotion : AbstractMarisaCard
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         var cards = Owner.PlayerCombatState!.Hand.Cards.ToArray();
-        var enchant = MarisaCharacter.StarlitEnchantment;
+        var enchant = ModelDb.Enchantment<StarlitEnchantment>().ToMutable();
         foreach (var card in cards)
         {
             if (enchant.CanEnchant(card))

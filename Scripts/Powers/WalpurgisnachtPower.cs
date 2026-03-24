@@ -1,10 +1,12 @@
 using marisamod.Scripts.Characters;
+using marisamod.Scripts.Enchantments;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.Extensions;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.Runs;
 
@@ -19,7 +21,7 @@ public class WalpurgisnachtPower : AbstractMarisaPower
     {
         if (player != Owner.Player)
             return;
-        var enchant = MarisaCharacter.StarlitEnchantment;
+        var enchant = ModelDb.Enchantment<StarlitEnchantment>().ToMutable();
         var cards = player.PlayerCombatState.Hand.Cards.Where(x => enchant.CanEnchant(x)).ToList();
         if (cards.Count > Amount)
         {

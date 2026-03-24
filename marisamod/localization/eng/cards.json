@@ -165,6 +165,8 @@
     "MARISAMOD-ULTRA_SHORT_WAVE.description": "Gain {Energy:energyIcons()} and {Power:diff()} [gold]Charge-Up[/gold].\nIncrease this card's Energy gain by 1 and [gold]Charge-Up[/gold] gain by {PowerInc:diff()}.",
     "MARISAMOD-UNSTABLE_BOMB.title": "Unstable Bomb",
     "MARISAMOD-UNSTABLE_BOMB.description": "WWWWW",
+    "MARISAMOD-WALPURGISNACHT.title": "Walpurgisnacht",
+    "MARISAMOD-WALPURGISNACHT.description": "At the start of your turn, [gold]Enchant[/gold] {Power:diff()} random {Power:plural:card|cards} in your hand with [gold]Starlit[/gold].\nWhenever you play an [gold]enchanted[/gold] card, gain {Energy:energyIcons()} next turn.",
     "MARISAMOD-WITCH_LEYLINE.title": "Witch Leyline",
     "MARISAMOD-WITCH_LEYLINE.description": "Deal {Damage:diff()} damage.\nAdd a [gold]Burn[/gold] into your [gold]Hand[/gold].",
     "MARISAMOD-WITCH_OF_GREED.title": "Witch of Greed",
