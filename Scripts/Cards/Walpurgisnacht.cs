@@ -10,7 +10,7 @@ namespace marisamod.Scripts.Cards
     {
         public Walpurgisnacht() : base(2, CardType.Power, CardRarity.Rare, TargetType.Self) { }
         
-        public override string PortraitPath => "res://marisamod/images/cards/marisamod-test_marisa_card.png";
+        //public override string PortraitPath => "res://marisamod/images/cards/marisamod-test_marisa_card.png";
 
         protected override IEnumerable<DynamicVar> CanonicalVars => [
             new DynamicVar("Power",1),
