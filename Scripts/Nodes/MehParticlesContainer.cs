@@ -8,10 +8,10 @@ namespace marisamod.Scripts.PatchesNModels;
 public partial class MehParticlesContainer : NParticlesContainer
 {
 
-    public override void _Ready()
-    {
-        base._Ready();
-        Traverse.Create(this).Field("_particles").SetValue(new Array<GpuParticles2D>());
-    }
+	public override void _Ready()
+	{
+		base._Ready();
+		Traverse.Create(this).Field("_particles").SetValue(new Array<GpuParticles2D>());
+	}
 
 }

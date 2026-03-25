@@ -3,6 +3,7 @@ using BaseLib.Config;
 using Godot;
 using Godot.Bridge;
 using HarmonyLib;
+using marisamod.Scripts.Cards;
 using marisamod.Scripts.Characters;
 using marisamod.Scripts.Relics;
 using MegaCrit.Sts2.Core.Commands;
@@ -167,6 +168,37 @@ public class Entry
             if (starterRelic is MiniHakkero)
             {
                 __result = ModelDb.Relic<BewitchedHakkero>();
+                return false;
+            }
+
+            return true;
+        }
+    }
+
+    [HarmonyPatch(typeof(ArchaicTooth), "GetTranscendenceStarterCard")]
+    internal static class ArchaicToothGetTranscendenceStarterCardPatch
+    {
+        private static bool Prefix(ArchaicTooth __instance, Player player, ref CardModel? __result)
+        {
+            if (player.Character is MarisaCharacter)
+            {
+                __result = ModelDb.Card<FinalMasterSpark>();
+                return false;
+            }
+
+            return true;
+        }
+    }
+    
+    
+    [HarmonyPatch(typeof(DustyTome), "SetupForPlayer")]
+    internal static class DustyTomeSetupForPlayerPatch
+    {
+        private static bool Prefix(DustyTome __instance, Player player)
+        {
+            if (player.Character is MarisaCharacter)
+            {
+                __instance.AncientCard = ModelDb.Card<MagicAndRedDream>().Id;
                 return false;
             }
 
