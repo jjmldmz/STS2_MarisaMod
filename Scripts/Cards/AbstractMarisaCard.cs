@@ -20,6 +20,7 @@ public abstract class AbstractMarisaCard : CustomCardModel
 
     protected override bool ShouldGlowGoldInternal => ShouldGlowGoldMarisaCard || IsFlashing;
 
+
     public async Task DoFlash()
     {
         IsFlashing = true;

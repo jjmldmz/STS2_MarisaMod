@@ -13,9 +13,11 @@ namespace marisamod.Scripts.Cards.Colorless
     [Pool(typeof(TokenCardPool))]
     public class BlackFlareStar : AbstractMarisaCard
     {
-        public BlackFlareStar() : base(0, CardType.Skill, CardRarity.Token, TargetType.AnyEnemy)
+        public BlackFlareStar() : base(0, CardType.Skill, CardRarity.Token, TargetType.Self)
         {
         }
+
+        public override bool GainsBlock => true;
 
         protected override IEnumerable<DynamicVar> CanonicalVars => [
             new BlockVar(3, ValueProp.Move),

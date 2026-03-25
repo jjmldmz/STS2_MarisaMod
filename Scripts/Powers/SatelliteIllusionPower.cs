@@ -14,11 +14,16 @@ namespace marisamod.Scripts.Powers
 
         private int _rec = 0;
 
+        public void SetStartingRec(int count)
+        {
+            _rec = count;
+        }
+
         public override Task BeforeCardPlayed(CardPlay cardPlay)
         {
             if (cardPlay.Card.Owner == Owner.Player)
             {
-                _rec = Owner.Player.PlayerCombatState.DrawPile.Cards.Count;
+                _rec = Owner.Player.PlayerCombatState!.DrawPile.Cards.Count;
             }
             return Task.CompletedTask;
         }
@@ -27,7 +32,7 @@ namespace marisamod.Scripts.Powers
         {
             if (cardPlay.Card.Owner == Owner.Player)
             {
-                var cnt = Owner.Player.PlayerCombatState.DrawPile.Cards.Count;
+                var cnt = Owner.Player.PlayerCombatState!.DrawPile.Cards.Count;
                 if (cnt > _rec)
                 {
                     await PlayerCmd.GainEnergy(Amount, Owner.Player);

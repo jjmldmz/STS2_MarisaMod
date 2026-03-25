@@ -20,7 +20,7 @@ public class MagicAndRedDreamPower : AbstractMarisaPower
             return Task.CompletedTask;
 
         _toTrigger = false;
-        if (cardPlay.Card.Type is CardType.Attack && Owner.HasPower<ChargeUpPower>() && Owner.GetPower<ChargeUpPower>().CalculateMult() > 1)
+        if (cardPlay.Card.Type is CardType.Attack && Owner.HasPower<ChargeUpPower>() && Owner.GetPower<ChargeUpPower>()!.CalculateMult() > 1)
         {
             _toTrigger = true;
         }

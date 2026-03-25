@@ -36,14 +36,14 @@ namespace marisamod.Scripts.Cards
             {
                 List<CardModel> cards =
                 [
-                    ModelDb.Card<BlackFlareStar>(),
-                    ModelDb.Card<WhiteDwarf>()
+                    CombatState!.CreateCard<BlackFlareStar>(Owner),
+                    CombatState!.CreateCard<WhiteDwarf>(Owner)
                 ];
                 if (IsUpgraded)
                 {
                     CardCmd.Upgrade(cards, CardPreviewStyle.HorizontalLayout);
                 }
-                var cardModel = await CardSelectCmd.FromChooseACardScreen(choiceContext, cards, Owner, canSkip: true);
+                var cardModel = await CardSelectCmd.FromChooseACardScreen(choiceContext, cards, Owner, true);
                 if (cardModel != null)
                 {
                     await CardPileCmd.AddGeneratedCardToCombat(cardModel, PileType.Hand, addedByPlayer: true);

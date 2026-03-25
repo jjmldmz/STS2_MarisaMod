@@ -21,7 +21,8 @@ namespace marisamod.Scripts.Cards
 
         protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
         {
-            await PowerCmd.Apply<SatelliteIllusionPower>(Owner.Creature, 1, Owner.Creature, this);
+            var pow= await PowerCmd.Apply<SatelliteIllusionPower>(Owner.Creature, 1, Owner.Creature, this);            
+            pow?.SetStartingRec(Owner.PlayerCombatState!.DrawPile.Cards.Count);
         }
     }
 }

@@ -9,21 +9,20 @@ namespace marisamod.Scripts.Cards;
 
 public class FinalMasterSpark : AbstractAmplifiedCard
 {
-    public FinalMasterSpark():base(1,1,CardType.Attack,CardRarity.Ancient,TargetType.AllEnemies){}
-    
+    public FinalMasterSpark() : base(1, 1, CardType.Attack, CardRarity.Ancient, TargetType.AllEnemies) { }
+
     protected override IEnumerable<DynamicVar> CanonicalVars => base.CanonicalVars.Concat([
         new CalculationBaseVar(16m),
         new ExtraDamageVar(14m),
         new CalculatedDamageVar(ValueProp.Move).WithMultiplier((card, _) => card is AbstractAmplifiedCard { IsAmplified: true } ? 1 : 0)
     ]);
-        
+
     protected override HashSet<CardTag> CanonicalTags => [MarisaCardTags.Spark];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        ArgumentNullException.ThrowIfNull(cardPlay.Target);
-        await DamageCmd.Attack(DynamicVars.CalculatedDamage).FromCard(this).Targeting(cardPlay.Target)
-            .WithHitFx("vfx/vfx_attack_slash")
+        await DamageCmd.Attack(DynamicVars.CalculatedDamage).FromCard(this).TargetingAllOpponents(CombatState)
+            .WithHitFx("vfx/vfx_attack_slash", null, "blunt_attack.mp3")
             .Execute(choiceContext);
     }
 

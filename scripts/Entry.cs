@@ -9,6 +9,7 @@ using marisamod.Scripts.Relics;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Context;
 using MegaCrit.Sts2.Core.Entities.Players;
+using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.Logging;
 using MegaCrit.Sts2.Core.Modding;
 using MegaCrit.Sts2.Core.Models;
@@ -182,15 +183,29 @@ public class Entry
         {
             if (player.Character is MarisaCharacter)
             {
-                __result = ModelDb.Card<FinalMasterSpark>();
+                __result = player.Deck.Cards.FirstOrDefault(c => c is MasterSpark); ;
                 return false;
             }
 
             return true;
         }
     }
-    
-    
+
+    [HarmonyPatch(typeof(ArchaicTooth), "GetTranscendenceTransformedCard")]
+    internal static class ArchaicToothGetTranscendenceTransformedCardPatch
+    {
+        private static bool Prefix(ArchaicTooth __instance, CardModel starterCard, ref CardModel? __result)
+        {
+            if (starterCard is MasterSpark)
+            {
+                __result = starterCard.Owner.RunState.CreateCard(ModelDb.Card<FinalMasterSpark>(), starterCard.Owner);
+                return false;
+            }
+
+            return true;
+        }
+    }
+
     [HarmonyPatch(typeof(DustyTome), "SetupForPlayer")]
     internal static class DustyTomeSetupForPlayerPatch
     {
@@ -205,6 +220,21 @@ public class Entry
             return true;
         }
     }
+
+    // [HarmonyPatch(typeof(EnergyIconHelper), nameof(EnergyIconHelper.GetPath), typeof(string))]
+    // internal static class EnergyIconHelperGetPathPatch
+    // {
+    //     private static bool Prefix(string prefix, ref string __result)
+    //     {
+    //         if (prefix == "marisa")
+    //         {
+    //             __result = "res://marisamod/images/ui/cardEnergyMarisa.png";
+    //             return false;
+    //         }
+
+    //         return true;
+    //     }
+    // }
 
     // [HarmonyPatch(typeof(NCreature), "_Ready")]
     // static class NCreature_Ready_SpineReplace_Patch

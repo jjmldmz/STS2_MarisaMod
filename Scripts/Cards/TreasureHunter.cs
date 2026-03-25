@@ -22,7 +22,7 @@ public class TreasureHunter : AbstractMarisaCard
     [
         new DamageVar(18, ValueProp.Move)
     ];
-    
+
     public override bool CanBeGeneratedInCombat => false;
 
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
@@ -41,11 +41,11 @@ public class TreasureHunter : AbstractMarisaCard
         AttackCommand attackCommand = await DamageCmd.Attack(base.DynamicVars.Damage.BaseValue).FromCard(this).Targeting(cardPlay.Target)
             .WithHitFx("vfx/vfx_bite", null, "blunt_attack.mp3")
             .Execute(choiceContext);
-        if (Owner.RunState.CurrentRoom.RoomType is MegaCrit.Sts2.Core.Rooms.RoomType.Boss or MegaCrit.Sts2.Core.Rooms.RoomType.Elite
+        if (Owner.RunState.CurrentRoom!.RoomType is RoomType.Boss or RoomType.Elite
             && shouldTriggerFatal && attackCommand.Results.Any((r) => r.WasTargetKilled))
         {
-            var room = (CombatRoom)RunState.CurrentRoom;
-            room?.AddExtraReward(Owner,new RelicReward(Owner));
+            if (RunState!.CurrentRoom is CombatRoom combatRoom)
+                combatRoom.AddExtraReward(Owner, new RelicReward(Owner));
         }
     }
 }

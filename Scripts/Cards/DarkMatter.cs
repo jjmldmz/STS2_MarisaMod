@@ -18,7 +18,7 @@ public class DarkMatter : AbstractMarisaCard
         new BlockVar(5m, ValueProp.Move),
         new CardsVar(1)
     ];
-    
+
     public override IEnumerable<CardKeyword> CanonicalKeywords => base.CanonicalKeywords.Concat([
         CardKeyword.Ethereal
     ]);
@@ -27,7 +27,7 @@ public class DarkMatter : AbstractMarisaCard
     {
         DynamicVars.Block.UpgradeValueBy(2m);
     }
-    
+
     protected override bool IsPlayable =>
         !CombatManager.Instance.History.CardPlaysFinished.Any(e => e.HappenedThisTurn(CombatState) && e.CardPlay.Card is DarkMatter && e.CardPlay.Card.Owner == Owner);
 
@@ -36,8 +36,15 @@ public class DarkMatter : AbstractMarisaCard
         List<CardModel> cards =
         [
             CombatState!.CreateCard<DarkMatter>(Owner),
-            CombatState.CreateCard<DarkMatter>(Owner)
+            CombatState!.CreateCard<DarkMatter>(Owner)
         ];
+        if (IsUpgraded)
+        {
+            foreach (var card in cards)
+            {
+                CardCmd.Upgrade(card);
+            }
+        }
         CardCmd.PreviewCardPileAdd(await CardPileCmd.AddGeneratedCardsToCombat(cards, PileType.Draw, addedByPlayer: true));
         await CardPileCmd.Draw(choiceContext, DynamicVars.Cards.BaseValue, Owner);
     }
