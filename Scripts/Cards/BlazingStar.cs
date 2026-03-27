@@ -20,16 +20,19 @@ namespace marisamod.Scripts.Cards
             new CalculationBaseVar(16m),
             new ExtraDamageVar(8m),
             new CalculatedDamageVar(ValueProp.Move).WithMultiplier((card, _) =>
-                card is AbstractAmplifiedCard { IsAmplified: true }
-                    ? card.Owner.PlayerCombatState!.Hand.Cards.Count(IsBurn) * 2 + 2
-                    : card.Owner.PlayerCombatState!.Hand.Cards.Count(IsBurn)),
+                // card is AbstractAmplifiedCard { IsAmplified: true }
+                //     ? card.Owner.PlayerCombatState!.Hand.Cards.Count(IsBurn) * 2 + 2 :
+                card.Owner.PlayerCombatState!.Hand.Cards.Count(IsBurn)),
+            new RepeatVar(2),
             new EnergyVar(1)
         ];
 
         protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
         {
             ArgumentNullException.ThrowIfNull(cardPlay.Target);
-            await DamageCmd.Attack(DynamicVars.CalculatedDamage).FromCard(this).Targeting(cardPlay.Target)
+            var repeat = IsAmplified ? DynamicVars.Repeat.IntValue : 1;
+            //await DamageCmd.Attack(DynamicVars.CalculatedDamage).FromCard(this).Targeting(cardPlay.Target)
+            await DamageCmd.Attack(DynamicVars.CalculatedDamage).WithHitCount(repeat).FromCard(this).Targeting(cardPlay.Target)
                 .WithHitFx("vfx/vfx_attack_blunt", null, "blunt_attack.mp3")
                 .Execute(choiceContext);
         }

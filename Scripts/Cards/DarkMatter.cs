@@ -14,7 +14,8 @@ public class DarkMatter : AbstractMarisaCard
     {
     }
 
-    protected override IEnumerable<DynamicVar> CanonicalVars => [
+    protected override IEnumerable<DynamicVar> CanonicalVars =>
+    [
         new BlockVar(5m, ValueProp.Move),
         new CardsVar(1)
     ];
@@ -35,8 +36,8 @@ public class DarkMatter : AbstractMarisaCard
     {
         List<CardModel> cards =
         [
-            CombatState!.CreateCard<DarkMatter>(Owner),
-            CombatState!.CreateCard<DarkMatter>(Owner)
+            CreateClone(),
+            CreateClone()
         ];
         if (IsUpgraded)
         {
@@ -45,6 +46,7 @@ public class DarkMatter : AbstractMarisaCard
                 CardCmd.Upgrade(card);
             }
         }
+
         CardCmd.PreviewCardPileAdd(await CardPileCmd.AddGeneratedCardsToCombat(cards, PileType.Draw, addedByPlayer: true));
         await CardPileCmd.Draw(choiceContext, DynamicVars.Cards.BaseValue, Owner);
     }
@@ -55,6 +57,7 @@ public class DarkMatter : AbstractMarisaCard
         {
             return;
         }
+
         await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, null);
     }
 }

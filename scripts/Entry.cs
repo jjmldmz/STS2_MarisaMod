@@ -199,6 +199,10 @@ public class Entry
             if (starterCard is MasterSpark)
             {
                 __result = starterCard.Owner.RunState.CreateCard(ModelDb.Card<FinalMasterSpark>(), starterCard.Owner);
+                if (starterCard.IsUpgraded)
+                {
+                    CardCmd.Upgrade(__result);
+                }
                 return false;
             }
 
