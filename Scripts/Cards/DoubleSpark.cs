@@ -19,7 +19,7 @@ namespace marisamod.Scripts.Cards
 
         protected override IEnumerable<DynamicVar> CanonicalVars =>
         [
-            new DamageVar(6m, ValueProp.Move)
+            new DamageVar(7m, ValueProp.Move)
         ];
         
         protected override HashSet<CardTag> CanonicalTags => [MarisaCardTags.Spark];
@@ -38,7 +38,7 @@ namespace marisamod.Scripts.Cards
 
         protected override void OnUpgrade()
         {
-            DynamicVars.Damage.UpgradeValueBy(2m);
+            DynamicVars.Damage.UpgradeValueBy(3m);
         }
     }
 }
