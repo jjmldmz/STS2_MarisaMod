@@ -3,7 +3,7 @@ using Godot;
 
 namespace marisamod.Scripts.PatchesNModels;
 
-public class MarisaCardPool : CustomCardPoolModel, ICustomEnergyIconPool
+public class MarisaCardPool : CustomCardPoolModel
 {
     // 卡池的ID。必须唯一防撞车。
     public override string Title => "marisa";
@@ -21,4 +21,11 @@ public class MarisaCardPool : CustomCardPoolModel, ICustomEnergyIconPool
     public override string BigEnergyIconPath => "res://marisamod/images/ui/cardOrb.png";
 
     public override string TextEnergyIconPath => "res://marisamod/images/ui/energyOrb-lighter.png";
+
+    public override float H => 0.65f;
+
+    public override float S => 0.59f;
+
+    public override float V => 0.69f;
+
 }

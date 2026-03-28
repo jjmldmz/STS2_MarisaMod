@@ -30,13 +30,12 @@ public class MarisaCharacter : PlaceholderCharacterModel
     // public override string CustomRestSiteAnimPath => "res://scenes/rest_site/characters/ironclad_rest_site.tscn";
     //public override string CustomRestSiteAnimPath => "res://marisamod/scenes/marisa_rest_site.tscn";
 
-    // public override string CustomMerchantAnimPath => "res://scenes/merchant/characters/ironclad_merchant.tscn";
     public override string CustomMerchantAnimPath => "res://marisamod/scenes/marisa_merchant.tscn";
 
-    // public override string CustomArmPointingTexturePath => null;
-    // public override string CustomArmRockTexturePath => null;
-    // public override string CustomArmPaperTexturePath => null;
-    // public override string CustomArmScissorsTexturePath => null;
+    public override string CustomArmPointingTexturePath => "res://marisamod/images/ui/hand_point.png";
+    public override string CustomArmRockTexturePath => "res://marisamod/images/ui/hand_rock.png";
+    public override string CustomArmPaperTexturePath => "res://marisamod/images/ui/hand_paper.png";
+    public override string CustomArmScissorsTexturePath => "res://marisamod/images/ui/hand_scissors.png";
 
     public override string CustomCharacterSelectBg => "res://marisamod/scenes/test_bg.tscn";
     public override string CustomCharacterSelectIconPath => "res://marisamod/images/char_select_marisa.png";

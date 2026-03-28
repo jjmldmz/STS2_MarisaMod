@@ -18,7 +18,7 @@ namespace marisamod.Scripts.Powers
         {
             if (cardPlay.Card.Owner == Owner.Player && cardPlay.Resources.EnergySpent == 0)
             {
-                CardModel card = Owner.Player.PlayerCombatState!.Hand.Cards.Where(x => x.Type == CardType.Attack).TakeRandom(1, Owner.Player.RunState.Rng.CombatCardSelection).FirstOrDefault();
+                var card = Owner.Player.PlayerCombatState!.Hand.Cards.Where(x => x.Type == CardType.Attack).TakeRandom(1, Owner.Player.RunState.Rng.CombatCardSelection).FirstOrDefault();
                 if (card != default)
                 {
                     Flash();

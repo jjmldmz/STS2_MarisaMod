@@ -4,6 +4,7 @@ using MegaCrit.Sts2.Core.Extensions;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
 
 namespace marisamod.Scripts.Cards
@@ -44,7 +45,8 @@ namespace marisamod.Scripts.Cards
                 }
                 else
                 {
-                    PowerModel pow = cardPlay.Target.Powers.Where(x => x.Type == MegaCrit.Sts2.Core.Entities.Powers.PowerType.Buff).TakeRandom(1, Owner.RunState.Rng.CombatCardSelection).FirstOrDefault();
+                    var pow = cardPlay.Target.Powers.Where(x => x.Type == MegaCrit.Sts2.Core.Entities.Powers.PowerType.Buff && x is not ReattachPower && x is not MinionPower).
+                    TakeRandom(1, Owner.RunState.Rng.CombatCardSelection).FirstOrDefault();
                     if (pow != default)
                         await PowerCmd.Remove(pow);
                 }

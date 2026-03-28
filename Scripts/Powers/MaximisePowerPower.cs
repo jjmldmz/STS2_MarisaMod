@@ -18,7 +18,7 @@ namespace marisamod.Scripts.Powers
 
         protected override IEnumerable<DynamicVar> CanonicalVars =>
         [
-            new DynamicVar("Mult", 1m)
+            new DynamicVar("Mult", 50m)
         ];
 
         public override decimal ModifyDamageMultiplicative(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource)
@@ -42,7 +42,7 @@ namespace marisamod.Scripts.Powers
         {
             if (power == this)
             {
-                DynamicVars["Mult"].BaseValue = (decimal)MathF.Pow(1.5f, Amount);
+                DynamicVars["Mult"].BaseValue = ((decimal)MathF.Pow(1.5f, Amount) - 1) * 100;
             }
 
             return Task.CompletedTask;

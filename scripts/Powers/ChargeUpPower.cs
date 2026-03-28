@@ -1,5 +1,6 @@
 using BaseLib.Extensions;
 using Godot;
+using marisamod.Scripts.Relics;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
@@ -13,7 +14,7 @@ namespace marisamod.Scripts.Powers
 {
     public class ChargeUpPower : AbstractMarisaPower
     {
-        public const int ChargeUpThreshold = 8;
+        public int ChargeUpThreshold => Owner.Player.Relics.Any(x => x is SimpleLauncher) ? 6 : 8;
 
         public override PowerType Type => PowerType.Buff;
 
@@ -68,7 +69,7 @@ namespace marisamod.Scripts.Powers
 
         public override Task BeforeCardPlayed(CardPlay cardPlay)
         {
-            if (cardPlay.Card.Type == CardType.Attack && Amount >= ChargeUpThreshold && !Owner.HasPower<OneTimeOffPower>())
+            if (cardPlay.Card.Type == CardType.Attack && Amount >= ChargeUpThreshold && !Owner.HasPower<OneTimeOffPower>() && cardPlay.Card.Owner == Owner.Player)
             {
                 _toBeConsumed = true;
             }

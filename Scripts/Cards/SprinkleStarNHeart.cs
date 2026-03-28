@@ -12,7 +12,7 @@ public class SprinkleStarNHeart : AbstractAmplifiedCard
     {
     }
     
-    public override string PortraitPath => "res://marisamod/images/cards/marisamod-test_marisa_card.png";
+    //public override string PortraitPath => "res://marisamod/images/cards/marisamod-test_marisa_card.png";
 
     protected override IEnumerable<DynamicVar> CanonicalVars => base.CanonicalVars.Concat([
         new DynamicVar("Power", 3)

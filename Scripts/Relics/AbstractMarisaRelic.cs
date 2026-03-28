@@ -1,7 +1,10 @@
 ﻿using BaseLib.Abstracts;
+using BaseLib.Utils;
+using marisamod.Scripts.PatchesNModels;
 
 namespace marisamod.Scripts.Relics;
 
+[Pool(typeof(MarisaRelicPool))]
 public abstract class AbstractMarisaRelic : CustomRelicModel
 {
     // 小图标

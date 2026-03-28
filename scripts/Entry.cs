@@ -144,7 +144,6 @@ public class Entry
         }
     }
 
-    // //well I just cannot make it right
     // [HarmonyPatch(typeof(NParticlesContainer), "Restart")]
     // internal static class ParticlesContainerRestartPatch
     // {
@@ -155,25 +154,24 @@ public class Entry
     //         {
     //             return true;
     //         }
-
     //         return false;
     //     }
     // }
 
-    [HarmonyPatch(typeof(TouchOfOrobas), "GetUpgradedStarterRelic")]
-    internal static class TouchOfOrobasGetUpgradedStarterRelicPatch
-    {
-        private static bool Prefix(TouchOfOrobas __instance, RelicModel starterRelic, ref RelicModel __result)
-        {
-            if (starterRelic is MiniHakkero)
-            {
-                __result = ModelDb.Relic<BewitchedHakkero>();
-                return false;
-            }
+    // [HarmonyPatch(typeof(TouchOfOrobas), "GetUpgradedStarterRelic")]
+    // internal static class TouchOfOrobasGetUpgradedStarterRelicPatch
+    // {
+    //     private static bool Prefix(TouchOfOrobas __instance, RelicModel starterRelic, ref RelicModel __result)
+    //     {
+    //         if (starterRelic is MiniHakkero)
+    //         {
+    //             __result = ModelDb.Relic<BewitchedHakkero>();
+    //             return false;
+    //         }
 
-            return true;
-        }
-    }
+    //         return true;
+    //     }
+    // }
 
     [HarmonyPatch(typeof(ArchaicTooth), "GetTranscendenceStarterCard")]
     internal static class ArchaicToothGetTranscendenceStarterCardPatch

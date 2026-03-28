@@ -6,10 +6,10 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Relics;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using MegaCrit.Sts2.Core.Models;
 
 namespace marisamod.Scripts.Relics;
 
-[Pool(typeof(MarisaRelicPool))]
 public class MiniHakkero : AbstractMarisaRelic
 {
     // 稀有度
@@ -30,4 +30,10 @@ public class MiniHakkero : AbstractMarisaRelic
             await PowerCmd.Apply<ChargeUpPower>(Owner.Creature, DynamicVars["Power"].BaseValue, Owner.Creature, null);
         //return base.AfterCardPlayed(context, cardPlay);
     }
+
+    public override RelicModel? GetUpgradeReplacement()
+    {
+        return ModelDb.Relic<BewitchedHakkero>();
+    }
+
 }
