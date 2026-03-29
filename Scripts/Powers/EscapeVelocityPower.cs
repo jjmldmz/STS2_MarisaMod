@@ -12,7 +12,7 @@ public class EscapeVelocityPower: AbstractMarisaPower
     public override PowerType Type => PowerType.Buff;
     public override PowerStackType StackType => PowerStackType.Counter;
 
-    public override async Task BeforeTurnEnd(PlayerChoiceContext choiceContext, CombatSide side)
+    public override async Task BeforeTurnEndEarly(PlayerChoiceContext choiceContext, CombatSide side)
     {
         var draw = Mathf.Min(Owner.Player!.PlayerCombatState!.Hand.Cards.Count, Amount);
 
