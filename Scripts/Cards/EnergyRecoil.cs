@@ -9,7 +9,7 @@ namespace marisamod.Scripts.Cards;
 
 public class EnergyRecoil : AbstractMarisaCard
 {
-    public EnergyRecoil() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
+    public EnergyRecoil() : base(0, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
     {
     }
 

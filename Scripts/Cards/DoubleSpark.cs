@@ -6,6 +6,7 @@ using MegaCrit.Sts2.Core.ValueProps;
 using MegaCrit.Sts2.Core.HoverTips;
 using marisamod.Scripts.Cards.Colorless;
 using marisamod.Scripts.PatchesNModels;
+using MegaCrit.Sts2.Core.Models;
 
 namespace marisamod.Scripts.Cards
 {
@@ -33,7 +34,20 @@ namespace marisamod.Scripts.Cards
                 .WithHitFx("vfx/vfx_attack_slash")
                 .Execute(choiceContext);
             if (CombatState != null)
-                await Spark.CreateInHand(Owner, 1, CombatState);
+            {
+                var cards = await Spark.CreateInHand(Owner, 1, CombatState);
+                if (IsUpgraded)
+                {
+                    var cardModels = cards as CardModel[] ?? cards.ToArray();
+                    if (cardModels.Length != 0)
+                    {
+                        foreach (var card in cardModels)
+                        {
+                            CardCmd.Upgrade(card);
+                        }
+                    }
+                }
+            }
         }
 
         protected override void OnUpgrade()

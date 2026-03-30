@@ -32,7 +32,7 @@ public class Entry
     public static void Init()
     {
         Log.Info($"{LogPrefix} Init called");
-        ModConfigRegistry.Register("test", new ModConfig());
+        ModConfigRegistry.Register("test", new MehModConfig());
         var harmony = new Harmony("marisamod");
         harmony.PatchAll(typeof(Entry).Assembly);
         Log.Info($"{LogPrefix} Harmony PatchAll completed");
@@ -358,12 +358,8 @@ public class Entry
     // }
 }
 
-public class ModConfig : SimpleModConfig
+public class MehModConfig : SimpleModConfig
 {
-    public static bool Test1 { get; set; } = true;
-    public static bool Test2 { get; set; } = false;
-    public static bool Test3 { get; set; } = true;
-
-    /// <summary> 是否启用皮肤替换（调试时可设为 false） </summary>
-    public static bool EnableSkinReplace { get; set; } = true;
+    public static bool NerfHakkero { get; set; } = false;
+    //public static bool EnableSkinReplace { get; set; } = true;
 }
