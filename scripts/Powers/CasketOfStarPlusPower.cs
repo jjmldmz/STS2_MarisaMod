@@ -7,7 +7,7 @@ using marisamod.Scripts.Cards.Colorless;
 
 namespace marisamod.Scripts.Powers
 {
-    public class CasketOfStarPlusPower : AbstractMarisaPower
+    public class CasketOfStarPlusPower : CasketOfStarPower
     {
         public override PowerType Type => PowerType.Buff;
 

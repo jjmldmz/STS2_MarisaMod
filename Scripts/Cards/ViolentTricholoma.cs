@@ -8,7 +8,7 @@ namespace marisamod.Scripts.Cards;
 
 public class ViolentTricholoma : AbstractMarisaCard
 {
-    public ViolentTricholoma() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
+    public ViolentTricholoma() : base(1, CardType.Skill, CardRarity.Common, TargetType.Self)
     {
     }
     

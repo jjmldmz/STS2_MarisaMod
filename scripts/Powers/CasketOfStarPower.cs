@@ -1,9 +1,10 @@
-using BaseLib.Abstracts;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
 using marisamod.Scripts.Cards.Colorless;
+using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Entities.Cards;
 
 namespace marisamod.Scripts.Powers
 {
@@ -19,6 +20,32 @@ namespace marisamod.Scripts.Powers
             {
                 await Spark.CreateInHand(Owner.Player, Amount, CombatState);
             }
+        }
+
+        public override async Task AfterApplied(Creature? applier, CardModel? cardSource)
+        {
+            foreach (var allCard in Owner.Player!.PlayerCombatState!.AllCards.Where(x => x is Spark))
+            {
+                await ApplyRetain(allCard);
+            }
+        }
+
+        public override async Task AfterCardEnteredCombat(CardModel card)
+        {
+            if (card.Owner == Owner.Player && card is Spark)
+            {
+                await ApplyRetain(card);
+            }
+        }
+
+        private static Task ApplyRetain(CardModel card)
+        {
+            if (!card.Keywords.Contains(CardKeyword.Retain))
+            {
+                CardCmd.ApplyKeyword(card, CardKeyword.Retain);
+            }
+
+            return Task.CompletedTask;
         }
     }
 }

@@ -18,7 +18,7 @@ namespace marisamod.Scripts.Cards
         protected override IEnumerable<DynamicVar> CanonicalVars =>
         [
             new CalculationBaseVar(0m),
-            new ExtraDamageVar(2m),
+            new ExtraDamageVar(3m),
             new CalculatedDamageVar(ValueProp.Move).WithMultiplier((card, _) => card.Owner.Creature.GetPower<ChargeUpPower>()?.Amount ?? 0)
         ];
 

@@ -35,7 +35,7 @@ namespace marisamod.Scripts.Cards
                 .WithHitFx("vfx/vfx_attack_slash")
                 .Execute(choiceContext);
 
-            if (Owner.RunState.CurrentRoom.RoomType != MegaCrit.Sts2.Core.Rooms.RoomType.Boss)
+            if (Owner.RunState.CurrentRoom!.RoomType != MegaCrit.Sts2.Core.Rooms.RoomType.Boss)
             {
                 if (IsAmplified)
                 {
@@ -46,8 +46,8 @@ namespace marisamod.Scripts.Cards
                 }
                 else
                 {
-                    var pows = cardPlay.Target.Powers.Where(x => x.Type == PowerType.Buff && x is not ReattachPower);
-                    if (pows.Any())
+                    var pows = cardPlay.Target.Powers.Where(x => x.Type == PowerType.Buff && x is not ReattachPower).ToArray();
+                    if (pows.Length != 0)
                     {
                         var pow = pows.TakeRandom(1, Owner.RunState.Rng.CombatCardSelection).FirstOrDefault();
                         if (pow != default)

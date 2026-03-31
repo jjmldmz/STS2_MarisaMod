@@ -360,7 +360,7 @@ public class Entry
 
 public class MehModConfig : SimpleModConfig
 {
-
+    [ConfigHoverTip]
     public static bool NerfHakkero { get; set; } = false;
     //public static bool EnableSkinReplace { get; set; } = true;
 }
