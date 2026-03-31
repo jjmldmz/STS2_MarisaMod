@@ -62,7 +62,7 @@
   "MARISAMOD-EARTH_LIGHT_RAY.title": "Earth Light Ray",
   "MARISAMOD-EARTH_LIGHT_RAY.description": "Heal {Heal:diff()} hp.\nAmplify {Energy:energyIcons()}: Put a {IfUpgraded:show:|random }card from your [gold]Discard Pile[/gold] into your [gold]Hand[/gold].",
   "MARISAMOD-ECCENTRIC_ASTEROID.title": "Eccentric Asteroid",
-  "MARISAMOD-ECCENTRIC_ASTEROID.description": "Gain {CalculatedBlock:diff()} [gold]Block[/gold].\nThis card have [gold]Replay[/gold] [blue]1[/blue] if you have played a [gold]Spark[/gold] card this turn.",
+  "MARISAMOD-ECCENTRIC_ASTEROID.description": "Gain {Block:diff()} [gold]Block[/gold].\nThis card have [gold]Replay[/gold] [blue]1[/blue] if you have played a [gold]Spark[/gold] card this turn.",
   "MARISAMOD-ENERGY_FLOW.title": "Energy Flow",
   "MARISAMOD-ENERGY_FLOW.description": "At the end of your turn, gain {EnergyFlowPower:diff()} [gold]Charge-Up[/gold].",
   "MARISAMOD-ENERGY_RECOIL.title": "Energy Recoil",

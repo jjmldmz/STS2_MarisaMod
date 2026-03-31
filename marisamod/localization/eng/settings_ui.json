@@ -1,3 +1,4 @@
 {
-    "MARISAMOD-NERF_HAKKERO.title": "Nerf Hakkero"
+    "MARISAMOD-NERF_HAKKERO.title": "Nerf Hakkero",
+    "MARISAMOD-NERF_HAKKERO.hover.desc": "[gold]Hakkero[/gold] will not apply [gold]Charge-Up[/gold] to player if they already have 8 or more, and [gold]Bewitched Hakkero[/gold] will not give extra [gold]Charge-Up[/gold] when an [gold]Attack[/gold] is played."
 }
