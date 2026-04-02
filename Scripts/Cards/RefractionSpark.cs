@@ -14,7 +14,7 @@ namespace marisamod.Scripts.Cards
 
 
         protected override IEnumerable<DynamicVar> CanonicalVars => base.CanonicalVars.Concat([
-            new CalculationBaseVar(4m),
+            new CalculationBaseVar(5m),
             new ExtraDamageVar(3m),
             new CalculatedDamageVar(ValueProp.Move).WithMultiplier((card, _) => card is AbstractAmplifiedCard { IsAmplified: true } ? 1 : 0)
             ]);
@@ -23,8 +23,8 @@ namespace marisamod.Scripts.Cards
 
         protected override void OnUpgrade()
         {
-            DynamicVars.CalculationBase.UpgradeValueBy(1m);
-            DynamicVars.ExtraDamage.UpgradeValueBy(1m);
+            DynamicVars.CalculationBase.UpgradeValueBy(2m);
+            DynamicVars.ExtraDamage.UpgradeValueBy(2m);
         }
 
 

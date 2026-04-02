@@ -29,7 +29,7 @@ namespace marisamod.Scripts.Cards
         {
             await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.CalculatedBlock.Calculate(cardPlay.Target), DynamicVars.CalculatedBlock.Props, cardPlay);
 
-            foreach (var item in CardPile.Get(PileType.Draw, Owner).Cards.ToArray())
+            foreach (var item in CardPile.Get(PileType.Draw, Owner)!.Cards.ToArray())
             {
                 await CardCmd.Discard(choiceContext, item);
             }
