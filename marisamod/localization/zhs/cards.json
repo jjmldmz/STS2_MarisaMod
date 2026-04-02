@@ -90,6 +90,8 @@
   "MARISAMOD-ILLUSION_STAR.title": "幻象之星",
   "MARISAMOD-ILLUSION_STAR.description": "将{Cards:diff()}张随机牌加入你的[gold]手牌[/gold]。\n将你[gold]手牌[/gold]中的{PutBack:diff()}张牌放到[gold]抽牌堆[/gold]顶部。",
   "MARISAMOD-ILLUSION_STAR.selectionScreenPrompt": "选择要放到你抽牌堆顶的牌",
+  "MARISAMOD-INITIATOR.title": "连段起手",
+  "MARISAMOD-INITIATOR.description": "造成{Damage:diff()}点伤害。将[gold]抽牌堆[/gold]里至多{Cards:diff()}张随机攻击牌加入你的[gold]手牌[/gold]，它们的伤害增加此牌造成的未被格挡的伤害且本回合费用减少{Energy:energyIcons()}。",
   "MARISAMOD-LUMINES_STRIKE.title": "声光冲击",
   "MARISAMOD-LUMINES_STRIKE.description": "造成{Mult:diff()}倍你的[gold]手牌[/gold]数的伤害。\n增幅{Energy:energyIcons()}：改为造成{MultAmp:diff()}倍你的[gold]能量[/gold]的伤害。{InCombat:\n(造成{CalculatedDamage:diff()}伤害)|}",
   "MARISAMOD-MACHINE_GUN_SPARK.title": "机枪火花",

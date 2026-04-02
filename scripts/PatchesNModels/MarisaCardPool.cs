@@ -32,6 +32,9 @@ public class MarisaCardPool : CustomCardPoolModel
     // public override float H => 0.65f;
     // public override float S => 0.59f;
     // public override float V => 0.69f;
+    public override float H => 1f;
+    public override float S => 1f;
+    public override float V => 1f;
 
     public override Texture2D CustomFrame(CustomCardModel card)
     {
@@ -41,6 +44,7 @@ public class MarisaCardPool : CustomCardPoolModel
             CardType.Power => FramePathPower,
             _ => FramePathSkill
         };
-        return PreloadManager.Cache.GetTexture2D(path);
+        return //ResourceLoader.Load<Texture2D>(path); 
+        PreloadManager.Cache.GetTexture2D(path);
     }
 }
