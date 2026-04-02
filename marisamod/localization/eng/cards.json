@@ -1,7 +1,7 @@
 {
   "MARISAMOD-SPARK_STRIKE.title": "Spark Strike",
   "MARISAMOD-SPARK_STRIKE.description": "Deal {Damage:diff()} damage.",
-  "MARISAMOD-DEFEND_MARISA.title": "Defense",
+  "MARISAMOD-DEFEND_MARISA.title": "Defend",
   "MARISAMOD-DEFEND_MARISA.description": "Gain {Block:diff()} [gold]Block[/gold].",
   "MARISAMOD-MASTER_SPARK.title": "Master Spark",
   "MARISAMOD-MASTER_SPARK.description": "Deal {CalculatedDamage:diff()} damage.\nAmplify {Energy:energyIcons()}: Deal {ExtraDamage:diff()} additional damage.",
