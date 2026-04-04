@@ -91,7 +91,7 @@
   "MARISAMOD-ILLUSION_STAR.description": "Add {Cards:diff()} random cards into your [gold]Hand[/gold].\nPut {PutBack:diff()} {PutBack:plural:card|cards} from your [gold]Hand[/gold] on top of your [gold]Draw Pile[/gold].",
   "MARISAMOD-ILLUSION_STAR.selectionScreenPrompt": "Choose Cards to put on top of your Draw Pile",
   "MARISAMOD-INITIATOR.title": "Initiator",
-  "MARISAMOD-INITIATOR.description": "Deal {Damage:diff()} damage.Add up to {Cards:diff()} random Attacks from your [gold]Draw Pile[/gold] to your [gold]Hand[/gold],increase their damage by unblocked damage dealt and they cost {Energy:energyIcons()} this turn .",
+  "MARISAMOD-INITIATOR.description": "Deal {Damage:diff()} damage.Add up to {Cards:diff()} random Attacks from your [gold]Draw Pile[/gold] to your [gold]Hand[/gold],increase their damage by unblocked damage dealt and they cost {Energy:energyIcons()} less this turn .",
   "MARISAMOD-LUMINES_STRIKE.title": "Luminous Strike",
   "MARISAMOD-LUMINES_STRIKE.description": "Deal damage equal to {Mult:diff()} times the number of cards in your [gold]Hand[/gold].\nAmplify {Energy:energyIcons()}: Deal damage equal to {MultAmp:diff()} times your [gold]Energy[/gold] instead.{InCombat:\n(Deal {CalculatedDamage:diff()} damage)|}",
   "MARISAMOD-MACHINE_GUN_SPARK.title": "Machine Gun Spark",
