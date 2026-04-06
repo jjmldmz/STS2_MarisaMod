@@ -42,7 +42,7 @@ namespace marisamod.Scripts.Powers
         {
             if (power == this)
             {
-                DynamicVars["Mult"].BaseValue = ((decimal)MathF.Pow(1.5f, Amount) - 1) * 100;
+                DynamicVars["Mult"].BaseValue = (decimal)MathF.Pow(1.5f, Amount) * 100;
             }
 
             return Task.CompletedTask;
