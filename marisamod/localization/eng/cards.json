@@ -143,7 +143,7 @@
   "MARISAMOD-PROP_BAG.title": "Prop Bag",
   "MARISAMOD-PROP_BAG.description": "Obtain a random relic. Remove it at the end of combat.",
   "MARISAMOD-PULSE_MAGIC.title": "Pulse Magic",
-  "MARISAMOD-PULSE_MAGIC.description": "Next turn, gain {Energy:energyIcons()}.\nAmplify {Energy:energyIcons()}: [gold]Amplify[/gold] effects do not require extra [gold]Energy[/gold] to activate this turn.",
+  "MARISAMOD-PULSE_MAGIC.description": "Next turn, gain {GainEnergy:energyIcons()}.\nAmplify {LoseEnergy:energyIcons()}: [gold]Amplify[/gold] effects do not require extra [gold]Energy[/gold] to activate this turn.",
   "MARISAMOD-REFRACTION_SPARK.title": "Refraction Spark",
   "MARISAMOD-REFRACTION_SPARK.description": "Deal {CalculatedDamage:diff()} damage. Increase the damage of ALL [gold]Spark[/gold] cards in your hand by the unblocked damage dealt.\nAmplify {Energy:energyIcons()}: Deal {ExtraDamage:diff()} additional damage.",
   "MARISAMOD-ROB.title": "Robbery",
