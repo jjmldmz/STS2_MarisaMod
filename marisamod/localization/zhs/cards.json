@@ -178,7 +178,7 @@
   "MARISAMOD-STARLIT_POTION.title": "星彩药剂",
   "MARISAMOD-STARLIT_POTION.description": "为你的所有手牌添加[gold]附魔[/gold][gold]星彩[/gold]。",
   "MARISAMOD-SUPER_PERSEIDS.title": "超级英仙座",
-  "MARISAMOD-SUPER_PERSEIDS.description": "抽到此牌时获得{Energy:energyIcons()}。\n对随机敌人造成{Damage:diff()}点伤害。\n当这张牌被[gold]消耗[/gold],对随机敌人造成{Damage:diff()}点伤害{Repeat:diff()}次。",
+  "MARISAMOD-SUPER_PERSEIDS.description": "抽到此牌时获得{Energy:energyIcons()}。\n对随机敌人造成{Damage:diff()}点伤害{Repeat:diff()}次。\n在你的回合开始时，如果这张牌在你的[gold]消耗牌堆[/gold]中，则将其加入你的[gold]手牌[/gold]，其伤害增加1点且回合内耗能为0。",
   "MARISAMOD-TREASURE_HUNTER.title": "宝物猎手",
   "MARISAMOD-TREASURE_HUNTER.description": "造成{Damage:diff()}点伤害。\n如果[gold]斩杀[/gold]了一名精英或首领，为本场战斗的奖励增加一个随机[gold]遗物[/gold]。",
   "MARISAMOD-ULTRA_SHORT_WAVE.title": "极超短波",

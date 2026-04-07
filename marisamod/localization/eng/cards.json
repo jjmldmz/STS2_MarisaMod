@@ -178,7 +178,7 @@
   "MARISAMOD-SUPER_NOVA.title": "Supernova",
   "MARISAMOD-SUPER_NOVA.description": "Your cards gain [gold]Ethereal[/gold].\n[gold]Burn[/gold] no longer deals damage to you.\nGain {Power:diff()} [gold]Strength[/gold] whenever you [gold]Exhaust[/gold] a [gold]Burn[/gold].",
   "MARISAMOD-SUPER_PERSEIDS.title": "Super Perseids",
-  "MARISAMOD-SUPER_PERSEIDS.description": "Gain {Energy:energyIcons()} when drawn.\nDeal {Damage:diff()} damage to a random enemy.\nDeal {Damage:diff()} damage to a random enemy {Repeat:diff()} times when [gold]Exhausted[/gold].",
+  "MARISAMOD-SUPER_PERSEIDS.description": "Gain {Energy:energyIcons()} when drawn.\nDeal {Damage:diff()} damage to a random enemy {Repeat:diff()} times.\nAt the start of your turn, if this is in your [gold]Exhaust Pile[/gold], add it into your [gold]Hand[/gold], increase its damage by 1, it cost 0 for the turn.",
   "MARISAMOD-TREASURE_HUNTER.title": "Treasure Hunter",
   "MARISAMOD-TREASURE_HUNTER.description": "Deal {Damage:diff()} damage.\nIf [gold]Fatal[/gold] against a Boss or Elite, add an extra [gold]Relic[/gold] to rewards of this combat.",
   "MARISAMOD-ULTRA_SHORT_WAVE.title": "Ultimate Shortwave",
