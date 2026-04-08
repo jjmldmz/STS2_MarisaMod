@@ -5,6 +5,7 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Extensions;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using MegaCrit.Sts2.Core.Logging;
 using MegaCrit.Sts2.Core.ValueProps;
 using static MegaCrit.Sts2.Core.Models.ModelDb;
 
@@ -65,6 +66,7 @@ public class DC : AbstractMarisaCard
         var zaEnchantment = Enchantment<StarlitEnchantment>().ToMutable();
         var cards = Owner.PlayerCombatState!.Hand.Cards.ToList();
         cards = cards.Where(x => zaEnchantment.CanEnchant(x)).ToList();
+        Log.Info($"[{cards.Count}] {cards}");
         if (cards.Count > DynamicVars.Cards.IntValue)
         {
             cards = cards.TakeRandom(DynamicVars.Cards.IntValue, RunState!.Rng.CombatCardSelection).ToList();
@@ -72,6 +74,8 @@ public class DC : AbstractMarisaCard
 
         foreach (var card in cards)
         {
+            Log.Info($"enchanting {card}");
+            zaEnchantment = Enchantment<StarlitEnchantment>().ToMutable();
             MarisaCharacter.Enchant(zaEnchantment, card);
         }
     }

@@ -28,6 +28,7 @@ public class UnstableMagicTool : AbstractMarisaRelic
                 .ToList();
             foreach (var card in cards)
             {
+                zaEnchantment = ModelDb.Enchantment<StarlitEnchantment>().ToMutable();
                 MarisaCharacter.Enchant(zaEnchantment, card);
             }
 
