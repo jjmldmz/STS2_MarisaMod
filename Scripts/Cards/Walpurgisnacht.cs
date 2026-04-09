@@ -36,7 +36,7 @@ public class Walpurgisnacht : AbstractAmplifiedCard //AbstractMarisaCard
         await PowerCmd.Apply<WalpurgisnachtPower>(Owner.Creature, DynamicVars["Power"].IntValue, Owner.Creature, this);
         if (IsAmplified)
         {
-            await PowerCmd.Apply<WalpurgisnachtPower>(Owner.Creature, DynamicVars["PowerAmp"].IntValue, Owner.Creature, this);
+            await PowerCmd.Apply<WalpurgisnachtAmpPower>(Owner.Creature, DynamicVars["PowerAmp"].IntValue, Owner.Creature, this);
         }
     }
 }

@@ -1,7 +1,6 @@
 using marisamod.Scripts.Powers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
-using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
@@ -20,25 +19,19 @@ public class FirepowerHyoui : AbstractMarisaCard
     [
         new DynamicVar("Power", 8)
     ];
-    
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [
+
+    protected override IEnumerable<IHoverTip> ExtraHoverTips =>
+    [
         HoverTipFactory.FromPower<ChargeUpPower>()
     ];
-    
+
     //public override string PortraitPath => "res://marisamod/images/cards/marisamod-test_marisa_card.png";
-    
-    // protected override void OnUpgrade()
-    // {
-    //     TargetType = TargetType.AllAllies;
-    // }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         if (IsUpgraded)
         {
-            IEnumerable<Creature> enumerable = from c in CombatState!.GetTeammatesOf(Owner.Creature)
-                where c is { IsAlive: true, IsPlayer: true }
-                select c;
+            var enumerable = CombatState!.GetTeammatesOf(Owner.Creature).Where(c => c is { IsAlive: true, IsPlayer: true } && c != Owner.Creature);
             foreach (var creature in enumerable)
             {
                 await PowerCmd.Apply<ChargeUpPower>(creature, DynamicVars["Power"].BaseValue, Owner.Creature, this);
