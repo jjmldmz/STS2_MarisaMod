@@ -5,8 +5,11 @@ using HarmonyLib;
 using marisamod.Scripts.Cards;
 using marisamod.Scripts.Characters;
 using marisamod.Scripts.Powers;
+using MegaCrit.Sts2.Core.Animation;
+using MegaCrit.Sts2.Core.Bindings.MegaSpine;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Context;
+using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Logging;
 using MegaCrit.Sts2.Core.Modding;
@@ -33,13 +36,13 @@ public class Entry
         //ScriptManagerBridge.LookupScriptsInAssembly(typeof(Entry).Assembly);
         var assembly = Assembly.GetExecutingAssembly();
         Godot.Bridge.ScriptManagerBridge.LookupScriptsInAssembly(assembly);
-        
+
         Log.Info($"{LogPrefix} Init called");
         //ModConfigRegistry.Register("marisamod", new MehModConfig());
         var harmony = new Harmony("marisamod");
         harmony.PatchAll(typeof(Entry).Assembly);
         Log.Info($"{LogPrefix} Harmony PatchAll completed");
-  
+
         Log.Info($"{LogPrefix} Init Done");
         //const string gamePath = "res://images/atlases/ui_atlas.sprites/card/energy_test.tres";
         //const string modPath = "res://marisamod/images/atlases/ui_atlas.sprites/card/energy_test.tres";
@@ -237,6 +240,78 @@ public class Entry
             }
 
             return true;
+        }
+    }
+
+
+    [HarmonyPatch(typeof(PhantasmalGardener), nameof(PhantasmalGardener.GenerateAnimator))]
+    internal static class PhantasmalGardenerGenerateAnimatorPatch
+    {
+        private static bool Prefix(PhantasmalGardener __instance, ref CreatureAnimator __result, MegaSprite controller)
+        {
+            AnimState animState = new AnimState("idle_loop", isLooping: true);
+            AnimState animState2 = new AnimState("buff");
+            AnimState animState3 = new AnimState("attack");
+            AnimState animState4 = new AnimState("attack_multi");
+            AnimState animState5 = new AnimState("hurt_extended");
+            AnimState animState6 = new AnimState("hurt");
+            AnimState state = new AnimState("die");
+            AnimState nextState = new AnimState("block_loop", isLooping: true);
+            AnimState animState7 = new AnimState("block_start");
+            AnimState animState8 = new AnimState("block_end");
+            animState2.NextState = animState;
+            animState3.NextState = animState;
+            animState4.NextState = animState;
+            animState5.NextState = animState;
+            animState6.NextState = nextState;
+            animState7.NextState = nextState;
+            animState8.NextState = animState;
+            CreatureAnimator creatureAnimator = new CreatureAnimator(animState, controller);
+            creatureAnimator.AddAnyState("Idle", animState);
+            creatureAnimator.AddAnyState("Cast", animState2);
+            creatureAnimator.AddAnyState("Attack", animState3);
+            creatureAnimator.AddAnyState("AttackMulti", animState4);
+            creatureAnimator.AddAnyState("Dead", state);
+            creatureAnimator.AddAnyState("Hit", animState5, () => __instance.Creature.HasPower<SkittishPower>() && !__instance.Creature.GetPower<SkittishPower>()!.HasGainedBlockThisTurn);
+            creatureAnimator.AddAnyState("Hit", animState6, () => !__instance.Creature.HasPower<SkittishPower>() || __instance.Creature.GetPower<SkittishPower>()!.HasGainedBlockThisTurn);
+            creatureAnimator.AddAnyState("BlockStart", animState7);
+            creatureAnimator.AddAnyState("BlockEnd", animState8);
+
+            __result = creatureAnimator;
+            return false;
+        }
+    }
+
+    [HarmonyPatch(typeof(Parafright), nameof(PhantasmalGardener.GenerateAnimator))]
+    internal static class ParafrightGenerateAnimatorPatch
+    {
+        private static bool Prefix(Parafright __instance, ref CreatureAnimator __result, MegaSprite controller)
+        {
+            AnimState nextState = new AnimState("idle_loop", isLooping: true);
+            AnimState animState = new AnimState("attack");
+            AnimState state = new AnimState("die");
+            AnimState animState2 = new AnimState("hurt");
+            AnimState animState3 = new AnimState("hurt_stunned");
+            AnimState nextState2 = new AnimState("stunned_loop", isLooping: true);
+            AnimState animState4 = new AnimState("spawn");
+            AnimState animState5 = new AnimState("wake_up");
+            AnimState animState6 = new AnimState("stun");
+            animState4.NextState = nextState;
+            animState.NextState = nextState;
+            animState2.NextState = nextState;
+            animState5.NextState = nextState;
+            animState6.NextState = nextState2;
+            animState3.NextState = nextState2;
+            CreatureAnimator creatureAnimator = new CreatureAnimator(animState4, controller);
+            creatureAnimator.AddAnyState("Attack", animState);
+            creatureAnimator.AddAnyState("Hit", animState2, () => __instance.Creature.HasPower<SkittishPower>() && !__instance.Creature.GetPower<IllusionPower>()!.IsReviving);
+            creatureAnimator.AddAnyState("Hit", animState3, () => !__instance.Creature.HasPower<SkittishPower>() || __instance.Creature.GetPower<IllusionPower>()!.IsReviving);
+            creatureAnimator.AddAnyState("StunTrigger", animState6);
+            creatureAnimator.AddAnyState("WakeUpTrigger", animState5);
+            creatureAnimator.AddAnyState("Dead", state, () => !__instance.CombatState.GetTeammatesOf(__instance.Creature).Any(t => t is { IsPrimaryEnemy: true, IsAlive: true }));
+
+            __result = creatureAnimator;
+            return false;
         }
     }
 

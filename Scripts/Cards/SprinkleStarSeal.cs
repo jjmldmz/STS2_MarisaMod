@@ -32,12 +32,12 @@ namespace marisamod.Scripts.Cards
         {
             ArgumentNullException.ThrowIfNull(cardPlay.Target, "cardPlay.Target");
             await PowerCmd.Apply<WeakPower>(cardPlay.Target, DynamicVars["Power"].IntValue, Owner.Creature, this);
-            List<CardModel> cards2Add = [];
-            for (var i = 0; i < DynamicVars.Cards.IntValue; i++)
-            {
-                cards2Add.Add(CombatState!.CreateCard<Burn>(Owner));
-            }
-            await CardPileCmd.AddGeneratedCardsToCombat(cards2Add, PileType.Hand, addedByPlayer: true);
+            // List<CardModel> cards2Add = [];
+            // for (var i = 0; i < DynamicVars.Cards.IntValue; i++)
+            // {
+            //     cards2Add.Add(CombatState!.CreateCard<Burn>(Owner));
+            // }
+            // await CardPileCmd.AddGeneratedCardsToCombat(cards2Add, PileType.Hand, addedByPlayer: true);
         }
     }
 }

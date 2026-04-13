@@ -21,6 +21,10 @@ public class Initiator : AbstractMarisaCard
         new EnergyVar(1)
     ];
 
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [
+        CardKeyword.Exhaust
+    ];
+
     protected override void OnUpgrade()
     {
         DynamicVars.Damage.UpgradeValueBy(2);

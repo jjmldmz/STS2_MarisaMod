@@ -15,7 +15,7 @@ public class GalacticHalo : AbstractMarisaCard
     }
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new BlockVar(13,ValueProp.Move),
+        new BlockVar(12,ValueProp.Move),
         new DynamicVar("Power",2)
     ];
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [

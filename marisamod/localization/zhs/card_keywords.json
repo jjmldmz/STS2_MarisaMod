@@ -1,6 +1,6 @@
 {
-    "SPARK.description": "这张卡是一张火花牌。",
-    "SPARK.title": "火花",
-    "AMPLIFY.description": "当费用足够时，额外支付对应的费用来发动其效果",
-    "AMPLIFY.title": "增幅"
+    "MARISAMOD-SPARK.description": "这张卡是一张火花牌。",
+    "MARISAMOD-SPARK.title": "火花",
+    "MARISAMOD-AMPLIFY.description": "当费用足够时，这张牌的费用相应增加来发动其效果",
+    "MARISAMOD-AMPLIFY.title": "增幅"
 }

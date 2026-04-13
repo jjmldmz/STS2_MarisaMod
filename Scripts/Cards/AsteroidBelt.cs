@@ -16,10 +16,10 @@ namespace marisamod.Scripts.Cards
         public override bool GainsBlock => true;
 
         protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [
-            new BlockVar(8m, ValueProp.Move),
-            new EnergyVar(1)
-        ];
+            base.CanonicalVars.Concat(
+            [
+                new BlockVar(8m, ValueProp.Move)
+            ]);
 
         protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
         {

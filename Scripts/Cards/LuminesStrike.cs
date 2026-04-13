@@ -52,14 +52,15 @@ public class LuminesStrike : AbstractMarisaCard
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new CalculationBaseVar(0),
-        new ExtraDamageVar(7),
+        new CalculationBaseVar(7),
+        new ExtraDamageVar(3),
         new CalculatedDamageVar(ValueProp.Move).WithMultiplier((card, _) => card.Owner.PlayerCombatState!.Hand.Cards.Count(x => x.DeckVersion == null && x != card))
     ];
 
     protected override void OnUpgrade()
     {
-        DynamicVars.ExtraDamage.UpgradeValueBy(3);
+        DynamicVars.CalculationBase.UpgradeValueBy(2);
+        DynamicVars.ExtraDamage.UpgradeValueBy(2);
     }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)

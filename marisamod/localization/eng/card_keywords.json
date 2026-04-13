@@ -1,6 +1,6 @@
 {
-    "SPARK.description": "This card is a Spark card.",
-    "SPARK.title": "Spark",
-    "AMPLIFY.description": "When you have enough energy, spend additional energy to activate its effect.",
-    "AMPLIFY.title": "Amplify"
+    "MARISAMOD-SPARK.description": "This card is a Spark card.",
+    "MARISAMOD-SPARK.title": "Spark",
+    "MARISAMOD-AMPLIFY.description": "When you have enough energy, spend additional energy to activate its effect.",
+    "MARISAMOD-AMPLIFY.title": "Amplify"
 }

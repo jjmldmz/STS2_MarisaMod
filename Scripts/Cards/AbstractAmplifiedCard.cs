@@ -1,3 +1,4 @@
+using marisamod.Scripts.PatchesNModels;
 using marisamod.Scripts.Powers;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
@@ -22,6 +23,13 @@ namespace marisamod.Scripts.Cards
         [
             new EnergyVar(KickerCost)
         ];
+
+        public override IEnumerable<CardKeyword> CanonicalKeywords =>
+        [
+            MarisaCardKeyWords.Amplify
+        ];
+
+        protected override bool ShouldGlowGoldInternal => IsAmplified;
 
         // public override IEnumerable<CardKeyword> CanonicalKeywords => [
         //     MarisaCardKeyWords.Amplify

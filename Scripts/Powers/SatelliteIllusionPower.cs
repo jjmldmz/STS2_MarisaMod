@@ -1,11 +1,11 @@
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 
 namespace marisamod.Scripts.Powers
 {
-
     public class SatelliteIllusionPower : AbstractMarisaPower
     {
         public override PowerType Type => PowerType.Buff;
@@ -25,6 +25,7 @@ namespace marisamod.Scripts.Powers
             {
                 _rec = Owner.Player.PlayerCombatState!.DrawPile.Cards.Count;
             }
+
             return Task.CompletedTask;
         }
 
@@ -33,10 +34,19 @@ namespace marisamod.Scripts.Powers
             if (cardPlay.Card.Owner == Owner.Player)
             {
                 var cnt = Owner.Player.PlayerCombatState!.DrawPile.Cards.Count;
-                if (cnt > _rec)
+                if (cnt > _rec && _rec > 0)
                 {
                     await PlayerCmd.GainEnergy(Amount, Owner.Player);
                 }
+            }
+        }
+
+        public override async Task AfterShuffle(PlayerChoiceContext choiceContext, Player shuffler)
+        {
+            if (shuffler == Owner.Player)
+            {
+                await PlayerCmd.GainEnergy(Amount, Owner.Player);
+                _rec = -1;
             }
         }
     }

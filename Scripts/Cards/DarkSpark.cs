@@ -21,7 +21,7 @@ namespace marisamod.Scripts.Cards
 
         protected override IEnumerable<DynamicVar> CanonicalVars =>
         [
-            new CalculationBaseVar(14m),
+            new CalculationBaseVar(10m),
             new ExtraDamageVar(2m),
             new CalculatedDamageVar(ValueProp.Move).WithMultiplier((card, _) => PileType.Exhaust.GetPile(card.Owner).Cards.Count)
         ];
@@ -30,7 +30,7 @@ namespace marisamod.Scripts.Cards
 
         protected override void OnUpgrade()
         {
-            DynamicVars.CalculationBase.UpgradeValueBy(4m);
+            DynamicVars.CalculationBase.UpgradeValueBy(2m);
             DynamicVars.ExtraDamage.UpgradeValueBy(1m);
         }
 

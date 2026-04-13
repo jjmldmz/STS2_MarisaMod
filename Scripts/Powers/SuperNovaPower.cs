@@ -1,3 +1,5 @@
+using MegaCrit.Sts2.Core.CardSelection;
+using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
@@ -27,6 +29,15 @@ namespace marisamod.Scripts.Powers
         //             await CardCmd.Exhaust(choiceContext, item);
         //         }
         // }
+
+        public override async Task BeforeTurnEnd(PlayerChoiceContext choiceContext, CombatSide side)
+        {
+            foreach (var item in await CardSelectCmd.FromHand(choiceContext, Owner.Player!,
+                         new CardSelectorPrefs(SelectionScreenPrompt, 0, 2), null, this))
+            {
+                await CardCmd.Discard(choiceContext, item);
+            }
+        }
 
         public override async Task AfterCardExhausted(PlayerChoiceContext choiceContext, CardModel card, bool causedByEthereal)
         {

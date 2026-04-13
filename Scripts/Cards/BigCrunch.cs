@@ -24,7 +24,8 @@ public class BigCrunch : AbstractMarisaCard
                 / card.DynamicVars["Div"].IntValue))
     ];
 
-    public override IEnumerable<CardKeyword> CanonicalKeywords => [
+    public override IEnumerable<CardKeyword> CanonicalKeywords =>
+    [
         CardKeyword.Exhaust
     ];
 
@@ -49,7 +50,8 @@ public class BigCrunch : AbstractMarisaCard
             var cardModel = Owner.RunState.Rng.CombatCardSelection.NextItem(pile.Cards);
             if (cardModel != null)
             {
-                await CardCmd.Exhaust(choiceContext, cardModel,skipVisuals:true);
+                //CardCmd.Preview(cardModel);
+                await CardCmd.Exhaust(choiceContext, cardModel, skipVisuals: true);
             }
         }
     }

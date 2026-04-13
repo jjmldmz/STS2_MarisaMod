@@ -53,7 +53,7 @@ namespace marisamod.Scripts.Cards
         }
 
         protected override IEnumerable<DynamicVar> CanonicalVars => base.CanonicalVars.Concat([
-            new DamageVar(18, ValueProp.Move),
+            new DamageVar(20, ValueProp.Move),
             new CardsVar(2)
         ]);
 

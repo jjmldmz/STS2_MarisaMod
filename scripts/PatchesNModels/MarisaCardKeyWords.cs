@@ -1,18 +1,17 @@
 using BaseLib.Patches.Content;
 using MegaCrit.Sts2.Core.Entities.Cards;
 
-namespace marisamod.Scripts.PatchesNModels
+namespace marisamod.Scripts.PatchesNModels;
+
+public static class MarisaCardKeyWords
 {
-    public static class MarisaCardKeyWords
-    {
-        // [CustomEnum]
-        // public static CardKeyword Amplify;
+    [CustomEnum("Amplify")]
+    [KeywordProperties(AutoKeywordPosition.None)]
+    public static CardKeyword Amplify;
+}
 
-    }
-
-    public static class MarisaCardTags
-    {
-        [CustomEnum]
-        public static CardTag Spark;
-    }
+public static class MarisaCardTags
+{
+    [CustomEnum]
+    public static CardTag Spark;
 }
