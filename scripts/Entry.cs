@@ -21,6 +21,7 @@ using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.Models.Relics;
 using MegaCrit.Sts2.Core.Runs;
 using MegaCrit.Sts2.Core.Saves.Managers;
+using MegaCrit.Sts2.Core.TestSupport;
 
 // ReSharper disable InconsistentNaming
 
@@ -312,6 +313,61 @@ public class Entry
 
             __result = creatureAnimator;
             return false;
+        }
+    }
+
+
+    // [HarmonyPatch(typeof(RunManager), "UpdateRichPresence")]
+    // internal static class RunManagerUpdateRichPresencePatch
+    // {
+    //     private static bool Prefix(RunManager __instance)
+    //     {
+    //         if (AccessTools.Field(typeof(RunManager), "State").GetValue(__instance) is RunState State)
+    //         {
+    //             var player = LocalContext.GetMe(State);
+    //             if (player != null && player.Character is MarisaCharacter)
+    //             {
+    //                 
+    //                 
+    //                 return false;
+    //             }
+    //         }
+    //
+    //         return true;
+    //     }
+    // }
+
+    [HarmonyPatch(typeof(RunManager))]
+    public static class RichPresencePatch
+    {
+        private static readonly Lazy<MethodInfo?> SteamSetRichPresence = new(() =>
+        {
+            var t = AccessTools.TypeByName("Steamworks.SteamFriends");
+            return t == null ? null : AccessTools.Method(t, "SetRichPresence", new[] { typeof(string), typeof(string) });
+        });
+
+        private static readonly Lazy<PropertyInfo?> StateProp = new(() =>
+            AccessTools.DeclaredProperty(typeof(RunManager), "State"));
+
+        [HarmonyPostfix]
+        [HarmonyPatch("UpdateRichPresence")]
+        public static void UpdateRichPresence_Postfix(RunManager? __instance)
+        {
+            if (__instance == null) return;
+            var State = StateProp.Value?.GetValue(__instance) as RunState;
+            if (!TestMode.IsOn && State != null)
+            {
+                var player = LocalContext.GetMe(State);
+                if (player != null)
+                {
+                    var character = player.Character;
+                    if (character is MarisaCharacter)
+                    {
+                        SteamSetRichPresence.Value?.Invoke(null, new object[] { "Character", "DEFECT" });
+                        SteamSetRichPresence.Value?.Invoke(null, new object[] { "Ascension", "Marisa - A" + State.AscensionLevel });
+                    }
+                }
+            }
         }
     }
 
