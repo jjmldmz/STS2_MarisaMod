@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dx43ey78e3imh"
-path="res://.godot/imported/char_4088_hodrer.png-57e2bb2038e05af9b952a43f4d33f5fc.ctex"
+uid="uid://i5jy88m1bgdo"
+path="res://.godot/imported/Marisa.png-272631fd92b55e77de6549c1fd564d04.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://marisamod/char_4088_hodrer.png"
-dest_files=["res://.godot/imported/char_4088_hodrer.png-57e2bb2038e05af9b952a43f4d33f5fc.ctex"]
+source_file="res://marisamod/images/export/Marisa.png"
+dest_files=["res://.godot/imported/Marisa.png-272631fd92b55e77de6549c1fd564d04.ctex"]
 
 [params]
 

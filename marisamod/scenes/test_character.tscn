@@ -1,28 +1,47 @@
-[gd_scene load_steps=2 format=3 uid="uid://c4dnpxxd6ldei"]
+[gd_scene load_steps=5 format=3 uid="uid://c4dnpxxd6ldei"]
 
 [ext_resource type="Texture2D" uid="uid://cv06ndyh426do" path="res://marisamod/images/MarisaModelv3-Idle.png" id="1_0xtj3"]
+[ext_resource type="Script" uid="uid://d3lvlhdu7l32h" path="res://Scripts/Nodes/MehCreatureVisual.cs" id="1_hhm8a"]
+[ext_resource type="SpineSkeletonDataResource" uid="uid://bh8433l0afqer" path="res://marisamod/images/export/temp_marisa.tres" id="1_tht5s"]
+[ext_resource type="Texture2D" uid="uid://pjh3jc3h8nk7" path="res://marisamod/images/shadow.png" id="3_hhm8a"]
 
 [node name="TestCharacter" type="Node2D"]
+script = ExtResource("1_hhm8a")
 
-[node name="Visuals" type="Sprite2D" parent="."]
+[node name="Visuals" type="SpineSprite" parent="."]
+skeleton_data_res = ExtResource("1_tht5s")
+preview_skin = "Default"
+preview_animation = "-- Empty --"
+preview_frame = false
+preview_time = 0.0
 unique_name_in_owner = true
-position = Vector2(0, -73)
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("1_0xtj3")
+position = Vector2(-2.0000007, 20)
+scale = Vector2(0.4, 0.4)
 
 [node name="Bounds" type="Control" parent="."]
 unique_name_in_owner = true
 layout_mode = 3
 anchors_preset = 0
-offset_left = -114.0
-offset_top = -284.0
-offset_right = 99.0
-offset_bottom = 153.0
+offset_left = -142.0
+offset_top = -329.0
+offset_right = 101.0
+offset_bottom = -10.0
 
 [node name="IntentPos" type="Marker2D" parent="."]
 unique_name_in_owner = true
-position = Vector2(20, -333)
+position = Vector2(0.25, -386)
 
 [node name="CenterPos" type="Marker2D" parent="."]
 unique_name_in_owner = true
-position = Vector2(0, -154)
+position = Vector2(90, -277)
+
+[node name="TempPic" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(0, -73)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_0xtj3")
+
+[node name="Shadow" type="Sprite2D" parent="."]
+position = Vector2(-7, -5)
+scale = Vector2(0.52, 0.52)
+texture = ExtResource("3_hhm8a")

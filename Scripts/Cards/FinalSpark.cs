@@ -1,4 +1,5 @@
 ﻿using marisamod.Scenes.Vfx.FinalSpark;
+using marisamod.Scripts.Characters;
 using marisamod.Scripts.PatchesNModels;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -47,7 +48,7 @@ public class FinalSpark : AbstractMarisaCard
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this).TargetingAllOpponents(CombatState!)
-            .WithHitFx("vfx/vfx_attack_slash")
+            .WithHitFx("vfx/vfx_attack_slash").WithAttackerAnim(Owner.Character is MarisaCharacter ? "Spark" : "Cast", 0.3f)
             .BeforeDamage(async delegate
             {
                 List<Creature> enemies = CombatState!.Enemies.Where(e => e.IsAlive).ToList();

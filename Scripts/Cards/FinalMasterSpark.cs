@@ -1,5 +1,6 @@
 using marisamod.Scenes.Vfx.DarkSpark;
 using marisamod.Scenes.Vfx.FinalSpark;
+using marisamod.Scripts.Characters;
 using marisamod.Scripts.PatchesNModels;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -15,7 +16,9 @@ namespace marisamod.Scripts.Cards;
 
 public class FinalMasterSpark : AbstractAmplifiedCard
 {
-    public FinalMasterSpark() : base(1, 1, CardType.Attack, CardRarity.Ancient, TargetType.AllEnemies) { }
+    public FinalMasterSpark() : base(1, 1, CardType.Attack, CardRarity.Ancient, TargetType.AllEnemies)
+    {
+    }
 
     protected override IEnumerable<DynamicVar> CanonicalVars => base.CanonicalVars.Concat([
         new CalculationBaseVar(16m),
@@ -28,7 +31,7 @@ public class FinalMasterSpark : AbstractAmplifiedCard
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         await DamageCmd.Attack(DynamicVars.CalculatedDamage).FromCard(this).TargetingAllOpponents(CombatState!)
-            .WithHitFx("vfx/vfx_attack_slash", null, "blunt_attack.mp3")
+            .WithHitFx("vfx/vfx_attack_slash", null, "blunt_attack.mp3").WithAttackerAnim(Owner.Character is MarisaCharacter ? "Spark" : "Cast", 0.3f)
             .BeforeDamage(async delegate
             {
                 List<Creature> enemies = CombatState!.Enemies.Where(e => e.IsAlive).ToList();
@@ -39,6 +42,7 @@ public class FinalMasterSpark : AbstractAmplifiedCard
                     NCombatRoom.Instance?.CombatVfxContainer.AddChildSafely(vfx);
                     await Cmd.Wait(VfxFinalSpark.VfxTime);
                 }
+
                 foreach (Creature item in enemies)
                 {
                     var nHyperbeamImpactVfx = NHyperbeamImpactVfx.Create(Owner.Creature, item);

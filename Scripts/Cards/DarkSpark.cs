@@ -1,5 +1,6 @@
 using marisamod.Scenes.Vfx.DarkSpark;
 using marisamod.Scenes.Vfx.FinalSpark;
+using marisamod.Scripts.Characters;
 using marisamod.Scripts.PatchesNModels;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -37,25 +38,26 @@ namespace marisamod.Scripts.Cards
         protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
         {
             await DamageCmd.Attack(DynamicVars.CalculatedDamage).FromCard(this).TargetingAllOpponents(CombatState!)
-                .WithHitFx("vfx/vfx_attack_slash", null, "blunt_attack.mp3")
-            .BeforeDamage(async delegate
-            {
-                List<Creature> enemies = CombatState!.Enemies.Where(e => e.IsAlive).ToList();
-                var vfx = VfxDarkSpark.Create(Owner.Creature, enemies.Last());
-                if (vfx != null)
+                .WithHitFx("vfx/vfx_attack_slash", null, "blunt_attack.mp3").WithAttackerAnim(Owner.Character is MarisaCharacter ? "Spark" : "Cast", 0.3f)
+                .BeforeDamage(async delegate
                 {
-                    NCombatRoom.Instance?.CombatVfxContainer.AddChildSafely(vfx);
-                    await Cmd.Wait(VfxDarkSpark.VfxTime);
-                }
-                foreach (Creature item in enemies)
-                {
-                    var nHyperbeamImpactVfx = NHyperbeamImpactVfx.Create(Owner.Creature, item);
-                    if (nHyperbeamImpactVfx != null)
+                    List<Creature> enemies = CombatState!.Enemies.Where(e => e.IsAlive).ToList();
+                    var vfx = VfxDarkSpark.Create(Owner.Creature, enemies.Last());
+                    if (vfx != null)
                     {
-                        NCombatRoom.Instance?.CombatVfxContainer.AddChildSafely(nHyperbeamImpactVfx);
+                        NCombatRoom.Instance?.CombatVfxContainer.AddChildSafely(vfx);
+                        await Cmd.Wait(VfxDarkSpark.VfxTime);
                     }
-                }
-            })
+
+                    foreach (Creature item in enemies)
+                    {
+                        var nHyperbeamImpactVfx = NHyperbeamImpactVfx.Create(Owner.Creature, item);
+                        if (nHyperbeamImpactVfx != null)
+                        {
+                            NCombatRoom.Instance?.CombatVfxContainer.AddChildSafely(nHyperbeamImpactVfx);
+                        }
+                    }
+                })
                 .Execute(choiceContext);
         }
     }
