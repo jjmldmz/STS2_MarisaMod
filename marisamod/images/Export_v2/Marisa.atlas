@@ -1,0 +1,77 @@
+Marisa.png
+	size: 2016, 497
+	filter: Linear, Linear
+	pma: true
+ArmL
+	bounds: 714, 8, 85, 196
+	offsets: 2, 0, 92, 196
+Hair_F
+	bounds: 143, 13, 113, 176
+	offsets: 24, 0, 137, 176
+	rotate: 90
+HandL
+	bounds: 650, 148, 56, 24
+	rotate: 90
+MiniHakkero_Master
+	bounds: 650, 206, 289, 268
+	rotate: 90
+MiniHakkero_Ring_1
+	bounds: 489, 6, 132, 134
+Shirt1
+	bounds: 321, 4, 136, 166
+	rotate: 90
+belt
+	bounds: 1471, 7, 95, 42
+bow
+	bounds: 818, 23, 181, 257
+	rotate: 90
+braid
+	bounds: 1471, 51, 63, 141
+broom
+	bounds: 1228, 336, 786, 159
+cape_b
+	bounds: 920, 224, 211, 271
+	offsets: 0, 41, 211, 312
+cape_f
+	bounds: 2, 128, 166, 367
+face
+	bounds: 58, 12, 83, 114
+	offsets: 3, 1, 86, 115
+hair_b
+	bounds: 170, 142, 353, 323
+	offsets: 0, 0, 355, 323
+	rotate: 90
+hand_r
+	bounds: 1077, 17, 149, 205
+	offsets: 0, 0, 240, 205
+hat
+	bounds: 495, 143, 352, 153
+	rotate: 90
+hat_b
+	bounds: 1568, 5, 240, 78
+hotpants
+	bounds: 623, 2, 139, 89
+	rotate: 90
+leg_l
+	bounds: 1642, 102, 90, 266
+	rotate: 90
+leg_r
+	bounds: 1133, 235, 91, 260
+propbag
+	bounds: 2, 7, 119, 54
+	offsets: 1, 1, 120, 55
+	rotate: 90
+ribbon
+	bounds: 801, 22, 15, 182
+shade
+	bounds: 1228, 194, 785, 140
+	offsets: 11, 25, 800, 180
+skull
+	bounds: 1228, 23, 111, 169
+thigh_l
+	bounds: 1341, 45, 147, 128
+	rotate: 90
+thigh_r
+	bounds: 1536, 85, 107, 104
+	offsets: 1, 0, 108, 104
+	rotate: 90

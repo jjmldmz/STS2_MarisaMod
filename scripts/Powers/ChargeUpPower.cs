@@ -1,5 +1,6 @@
 using BaseLib.Extensions;
 using Godot;
+using marisamod.Scripts.Characters;
 using marisamod.Scripts.Relics;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -8,6 +9,7 @@ using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Nodes.Rooms;
 using MegaCrit.Sts2.Core.ValueProps;
 
 namespace marisamod.Scripts.Powers
@@ -24,6 +26,8 @@ namespace marisamod.Scripts.Powers
         [
             new DynamicVar("Mult", 1m)
         ];
+
+        private int _lastPhase;
 
         private bool _toBeConsumed;
 
@@ -64,7 +68,41 @@ namespace marisamod.Scripts.Powers
                 return 1m;
             }
 
-            return (decimal)Mathf.Pow(2, Mathf.FloorToInt(Amount / ChargeUpThreshold));
+            var mult = Mathf.FloorToInt(Mathf.Pow(2, Mathf.FloorToInt(Amount / (float)ChargeUpThreshold)));
+            if (mult != _lastPhase)
+            {
+                if (Owner.Player?.Character is MarisaCharacter)
+                {
+                    var megaAnimationState = NCombatRoom.Instance?.GetCreatureNode(Owner)?.SpineAnimation.GetAnimationState();
+
+                    if (_lastPhase < mult)
+                    {
+                        var animTransName = mult switch
+                        {
+                            2 => "_tracks/charge_up_0to1",
+                            4 => "_tracks/charge_up_1to2",
+                            >= 8 => "_tracks/charge_up_2to3",
+                            _ => ""
+                        };
+                        megaAnimationState?.SetAnimation(animTransName, loop: false, 1);
+                    }
+
+                    var animName = mult switch
+                    {
+                        2 => "_tracks/charged_1",
+                        4 => "_tracks/charged_2",
+                        >= 8 => "_tracks/charged_3",
+                        _ => ""
+                    };
+
+                    megaAnimationState?.AddAnimation(animName, 0f, loop: true, 1);
+                    //_ = CreatureCmd.TriggerAnim(Owner, "CHARGE_UP", 0.25f);
+                }
+
+                _lastPhase = mult;
+            }
+
+            return mult;
         }
 
         public override Task BeforeCardPlayed(CardPlay cardPlay)
@@ -83,11 +121,29 @@ namespace marisamod.Scripts.Powers
             {
                 decimal reduceAmount = Amount - Amount % ChargeUpThreshold;
                 PowerCmd.ModifyAmount(this, -reduceAmount, Owner, null);
+                if (Owner.Player?.Character is MarisaCharacter)
+                {
+                    var megaAnimationState = NCombatRoom.Instance?.GetCreatureNode(Owner)?.SpineAnimation.GetAnimationState();
+
+                    var animName = _lastPhase switch
+                    {
+                        2 => "_tracks/spark_heavy_1",
+                        4 => "_tracks/spark_heavy_2",
+                        >= 8 => "_tracks/spark_heavy_3",
+                        _ => ""
+                    };
+                    megaAnimationState?.SetAnimation(animName, loop: false, 1);
+
+                    megaAnimationState?.AddAnimation("_tracks/charged_0", 0f, loop: true, 1);
+                }
+
                 _toBeConsumed = false;
             }
+
+            _lastPhase = 1;
+
             _toBeConsumed = false;
             return Task.CompletedTask;
         }
     }
-
 }

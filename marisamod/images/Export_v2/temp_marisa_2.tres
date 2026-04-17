@@ -1,0 +1,8 @@
+[gd_resource type="SpineSkeletonDataResource" load_steps=3 format=3 uid="uid://l0ehtkdmmg08"]
+
+[ext_resource type="SpineAtlasResource" uid="uid://djwvvqsvj48wo" path="res://marisamod/images/Export_v2/Marisa.atlas" id="1_qbvyb"]
+[ext_resource type="SpineSkeletonFileResource" uid="uid://chjsc8kcely8t" path="res://marisamod/images/Export_v2/Marisa.skel" id="2_m66g1"]
+
+[resource]
+atlas_res = ExtResource("1_qbvyb")
+skeleton_file_res = ExtResource("2_m66g1")

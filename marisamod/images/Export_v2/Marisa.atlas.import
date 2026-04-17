@@ -1,0 +1,16 @@
+[remap]
+
+importer="spine.atlas"
+type="SpineAtlasResource"
+uid="uid://djwvvqsvj48wo"
+path="res://.godot/imported/Marisa.atlas-52b41035713befd10c365f1544678b8d.spatlas"
+
+[deps]
+
+source_file="res://marisamod/images/Export_v2/Marisa.atlas"
+dest_files=["res://.godot/imported/Marisa.atlas-52b41035713befd10c365f1544678b8d.spatlas"]
+
+[params]
+
+normal_map_prefix="n"
+specular_map_prefix="s"

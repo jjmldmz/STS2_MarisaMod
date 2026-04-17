@@ -105,8 +105,8 @@ public partial class VfxDarkSpark : Node2D
             return null;
         }
         VfxDarkSpark instance = GD.Load<PackedScene>(ScenePath).Instantiate<VfxDarkSpark>();
-        //float dir = (target - start).Angle() - MathF.PI / 40f;
-        //instance.Rotation = dir;
+        float dir = (target - start).Angle();// - MathF.PI / 40f;
+        instance.Rotation = dir;
         instance.Position =  start;
         return instance;
     }

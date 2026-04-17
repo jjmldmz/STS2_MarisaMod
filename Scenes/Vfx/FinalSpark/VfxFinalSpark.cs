@@ -104,8 +104,8 @@ public partial class VfxFinalSpark : Node2D
             return null;
         }
         VfxFinalSpark instance = GD.Load<PackedScene>(ScenePath).Instantiate<VfxFinalSpark>();
-        //float dir = (target - start).Angle() - MathF.PI / 40f;
-        //instance.Rotation = dir;
+        float dir = (target - start).Angle();// - MathF.PI / 40f;
+        instance.Rotation = dir;
         instance.Position =  start;
         return instance;
     }
