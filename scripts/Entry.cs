@@ -223,28 +223,27 @@ public class Entry
         }
     }
 
-    private const string CookiePath = "yummy_cookie_marisa";
-
-    [HarmonyPatch(typeof(YummyCookie), "IconBaseName", MethodType.Getter)]
-    internal static class YummyCookieIconBaseNamePatch
-    {
-        private static bool Prefix(YummyCookie __instance, ref string __result)
-        {
-            if (__instance.IsCanonical)
-            {
-                return true;
-            }
-
-            if (__instance.Owner.Character is MarisaCharacter)
-            {
-                __result = CookiePath;
-                return false;
-            }
-
-            return true;
-        }
-    }
-
+    // private const string CookiePath = "yummy_cookie_marisa";
+    //
+    // [HarmonyPatch(typeof(YummyCookie), "IconBaseName", MethodType.Getter)]
+    // internal static class YummyCookieIconBaseNamePatch
+    // {
+    //     private static bool Prefix(YummyCookie __instance, ref string __result)
+    //     {
+    //         if (__instance.IsCanonical)
+    //         {
+    //             return true;
+    //         }
+    //
+    //         if (__instance.Owner.Character is MarisaCharacter)
+    //         {
+    //             __result = CookiePath;
+    //             return false;
+    //         }
+    //
+    //         return true;
+    //     }
+    // }
 
     [HarmonyPatch(typeof(PhantasmalGardener), nameof(PhantasmalGardener.GenerateAnimator))]
     internal static class PhantasmalGardenerGenerateAnimatorPatch

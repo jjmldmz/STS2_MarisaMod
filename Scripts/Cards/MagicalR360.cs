@@ -25,14 +25,14 @@ public class MagicalR360 : AbstractMarisaCard
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new BlockVar(7, ValueProp.Move)
+        new BlockVar(6, ValueProp.Move)
     ];
 
     public override bool GainsBlock => true;
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Block.UpgradeValueBy(4);
+        DynamicVars.Block.UpgradeValueBy(3);
     }
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>

@@ -16,12 +16,16 @@ public class MysteriousBeam : AbstractMarisaCard
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new DamageVar(0, ValueProp.Move)
+        new DamageVar(3, ValueProp.Move)
     ];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
+
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this).Targeting(cardPlay.Target)
+            .WithHitFx("vfx/vfx_attack_slash")
+            .Execute(choiceContext);
         var card =
             CardFactory.GetForCombat(
                 Owner,
@@ -38,7 +42,7 @@ public class MysteriousBeam : AbstractMarisaCard
                 CardCmd.Upgrade(card);
             }
 
-            var damage = DynamicVars.Damage.BaseValue;
+            var damage = 0m; //DynamicVars.Damage.BaseValue;
             if (card.DynamicVars.ContainsKey("CalculatedDamage"))
             {
                 damage += card.DynamicVars.CalculatedDamage.Calculate(null);
@@ -56,9 +60,11 @@ public class MysteriousBeam : AbstractMarisaCard
                 Log.Warn(Id.Entry + ": attack card " + card.Id.Entry + " that did not have an appropriate damage var!");
             }
 
-            await DamageCmd.Attack(damage).FromCard(this).Targeting(cardPlay.Target)
-                .WithHitFx("vfx/vfx_attack_slash")
-                .Execute(choiceContext);
+            DynamicVars.Damage.BaseValue = damage;
+
+            // await DamageCmd.Attack(damage).FromCard(this).Targeting(cardPlay.Target)
+            //     .WithHitFx("vfx/vfx_attack_slash")
+            //     .Execute(choiceContext);
         }
     }
 }

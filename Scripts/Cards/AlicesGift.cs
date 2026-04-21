@@ -13,8 +13,8 @@ namespace marisamod.Scripts.Cards
         }
 
         public override IEnumerable<CardKeyword> CanonicalKeywords => base.CanonicalKeywords.Concat([
-            CardKeyword.Retain,
-            CardKeyword.Exhaust
+            CardKeyword.Retain
+            //CardKeyword.Exhaust
         ]);
 
         // protected override IEnumerable<DynamicVar> CanonicalVars => base.CanonicalVars.Concat([

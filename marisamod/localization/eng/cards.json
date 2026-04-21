@@ -118,7 +118,7 @@
   "MARISAMOD-MILLISECOND_PULSARS.title": "Millisecond Pulsars",
   "MARISAMOD-MILLISECOND_PULSARS.description": "[gold]Amplify[/gold] effects do not require extra [gold]Energy[/gold] to activate.",
   "MARISAMOD-MYSTERIOUS_BEAM.title": "Mysterious Beam",
-  "MARISAMOD-MYSTERIOUS_BEAM.description": "Add a random {IfUpgraded:show:upgraded |}Attack into your [gold]Hand[/gold]. Deal damage equal to the damage of the added card.",
+  "MARISAMOD-MYSTERIOUS_BEAM.description": "Deal {Damage:diff()} damage. Add a random {IfUpgraded:show:upgraded |}Attack into your [gold]Hand[/gold]. This card's damage become same of the card added.",
   "MARISAMOD-NON_DIRECTIONAL_LASER.title": "Non-Directional Laser",
   "MARISAMOD-NON_DIRECTIONAL_LASER.description": "Deal {Damage:diff()} damage to ALL enemies, then deal {Damage:diff()} to a random enemy.",
   "MARISAMOD-OCCULTATION.title": "Occultation",

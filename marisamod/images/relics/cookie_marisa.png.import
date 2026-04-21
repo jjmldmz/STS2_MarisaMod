@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cwbydkvn4l3dp"
-path="res://.godot/imported/token_10002_kalts_mon3tr.png-2b688b1a6a40bccbcf9891f7c1a82dbb.ctex"
+uid="uid://nfqi0h164v0b"
+path="res://.godot/imported/cookie_marisa.png-4da1016dc24c082cfd705e4884e55aa9.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://marisamod/images/token_10002_kalts_mon3tr.png"
-dest_files=["res://.godot/imported/token_10002_kalts_mon3tr.png-2b688b1a6a40bccbcf9891f7c1a82dbb.ctex"]
+source_file="res://marisamod/images/relics/cookie_marisa.png"
+dest_files=["res://.godot/imported/cookie_marisa.png-4da1016dc24c082cfd705e4884e55aa9.ctex"]
 
 [params]
 

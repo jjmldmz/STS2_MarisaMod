@@ -1,4 +1,5 @@
 using BaseLib.Abstracts;
+using BaseLib.Patches.UI;
 using Godot;
 using marisamod.Scripts.Cards;
 using marisamod.Scripts.Enchantments;
@@ -86,6 +87,10 @@ public class MarisaCharacter : PlaceholderCharacterModel
         "vfx/vfx_bloody_impact",
         "vfx/vfx_rock_shatter"
     ];
+
+    public override RelicIconData CustomYummyCookie => new("res://marisamod/images/relics/cookie_marisa.png",
+        "res://marisamod/images/relics/cookie_small.png",
+        "res://marisamod/images/relics/cookie_small_outline.png");
 
     // public static EnchantmentModel? Enchant(EnchantmentModel enchantment, CardModel card, decimal amount = 1)
     // {

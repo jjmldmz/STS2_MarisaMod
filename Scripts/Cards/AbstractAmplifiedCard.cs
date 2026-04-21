@@ -37,10 +37,12 @@ namespace marisamod.Scripts.Cards
 
         public virtual void ValidateAmplify()
         {
+            if (RunState == null)
+                return;
             if (Owner.PlayerCombatState != null)
             {
                 //if (Owner.PlayerCombatState.Hand.Cards.Contains(this))
-                if (Pile is { Type: PileType.Discard or PileType.Draw or PileType.Hand or PileType.Exhaust })
+                if (Pile is { Type: PileType.Hand })
                 {
                     if (Owner.Creature.HasPower<OneTimeOffPower>())
                     {
@@ -59,10 +61,10 @@ namespace marisamod.Scripts.Cards
                         SetAmplifyState(true, false);
                     }
                 }
-                // else
-                // {
-                //     SetAmplifyState(false, false);
-                // }
+                else if (Pile is { Type: PileType.Discard or PileType.Draw or PileType.Exhaust })
+                {
+                    SetAmplifyState(false, false);
+                }
             }
         }
 

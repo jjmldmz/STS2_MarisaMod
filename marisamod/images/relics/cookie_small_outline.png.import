@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ceq0v07qewf36"
-path="res://.godot/imported/cookie_small.png-a8f39b173d8951629a38f1c919e915d9.ctex"
+uid="uid://bir8ufjy86ftb"
+path="res://.godot/imported/cookie_small_outline.png-cebec74d30eb33e99bdb7d671548af98.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://images/atlases/cookie_small.png"
-dest_files=["res://.godot/imported/cookie_small.png-a8f39b173d8951629a38f1c919e915d9.ctex"]
+source_file="res://marisamod/images/relics/cookie_small_outline.png"
+dest_files=["res://.godot/imported/cookie_small_outline.png-cebec74d30eb33e99bdb7d671548af98.ctex"]
 
 [params]
 
