@@ -20,6 +20,8 @@ public class EccentricAsteroid : AbstractMarisaCard
 
     public override bool GainsBlock => true;
 
+    protected override bool ShouldGlowGoldInternal => Sparked(this);
+
     protected override IEnumerable<DynamicVar> CanonicalVars =>
         // [
         //     new CalculationBaseVar(6),
@@ -44,13 +46,17 @@ public class EccentricAsteroid : AbstractMarisaCard
 
     public override int ModifyCardPlayCount(CardModel card, Creature? target, int playCount)
     {
-        if (card == this && CombatManager.Instance.History.CardPlaysFinished.
-                Any(e => e.HappenedThisTurn(card.CombatState) &&
-                         e.CardPlay.Card.Tags.Contains(MarisaCardTags.Spark) &&
-                         e.CardPlay.Card.Owner == card.Owner))
+        if (card == this && Sparked(card))
         {
             return playCount + 1;
         }
         return base.ModifyCardPlayCount(card, target, playCount);
+    }
+
+    private bool Sparked(CardModel card)
+    {
+        return CombatManager.Instance.History.CardPlaysFinished.Any(e => e.HappenedThisTurn(card.CombatState) &&
+                                                                         e.CardPlay.Card.Tags.Contains(MarisaCardTags.Spark) &&
+                                                                         e.CardPlay.Card.Owner == card.Owner);
     }
 }
