@@ -40,7 +40,7 @@ public class StarlitPower : AbstractMarisaPower
         return Task.CompletedTask;
     }
 
-    public override Task AfterPowerAmountChanged(PowerModel power, decimal amount, Creature? applier, CardModel? cardSource)
+    public override Task AfterPowerAmountChanged(PlayerChoiceContext choiceContext, PowerModel power, decimal amount, Creature? applier, CardModel? cardSource)
     {
         CalculateVars();
         return Task.CompletedTask;

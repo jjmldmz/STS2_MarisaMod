@@ -40,7 +40,7 @@ namespace marisamod.Scripts.Cards.Colorless
                 .WithHitFx("vfx/vfx_attack_slash")
                 .Execute(choiceContext);
             await CardPileCmd.AddGeneratedCardsToCombat(
-                [CombatState!.CreateCard<Burn>(Owner), CombatState!.CreateCard<Burn>(Owner)], PileType.Hand, addedByPlayer: true);
+                [CombatState!.CreateCard<Burn>(Owner), CombatState!.CreateCard<Burn>(Owner)], PileType.Hand, Owner);
         }
 
         protected override void OnUpgrade()

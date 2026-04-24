@@ -11,9 +11,10 @@ public class EventHorizon : AbstractMarisaCard
     public EventHorizon() : base(1, CardType.Power, CardRarity.Uncommon, TargetType.Self)
     {
     }
-    
-    protected override IEnumerable<DynamicVar> CanonicalVars =>[
-        new DynamicVar("Power",1)
+
+    protected override IEnumerable<DynamicVar> CanonicalVars =>
+    [
+        new DynamicVar("Power", 1)
     ];
 
     protected override void OnUpgrade()
@@ -23,6 +24,6 @@ public class EventHorizon : AbstractMarisaCard
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await PowerCmd.Apply<EventHorizonPower>(Owner.Creature, DynamicVars["Power"].BaseValue, Owner.Creature, this);
+        await PowerCmd.Apply<EventHorizonPower>(choiceContext, Owner.Creature, DynamicVars["Power"].BaseValue, Owner.Creature, this);
     }
 }

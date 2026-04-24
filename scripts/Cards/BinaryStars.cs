@@ -30,7 +30,7 @@ namespace marisamod.Scripts.Cards
                 {
                     CardCmd.Upgrade(cards, CardPreviewStyle.HorizontalLayout);
                 }
-                await CardPileCmd.AddGeneratedCardsToCombat(cards, PileType.Hand, addedByPlayer: true);
+                await CardPileCmd.AddGeneratedCardsToCombat(cards, PileType.Hand, Owner);
             }
             else
             {
@@ -46,7 +46,7 @@ namespace marisamod.Scripts.Cards
                 var cardModel = await CardSelectCmd.FromChooseACardScreen(choiceContext, cards, Owner, true);
                 if (cardModel != null)
                 {
-                    await CardPileCmd.AddGeneratedCardToCombat(cardModel, PileType.Hand, addedByPlayer: true);
+                    await CardPileCmd.AddGeneratedCardToCombat(cardModel, PileType.Hand, Owner);
                 }
             }
         }

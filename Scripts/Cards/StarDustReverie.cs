@@ -29,7 +29,7 @@ public class StarDustReverie : AbstractMarisaCard
         {
             if (IsUpgraded)
                 CardCmd.Upgrade(cardModel);
-            await CardPileCmd.AddGeneratedCardToCombat(cardModel, PileType.Hand, addedByPlayer: true);
+            await CardPileCmd.AddGeneratedCardToCombat(cardModel, PileType.Hand, Owner);
         }
     }
 }

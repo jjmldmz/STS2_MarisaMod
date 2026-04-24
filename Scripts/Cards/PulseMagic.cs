@@ -13,17 +13,18 @@ namespace marisamod.Scripts.Cards
         {
         }
 
-        protected override IEnumerable<DynamicVar> CanonicalVars => [
+        protected override IEnumerable<DynamicVar> CanonicalVars =>
+        [
             new EnergyVar("GainEnergy", 1),
             new EnergyVar("LoseEnergy", 1)
         ];
 
         protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
         {
-            await PowerCmd.Apply<EnergyNextTurnPower>(Owner.Creature, DynamicVars["GainEnergy"].BaseValue, Owner.Creature, this);
+            await PowerCmd.Apply<EnergyNextTurnPower>(choiceContext, Owner.Creature, DynamicVars["GainEnergy"].BaseValue, Owner.Creature, this);
             if (IsAmplified)
             {
-                await PowerCmd.Apply<PulseMagicPower>(Owner.Creature, 1m, Owner.Creature, this);
+                await PowerCmd.Apply<PulseMagicPower>(choiceContext, Owner.Creature, 1m, Owner.Creature, this);
             }
         }
 

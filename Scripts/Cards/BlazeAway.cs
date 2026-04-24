@@ -13,24 +13,23 @@ namespace marisamod.Scripts.Cards
         {
         }
 
-        protected override IEnumerable<DynamicVar> CanonicalVars => [
+        protected override IEnumerable<DynamicVar> CanonicalVars =>
+        [
             new EnergyVar(1)
-            ];
+        ];
 
 
         public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
 
         protected override void OnUpgrade()
         {
-
             RemoveKeyword(CardKeyword.Exhaust);
         }
 
 
         protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
         {
-
-            var selection = (await CardSelectCmd.FromHand(prefs: new CardSelectorPrefs(base.SelectionScreenPrompt, 1), context: choiceContext, player: base.Owner, filter: delegate (CardModel c)
+            var selection = (await CardSelectCmd.FromHand(prefs: new CardSelectorPrefs(base.SelectionScreenPrompt, 1), context: choiceContext, player: base.Owner, filter: delegate(CardModel c)
             {
                 CardType type = c.Type;
                 return (type == CardType.Attack) ? true : false;
@@ -40,7 +39,7 @@ namespace marisamod.Scripts.Cards
             if (selection != null)
             {
                 CardModel card = selection.CreateClone();
-                await CardPileCmd.AddGeneratedCardToCombat(card, PileType.Hand, addedByPlayer: true);
+                await CardPileCmd.AddGeneratedCardToCombat(card, PileType.Hand, Owner);
                 int energyGain = card.EnergyCost.GetWithModifiers(CostModifiers.All);
                 //if (IsUpgraded)
                 {

@@ -26,7 +26,7 @@ namespace marisamod.Scripts.Cards
 
         protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
         {
-            await PowerCmd.Apply<ChargeUpPower>(Owner.Creature, DynamicVars["Power"].IntValue, Owner.Creature, this);
+            await PowerCmd.Apply<ChargeUpPower>(choiceContext,Owner.Creature, DynamicVars["Power"].IntValue, Owner.Creature, this);
         }
 
         protected override void OnUpgrade()

@@ -34,7 +34,7 @@ public class UltraShortWave : AbstractMarisaCard
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         await PlayerCmd.GainEnergy(DynamicVars.Energy.IntValue, Owner);
-        await PowerCmd.Apply<ChargeUpPower>(Owner.Creature, DynamicVars["Power"].IntValue, Owner.Creature, this);
+        await PowerCmd.Apply<ChargeUpPower>(choiceContext, Owner.Creature, DynamicVars["Power"].IntValue, Owner.Creature, this);
 
         DynamicVars.Energy.UpgradeValueBy(DynamicVars["EnergyInc"].IntValue);
         DynamicVars["Power"].UpgradeValueBy(DynamicVars["PowerInc"].IntValue);

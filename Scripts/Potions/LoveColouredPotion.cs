@@ -22,6 +22,16 @@ public class LoveColouredPotion : AbstractMarisaPotion
     protected override async Task OnUse(PlayerChoiceContext choiceContext, Creature? target)
     {
         AssertValidForTargetedPotion(target);
-        await PowerCmd.Apply<ChargeUpPower>(target, DynamicVars["Power"].IntValue, Owner.Creature, null);
+        await PowerCmd.Apply<ChargeUpPower>(choiceContext, target, DynamicVars["Power"].IntValue, Owner.Creature, null);
+    }
+
+    protected override string GetImagePath()
+    {
+        return GodotIconPath;
+    }
+
+    protected override string GetOutlinePath()
+    {
+        return GodotIconPath;
     }
 }

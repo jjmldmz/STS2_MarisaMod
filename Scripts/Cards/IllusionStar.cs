@@ -23,7 +23,7 @@ public class IllusionStar : AbstractMarisaCard
     {
         DynamicVars.Cards.UpgradeValueBy(1);
     }
-    
+
     public override IEnumerable<CardKeyword> CanonicalKeywords => base.CanonicalKeywords.Concat([
         CardKeyword.Exhaust
     ]);
@@ -35,7 +35,7 @@ public class IllusionStar : AbstractMarisaCard
                 , DynamicVars.Cards.IntValue, Owner.RunState.Rng.CombatCardGeneration);
         foreach (var cardModel in cards)
         {
-            await CardPileCmd.AddGeneratedCardToCombat(cardModel, PileType.Hand, addedByPlayer: true);
+            await CardPileCmd.AddGeneratedCardToCombat(cardModel, PileType.Hand, Owner);
         }
 
         var array = (await CardSelectCmd.FromHand(prefs: new CardSelectorPrefs(SelectionScreenPrompt, DynamicVars["PutBack"].IntValue), context: choiceContext, player: base.Owner, filter: null, source: this)).ToArray();

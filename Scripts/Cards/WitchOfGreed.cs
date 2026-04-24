@@ -15,9 +15,9 @@ namespace marisamod.Scripts.Cards
 
         protected override IEnumerable<DynamicVar> CanonicalVars => base.CanonicalVars.Concat([
             new GoldVar(15),
-        new DynamicVar("Potion",1)
+            new DynamicVar("Potion", 1)
         ]);
-        
+
         public override bool CanBeGeneratedInCombat => false;
 
         protected override void OnUpgrade()
@@ -27,10 +27,10 @@ namespace marisamod.Scripts.Cards
 
         protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
         {
-            await PowerCmd.Apply<RoyaltiesPower>(Owner.Creature, DynamicVars.Gold.BaseValue, Owner.Creature, this);
+            await PowerCmd.Apply<RoyaltiesPower>(choiceContext, Owner.Creature, DynamicVars.Gold.BaseValue, Owner.Creature, this);
             if (IsAmplified)
             {
-                await PowerCmd.Apply<WitchOfGreedPotionPower>(Owner.Creature, DynamicVars["Potion"].BaseValue, Owner.Creature, this);
+                await PowerCmd.Apply<WitchOfGreedPotionPower>(choiceContext, Owner.Creature, DynamicVars["Potion"].BaseValue, Owner.Creature, this);
             }
         }
     }

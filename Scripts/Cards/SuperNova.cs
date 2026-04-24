@@ -8,10 +8,13 @@ namespace marisamod.Scripts.Cards
 {
     public class SuperNova : AbstractMarisaCard
     {
-        public SuperNova() : base(2, CardType.Power, CardRarity.Rare, TargetType.Self) { }
+        public SuperNova() : base(2, CardType.Power, CardRarity.Rare, TargetType.Self)
+        {
+        }
 
-        protected override IEnumerable<DynamicVar> CanonicalVars => [
-            new DynamicVar("Power",1)
+        protected override IEnumerable<DynamicVar> CanonicalVars =>
+        [
+            new DynamicVar("Power", 1)
         ];
 
         protected override void OnUpgrade()
@@ -21,7 +24,7 @@ namespace marisamod.Scripts.Cards
 
         protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
         {
-            await PowerCmd.Apply<SuperNovaPower>(Owner.Creature, DynamicVars["Power"].IntValue, Owner.Creature, this);
+            await PowerCmd.Apply<SuperNovaPower>(choiceContext, Owner.Creature, DynamicVars["Power"].IntValue, Owner.Creature, this);
         }
     }
 }

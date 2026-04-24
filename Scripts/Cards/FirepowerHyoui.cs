@@ -34,13 +34,13 @@ public class FirepowerHyoui : AbstractMarisaCard
             var enumerable = CombatState!.GetTeammatesOf(Owner.Creature).Where(c => c is { IsAlive: true, IsPlayer: true } && c != Owner.Creature);
             foreach (var creature in enumerable)
             {
-                await PowerCmd.Apply<ChargeUpPower>(creature, DynamicVars["Power"].BaseValue, Owner.Creature, this);
+                await PowerCmd.Apply<ChargeUpPower>(choiceContext, creature, DynamicVars["Power"].BaseValue, Owner.Creature, this);
             }
         }
         else
         {
             ArgumentNullException.ThrowIfNull(cardPlay.Target);
-            await PowerCmd.Apply<ChargeUpPower>(cardPlay.Target, DynamicVars["Power"].BaseValue, Owner.Creature, this);
+            await PowerCmd.Apply<ChargeUpPower>(choiceContext, cardPlay.Target, DynamicVars["Power"].BaseValue, Owner.Creature, this);
         }
     }
 }

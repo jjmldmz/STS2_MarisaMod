@@ -15,7 +15,7 @@ public class EnergyFlowPower : AbstractMarisaPower
         if (side == Owner.Side)
         {
             Flash();
-            await PowerCmd.Apply<ChargeUpPower>(Owner, Amount, Owner, null);
+            await PowerCmd.Apply<ChargeUpPower>(choiceContext, Owner, Amount, Owner, null);
         }
     }
 }

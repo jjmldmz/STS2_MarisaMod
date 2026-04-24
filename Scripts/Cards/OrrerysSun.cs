@@ -12,8 +12,9 @@ namespace marisamod.Scripts.Cards
         {
         }
 
-        protected override IEnumerable<DynamicVar> CanonicalVars => [
-            new DynamicVar("Power",6)
+        protected override IEnumerable<DynamicVar> CanonicalVars =>
+        [
+            new DynamicVar("Power", 6)
         ];
 
         protected override void OnUpgrade()
@@ -23,7 +24,7 @@ namespace marisamod.Scripts.Cards
 
         protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
         {
-            await PowerCmd.Apply<OrrerysSunPower>(Owner.Creature, DynamicVars["Power"].IntValue, Owner.Creature, this);
+            await PowerCmd.Apply<OrrerysSunPower>(choiceContext, Owner.Creature, DynamicVars["Power"].IntValue, Owner.Creature, this);
         }
     }
 }

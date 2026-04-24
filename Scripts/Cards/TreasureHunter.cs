@@ -20,7 +20,7 @@ public class TreasureHunter : AbstractMarisaCard
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new DamageVar(18, ValueProp.Move)
+        new DamageVar(20, ValueProp.Move)
     ];
 
     public override bool CanBeGeneratedInCombat => false;

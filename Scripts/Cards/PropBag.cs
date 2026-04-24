@@ -82,7 +82,7 @@ public class PropBag : AbstractMarisaCard
         }
         else
         {
-            pow = await PowerCmd.Apply<PropBagPower>(Owner.Creature, 1, Owner.Creature, this);
+            pow = await PowerCmd.Apply<PropBagPower>(choiceContext, Owner.Creature, 1, Owner.Creature, this);
             pow?.ClearRelicList();
         }
 

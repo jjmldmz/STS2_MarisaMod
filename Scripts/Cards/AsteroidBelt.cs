@@ -25,7 +25,7 @@ namespace marisamod.Scripts.Cards
         {
             decimal amount = await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, cardPlay);
             if (IsAmplified)
-                await PowerCmd.Apply<BlockNextTurnPower>(Owner.Creature, amount, Owner.Creature, this);
+                await PowerCmd.Apply<BlockNextTurnPower>(choiceContext,Owner.Creature, amount, Owner.Creature, this);
         }
 
         protected override void OnUpgrade()

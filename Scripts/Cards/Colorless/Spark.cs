@@ -43,7 +43,7 @@ namespace marisamod.Scripts.Cards.Colorless
             DynamicVars.Damage.UpgradeValueBy(2m);
         }
 
-        public static async Task<IEnumerable<CardModel>> CreateInHand(Player owner, int count, CombatState combatState)
+        public static async Task<IEnumerable<CardModel>> CreateInHand(Player owner, int count, ICombatState combatState)
         {
             if (count == 0)
             {
@@ -61,7 +61,7 @@ namespace marisamod.Scripts.Cards.Colorless
                 sparks.Add(combatState.CreateCard<Spark>(owner));
             }
 
-            await CardPileCmd.AddGeneratedCardsToCombat(sparks, PileType.Hand, addedByPlayer: true);
+            await CardPileCmd.AddGeneratedCardsToCombat(sparks, PileType.Hand, owner);
             return sparks;
         }
     }

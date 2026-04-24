@@ -16,8 +16,9 @@ namespace marisamod.Scripts.Cards
 
         //public override string PortraitPath => $"res://img/cards/DeepEcoBomb_p.png";
 
-        protected override IEnumerable<DynamicVar> CanonicalVars => [
-            new DamageVar(7,ValueProp.Move),
+        protected override IEnumerable<DynamicVar> CanonicalVars =>
+        [
+            new DamageVar(7, ValueProp.Move),
             new DynamicVar("Power", 2m),
             new EnergyVar(1)
         ];
@@ -29,13 +30,14 @@ namespace marisamod.Scripts.Cards
             {
                 return;
             }
+
             int repeat = IsAmplified ? 2 : 1;
             for (int i = 0; i < repeat; i++)
             {
                 var target = Owner.RunState.Rng.CombatTargets.NextItem(combatState.HittableEnemies);
                 if (target != null)
                 {
-                    await PowerCmd.Apply<DeepEcologicalBombPower>(target, DynamicVars["Power"].BaseValue, Owner.Creature, this);
+                    await PowerCmd.Apply<DeepEcologicalBombPower>(choiceContext, target, DynamicVars["Power"].BaseValue, Owner.Creature, this);
                     await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this).Targeting(target)
                         .WithHitFx("vfx/vfx_attack_blunt")
                         .Execute(choiceContext);

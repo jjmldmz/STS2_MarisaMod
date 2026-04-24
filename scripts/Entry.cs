@@ -11,6 +11,7 @@ using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Context;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Players;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Logging;
 using MegaCrit.Sts2.Core.Modding;
 using MegaCrit.Sts2.Core.Models;
@@ -143,7 +144,7 @@ public class Entry
                 }
 
                 await CreatureCmd.TriggerAnim(__instance.Creature, "Cast", 0.5f);
-                await PowerCmd.Apply<PersonalHivePower>(__instance.Creature, 1, __instance.Creature, null);
+                await PowerCmd.Apply<PersonalHivePower>(new ThrowingPlayerChoiceContext(), __instance.Creature, 1, __instance.Creature, null);
             };
 
             __result = _asyncWork.Value();

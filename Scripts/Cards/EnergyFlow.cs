@@ -30,6 +30,6 @@ public class EnergyFlow : AbstractMarisaCard
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await PowerCmd.Apply<EnergyFlowPower>(Owner.Creature, DynamicVars["EnergyFlowPower"].BaseValue, Owner.Creature, this);
+        await PowerCmd.Apply<EnergyFlowPower>(choiceContext, Owner.Creature, DynamicVars["EnergyFlowPower"].BaseValue, Owner.Creature, this);
     }
 }

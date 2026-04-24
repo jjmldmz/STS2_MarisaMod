@@ -44,7 +44,7 @@ namespace marisamod.Scripts.Powers
         {
             if (card is Burn)
             {
-                await PowerCmd.Apply<StrengthPower>(Owner, Amount, Owner, null);
+                await PowerCmd.Apply<StrengthPower>(choiceContext, Owner, Amount, Owner, null);
             }
         }
 

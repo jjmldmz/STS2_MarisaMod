@@ -51,7 +51,7 @@ namespace marisamod.Scripts.Powers
             return CalculateMult();
         }
 
-        public override Task AfterPowerAmountChanged(PowerModel power, decimal amount, Creature? applier, CardModel? cardSource)
+        public override Task AfterPowerAmountChanged(PlayerChoiceContext choiceContext, PowerModel power, decimal amount, Creature? applier, CardModel? cardSource)
         {
             if (power == this)
             {
@@ -120,7 +120,7 @@ namespace marisamod.Scripts.Powers
             if (_toBeConsumed)
             {
                 decimal reduceAmount = Amount - Amount % ChargeUpThreshold;
-                PowerCmd.ModifyAmount(this, -reduceAmount, Owner, null);
+                PowerCmd.ModifyAmount(context, this, -reduceAmount, Owner, null);
                 if (Owner.Player?.Character is MarisaCharacter)
                 {
                     var megaAnimationState = NCombatRoom.Instance?.GetCreatureNode(Owner)?.SpineAnimation.GetAnimationState();

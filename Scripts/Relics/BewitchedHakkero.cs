@@ -1,9 +1,12 @@
+using marisamod.Scripts.Events;
 using marisamod.Scripts.Powers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Relics;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Models.Events;
 
 namespace marisamod.Scripts.Relics;
 
@@ -24,10 +27,21 @@ public class BewitchedHakkero : AbstractMarisaRelic
         {
             return;
         }
+
         var cnt = DynamicVars["Power"].IntValue;
         if (cardPlay.Card.Type == CardType.Attack) // && !MehModConfig.NerfHakkero)
             cnt = DynamicVars["PowerAmp"].IntValue;
-        await PowerCmd.Apply<ChargeUpPower>(Owner.Creature, cnt, Owner.Creature, null);
+        await PowerCmd.Apply<ChargeUpPower>(context, Owner.Creature, cnt, Owner.Creature, null);
         //return base.AfterCardPlayed(context, cardPlay);
+    }
+
+    public override EventModel ModifyNextEvent(EventModel currentEvent)
+    {
+        if (currentEvent is HungryForMushrooms)
+        {
+            return ModelDb.Event<HungryForMushroomsMarisa>();
+        }
+
+        return currentEvent;
     }
 }

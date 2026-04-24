@@ -44,8 +44,8 @@ namespace marisamod.Scripts.Cards
                 await PlayerCmd.GainEnergy(gain, Owner);
             }
 
-            await PowerCmd.Apply<MaximisePowerPower>(Owner.Creature, 1m, Owner.Creature, this);
-            await CardPileCmd.AddGeneratedCardToCombat(CombatState!.CreateCard<Exhaustion>(Owner), PileType.Hand, addedByPlayer: true);
+            await PowerCmd.Apply<MaximisePowerPower>(choiceContext, Owner.Creature, 1m, Owner.Creature, this);
+            await CardPileCmd.AddGeneratedCardToCombat(CombatState!.CreateCard<Exhaustion>(Owner), PileType.Hand, Owner);
         }
     }
 }

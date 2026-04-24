@@ -15,14 +15,14 @@ namespace marisamod.Scripts.Cards
         }
 
         protected override IEnumerable<DynamicVar> CanonicalVars => base.CanonicalVars.Concat([
-            new DynamicVar("Power",99),
+            new DynamicVar("Power", 99),
             new CardsVar(2)
         ]);
 
         public override IEnumerable<CardKeyword> CanonicalKeywords => base.CanonicalKeywords.Concat([
             CardKeyword.Exhaust
         ]);
-        
+
         protected override void OnUpgrade()
         {
             EnergyCost.UpgradeBy(-1);
@@ -31,7 +31,7 @@ namespace marisamod.Scripts.Cards
         protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
         {
             ArgumentNullException.ThrowIfNull(cardPlay.Target, "cardPlay.Target");
-            await PowerCmd.Apply<WeakPower>(cardPlay.Target, DynamicVars["Power"].IntValue, Owner.Creature, this);
+            await PowerCmd.Apply<WeakPower>(choiceContext, cardPlay.Target, DynamicVars["Power"].IntValue, Owner.Creature, this);
             // List<CardModel> cards2Add = [];
             // for (var i = 0; i < DynamicVars.Cards.IntValue; i++)
             // {

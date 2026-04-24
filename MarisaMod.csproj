@@ -40,6 +40,7 @@
     <Content Include="marisamod\localization\eng\card_keywords.json" />
     <Content Include="marisamod\localization\eng\characters.json" />
     <Content Include="marisamod\localization\eng\enchantments.json" />
+    <Content Include="marisamod\localization\eng\events.json" />
     <Content Include="marisamod\localization\eng\potions.json" />
     <Content Include="marisamod\localization\eng\powers.json" />
     <Content Include="marisamod\localization\eng\relics.json" />
@@ -48,6 +49,7 @@
     <Content Include="marisamod\localization\zhs\card_keywords.json" />
     <Content Include="marisamod\localization\zhs\characters.json" />
     <Content Include="marisamod\localization\zhs\enchantments.json" />
+    <Content Include="marisamod\localization\zhs\events.json" />
     <Content Include="marisamod\localization\zhs\potions.json" />
     <Content Include="marisamod\localization\zhs\powers.json" />
     <Content Include="marisamod\localization\zhs\relics.json" />

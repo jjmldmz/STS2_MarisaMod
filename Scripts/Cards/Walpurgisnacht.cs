@@ -33,10 +33,10 @@ public class Walpurgisnacht : AbstractAmplifiedCard //AbstractMarisaCard
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await PowerCmd.Apply<WalpurgisnachtPower>(Owner.Creature, DynamicVars["Power"].IntValue, Owner.Creature, this);
+        await PowerCmd.Apply<WalpurgisnachtPower>(choiceContext, Owner.Creature, DynamicVars["Power"].IntValue, Owner.Creature, this);
         if (IsAmplified)
         {
-            await PowerCmd.Apply<WalpurgisnachtAmpPower>(Owner.Creature, DynamicVars["PowerAmp"].IntValue, Owner.Creature, this);
+            await PowerCmd.Apply<WalpurgisnachtAmpPower>(choiceContext, Owner.Creature, DynamicVars["PowerAmp"].IntValue, Owner.Creature, this);
         }
     }
 }

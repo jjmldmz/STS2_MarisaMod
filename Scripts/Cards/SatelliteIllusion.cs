@@ -8,7 +8,10 @@ namespace marisamod.Scripts.Cards
 {
     public class SatelliteIllusion : AbstractMarisaCard
     {
-        public SatelliteIllusion() : base(2, CardType.Power, CardRarity.Rare, TargetType.Self) { }
+        public SatelliteIllusion() : base(2, CardType.Power, CardRarity.Rare, TargetType.Self)
+        {
+        }
+
         protected override IEnumerable<DynamicVar> CanonicalVars =>
         [
             new EnergyVar(1)
@@ -21,7 +24,7 @@ namespace marisamod.Scripts.Cards
 
         protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
         {
-            var pow= await PowerCmd.Apply<SatelliteIllusionPower>(Owner.Creature, 1, Owner.Creature, this);            
+            var pow = await PowerCmd.Apply<SatelliteIllusionPower>(choiceContext, Owner.Creature, 1, Owner.Creature, this);
             pow?.SetStartingRec(Owner.PlayerCombatState!.DrawPile.Cards.Count);
         }
     }

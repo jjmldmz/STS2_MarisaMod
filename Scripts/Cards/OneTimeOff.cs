@@ -10,9 +10,12 @@ namespace marisamod.Scripts.Cards
 {
     public class OneTimeOff : AbstractMarisaCard
     {
-        public OneTimeOff() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self) { }
+        public OneTimeOff() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
+        {
+        }
 
-        protected override IEnumerable<DynamicVar> CanonicalVars => [
+        protected override IEnumerable<DynamicVar> CanonicalVars =>
+        [
             new BlockVar(5m, ValueProp.Move),
             new CardsVar(2)
         ];
@@ -26,8 +29,8 @@ namespace marisamod.Scripts.Cards
         protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
         {
             await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, cardPlay);
-            await PowerCmd.Apply<OneTimeOffPower>(Owner.Creature, 1, Owner.Creature, this);
-            await PowerCmd.Apply<DrawCardsNextTurnPower>(Owner.Creature, DynamicVars.Cards.IntValue, Owner.Creature, this);
+            await PowerCmd.Apply<OneTimeOffPower>(choiceContext, Owner.Creature, 1, Owner.Creature, this);
+            await PowerCmd.Apply<DrawCardsNextTurnPower>(choiceContext, Owner.Creature, DynamicVars.Cards.IntValue, Owner.Creature, this);
         }
     }
 }

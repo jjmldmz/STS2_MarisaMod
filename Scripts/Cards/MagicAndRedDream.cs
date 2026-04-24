@@ -21,6 +21,6 @@ public class MagicAndRedDream : AbstractMarisaCard
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await PowerCmd.Apply<MagicAndRedDreamPower>(Owner.Creature, DynamicVars["Power"].IntValue, Owner.Creature, this);
+        await PowerCmd.Apply<MagicAndRedDreamPower>(choiceContext, Owner.Creature, DynamicVars["Power"].IntValue, Owner.Creature, this);
     }
 }

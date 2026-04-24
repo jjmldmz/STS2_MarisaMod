@@ -12,7 +12,7 @@ public class ViolentTricholoma : AbstractMarisaCard
     public ViolentTricholoma() : base(1, CardType.Skill, CardRarity.Common, TargetType.Self)
     {
     }
-    
+
     //public override string PortraitPath => "res://marisamod/images/cards/marisamod-test_marisa_card.png";
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
@@ -21,7 +21,8 @@ public class ViolentTricholoma : AbstractMarisaCard
         new PowerVar<ChargeUpPower>(2)
     ];
 
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [
+    protected override IEnumerable<IHoverTip> ExtraHoverTips =>
+    [
         HoverTipFactory.FromPower<ChargeUpPower>()
     ];
 
@@ -33,6 +34,6 @@ public class ViolentTricholoma : AbstractMarisaCard
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         await CardPileCmd.Draw(choiceContext, DynamicVars.Cards.BaseValue, Owner);
-        await PowerCmd.Apply<ChargeUpPower>(Owner.Creature, DynamicVars["ChargeUpPower"].BaseValue, Owner.Creature, this);
+        await PowerCmd.Apply<ChargeUpPower>(choiceContext, Owner.Creature, DynamicVars["ChargeUpPower"].BaseValue, Owner.Creature, this);
     }
 }

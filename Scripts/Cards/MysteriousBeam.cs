@@ -36,7 +36,7 @@ public class MysteriousBeam : AbstractMarisaCard
             ).FirstOrDefault();
         if (card != null)
         {
-            await CardPileCmd.AddGeneratedCardToCombat(card, PileType.Hand, addedByPlayer: true);
+            await CardPileCmd.AddGeneratedCardToCombat(card, PileType.Hand, Owner);
             if (IsUpgraded)
             {
                 CardCmd.Upgrade(card);

@@ -21,11 +21,11 @@ namespace marisamod.Scripts.Cards
         {
             if (IsUpgraded)
             {
-                await PowerCmd.Apply<CasketOfStarPlusPower>(Owner.Creature, 1m, Owner.Creature, this);
+                await PowerCmd.Apply<CasketOfStarPlusPower>(choiceContext, Owner.Creature, 1m, Owner.Creature, this);
             }
             else
             {
-                await PowerCmd.Apply<CasketOfStarPower>(Owner.Creature, 1m, Owner.Creature, this);
+                await PowerCmd.Apply<CasketOfStarPower>(choiceContext, Owner.Creature, 1m, Owner.Creature, this);
             }
         }
     }

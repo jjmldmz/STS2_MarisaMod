@@ -15,11 +15,12 @@ namespace marisamod.Scripts.Potions;
 
 public class ShroomBrew : AbstractMarisaPotion
 {
-    public override PotionRarity Rarity=> PotionRarity.Rare;
+    public override PotionRarity Rarity => PotionRarity.Rare;
     public override PotionUsage Usage => PotionUsage.CombatOnly;
     public override TargetType TargetType => TargetType.Self;
-    
-    protected override IEnumerable<DynamicVar> CanonicalVars => [
+
+    protected override IEnumerable<DynamicVar> CanonicalVars =>
+    [
         new DynamicVar("PowStr", 3),
         new DynamicVar("PowDex", 3),
         new CardsVar(2),
@@ -28,8 +29,9 @@ public class ShroomBrew : AbstractMarisaPotion
         new DynamicVar("PowBuffer", 1),
         new DynamicVar("Coin", 70)
     ];
-    
-    public override IEnumerable<IHoverTip> ExtraHoverTips => [
+
+    public override IEnumerable<IHoverTip> ExtraHoverTips =>
+    [
         HoverTipFactory.FromPower<StrengthPower>(),
         HoverTipFactory.FromPower<DexterityPower>(),
         HoverTipFactory.FromPower<BufferPower>(),
@@ -45,25 +47,35 @@ public class ShroomBrew : AbstractMarisaPotion
             switch (item.Type)
             {
                 case CardType.Attack:
-                    await PowerCmd.Apply<StrengthPower>(Owner.Creature, DynamicVars["PowStr"].BaseValue, Owner.Creature, null);
+                    await PowerCmd.Apply<StrengthPower>(choiceContext, Owner.Creature, DynamicVars["PowStr"].BaseValue, Owner.Creature, null);
                     break;
                 case CardType.Skill:
-                    await PowerCmd.Apply<DexterityPower>(Owner.Creature, DynamicVars["PowDex"].BaseValue, Owner.Creature, null);
+                    await PowerCmd.Apply<DexterityPower>(choiceContext, Owner.Creature, DynamicVars["PowDex"].BaseValue, Owner.Creature, null);
                     break;
                 case CardType.Power:
                     await PlayerCmd.GainEnergy(DynamicVars.Energy.BaseValue, Owner);
                     await CardPileCmd.Draw(choiceContext, DynamicVars.Cards.BaseValue, Owner);
                     break;
                 case CardType.Curse:
-                    await PowerCmd.Apply<BufferPower>(Owner.Creature, DynamicVars["PowBuffer"].BaseValue, Owner.Creature, null);
+                    await PowerCmd.Apply<BufferPower>(choiceContext, Owner.Creature, DynamicVars["PowBuffer"].BaseValue, Owner.Creature, null);
                     break;
                 case CardType.Status:
-                    await PowerCmd.Apply<RegenPower>(Owner.Creature, DynamicVars["PowRegen"].BaseValue, Owner.Creature, null);
+                    await PowerCmd.Apply<RegenPower>(choiceContext, Owner.Creature, DynamicVars["PowRegen"].BaseValue, Owner.Creature, null);
                     break;
                 case CardType.Quest:
-                    await PowerCmd.Apply<RoyaltiesPower>(Owner.Creature, DynamicVars["Coin"].BaseValue, Owner.Creature, null);
+                    await PowerCmd.Apply<RoyaltiesPower>(choiceContext, Owner.Creature, DynamicVars["Coin"].BaseValue, Owner.Creature, null);
                     break;
             }
         }
+    }
+
+    protected override string GetImagePath()
+    {
+        return GodotIconPath;
+    }
+
+    protected override string GetOutlinePath()
+    {
+        return GodotIconPath;
     }
 }

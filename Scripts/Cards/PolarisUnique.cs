@@ -8,9 +8,12 @@ namespace marisamod.Scripts.Cards
 {
     public class PolarisUnique : AbstractMarisaCard
     {
-        public PolarisUnique() : base(0, CardType.Skill, CardRarity.Uncommon, TargetType.Self) { }
+        public PolarisUnique() : base(0, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
+        {
+        }
 
-        protected override IEnumerable<DynamicVar> CanonicalVars => [
+        protected override IEnumerable<DynamicVar> CanonicalVars =>
+        [
             new EnergyVar(2)
         ];
 
@@ -23,7 +26,7 @@ namespace marisamod.Scripts.Cards
         {
             await PlayerCmd.GainEnergy(DynamicVars.Energy.IntValue, Owner);
             //EnergyCost.AddThisCombat(1);
-            await PowerCmd.Apply<PolarisUniquePower>(Owner.Creature, 1, Owner.Creature, this);
+            await PowerCmd.Apply<PolarisUniquePower>(choiceContext, Owner.Creature, 1, Owner.Creature, this);
         }
     }
 }

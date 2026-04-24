@@ -35,13 +35,13 @@ namespace marisamod.Scripts.Cards
             {
                 foreach (Creature enemy in CombatState!.HittableEnemies)
                 {
-                    await PowerCmd.Apply<VulnerablePower>(enemy, DynamicVars["Power"].IntValue, base.Owner.Creature, this);
+                    await PowerCmd.Apply<VulnerablePower>(choiceContext, enemy, DynamicVars["Power"].IntValue, base.Owner.Creature, this);
                 }
             }
             else
             {
                 ArgumentNullException.ThrowIfNull(cardPlay.Target, "cardPlay.Target");
-                await PowerCmd.Apply<VulnerablePower>(cardPlay.Target, DynamicVars["Power"].IntValue, Owner.Creature, this);
+                await PowerCmd.Apply<VulnerablePower>(choiceContext, cardPlay.Target, DynamicVars["Power"].IntValue, Owner.Creature, this);
             }
         }
     }

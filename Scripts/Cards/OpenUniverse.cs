@@ -13,9 +13,10 @@ namespace marisamod.Scripts.Cards
         {
         }
 
-        protected override IEnumerable<DynamicVar> CanonicalVars => [
-            new DynamicVar("Add",5),
-            new DynamicVar("Draw",2)
+        protected override IEnumerable<DynamicVar> CanonicalVars =>
+        [
+            new DynamicVar("Add", 5),
+            new DynamicVar("Draw", 2)
         ];
 
         protected override void OnUpgrade()
@@ -26,11 +27,12 @@ namespace marisamod.Scripts.Cards
         protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
         {
             IEnumerable<CardModel> forCombat =
-            CardFactory.GetForCombat(Owner, Owner.Character.CardPool.GetUnlockedCards(Owner.UnlockState, Owner.RunState.CardMultiplayerConstraint), DynamicVars["Add"].IntValue, Owner.RunState.Rng.CombatCardGeneration);
+                CardFactory.GetForCombat(Owner, Owner.Character.CardPool.GetUnlockedCards(Owner.UnlockState, Owner.RunState.CardMultiplayerConstraint), DynamicVars["Add"].IntValue, Owner.RunState.Rng.CombatCardGeneration);
             foreach (CardModel item in forCombat)
             {
-                CardCmd.PreviewCardPileAdd(await CardPileCmd.AddGeneratedCardToCombat(item, PileType.Draw, addedByPlayer: true, CardPilePosition.Random));
+                CardCmd.PreviewCardPileAdd(await CardPileCmd.AddGeneratedCardToCombat(item, PileType.Draw, Owner, CardPilePosition.Random));
             }
+
             var draw = await CardPileCmd.Draw(choiceContext, DynamicVars["Draw"].IntValue, Owner);
             if (draw.Any())
             {

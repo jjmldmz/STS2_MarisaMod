@@ -11,16 +11,17 @@ public class ExperimentalFamiliar : AbstractMarisaRelic
 {
     public override RelicRarity Rarity => RelicRarity.Rare;
 
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [
+    protected override IEnumerable<IHoverTip> ExtraHoverTips =>
+    [
         HoverTipFactory.FromCard<Spark>()
     ];
 
-    public override async Task AfterSideTurnStart(CombatSide side, CombatState combatState)
+    public override async Task AfterSideTurnStart(CombatSide side, ICombatState combatState)
     {
         if (side == CombatSide.Player)
         {
             Flash();
-            await CardPileCmd.AddGeneratedCardToCombat(combatState.CreateCard<Spark>(Owner), PileType.Hand, true);
+            await CardPileCmd.AddGeneratedCardToCombat(combatState.CreateCard<Spark>(Owner), PileType.Hand, Owner);
         }
     }
 }

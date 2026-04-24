@@ -47,8 +47,8 @@ public class Perseids : AbstractMarisaCard
             {
                 CardCmd.Upgrade(perseidsCards);
             }
-            await CardPileCmd.AddGeneratedCardToCombat(perseidsCards, PileType.Hand, addedByPlayer: true);
-            
+
+            await CardPileCmd.AddGeneratedCardToCombat(perseidsCards, PileType.Hand, Owner);
         }
     }
 }

@@ -36,7 +36,7 @@ public class WalpurgisnachtPower : AbstractMarisaPower
     {
         if (cardPlay.Card.Owner == Owner.Player && cardPlay.Card.Enchantment != null)
         {
-            await PowerCmd.Apply<EnergyNextTurnPower>(Owner, Amount, Owner, null);
+            await PowerCmd.Apply<EnergyNextTurnPower>(context, Owner, Amount, Owner, null);
         }
     }
 }

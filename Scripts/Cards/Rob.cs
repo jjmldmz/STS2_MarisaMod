@@ -52,7 +52,7 @@ namespace marisamod.Scripts.Cards
                 var monsterPos = NCombatRoom.Instance?.GetCreatureNode(cardPlay.Target)?.VfxSpawnPosition;
                 if (monsterPos.HasValue)
                 {
-                    VfxCmd.PlayVfx(monsterPos.Value, "vfx/vfx_coin_explosion_regular");
+                    VfxCmd.PlayVfx(monsterPos.Value, "vfx/vfx_coin_explosion_regular", NCombatRoom.Instance?.CombatVfxContainer);
                 }
             }
         }

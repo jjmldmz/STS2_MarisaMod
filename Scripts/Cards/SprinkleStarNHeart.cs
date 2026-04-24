@@ -31,10 +31,10 @@ public class SprinkleStarNHeart : AbstractAmplifiedCard
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await PowerCmd.Apply<SprinkleStarNHeartPower>(Owner.Creature, 1, Owner.Creature, this);
+        await PowerCmd.Apply<SprinkleStarNHeartPower>(choiceContext, Owner.Creature, 1, Owner.Creature, this);
         if (IsAmplified)
         {
-            await PowerCmd.Apply<StarlitPower>(Owner.Creature, DynamicVars["Power"].IntValue, Owner.Creature, this);
+            await PowerCmd.Apply<StarlitPower>(choiceContext, Owner.Creature, DynamicVars["Power"].IntValue, Owner.Creature, this);
         }
     }
 }

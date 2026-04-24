@@ -17,7 +17,7 @@ public class StarlitEnchantment : AbstractMarisaEnchantment
     {
         if (cardPlay.Card == Card && cardPlay.Resources.EnergySpent > 0)
         {
-            await PowerCmd.Apply<StarlitPower>(Card.Owner.Creature, cardPlay.Resources.EnergySpent, Card.Owner.Creature, Card);
+            await PowerCmd.Apply<StarlitPower>(context, Card.Owner.Creature, cardPlay.Resources.EnergySpent, Card.Owner.Creature, Card);
         }
     }
 }

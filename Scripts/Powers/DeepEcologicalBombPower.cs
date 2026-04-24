@@ -31,11 +31,11 @@ public class DeepEcologicalBombPower : AbstractMarisaPower, ITemporaryPower
         }
         else
         {
-            await PowerCmd.Apply<StrengthPower>(target, -amount, applier, cardSource, silent: true);
+            await PowerCmd.Apply<StrengthPower>(new ThrowingPlayerChoiceContext(), target, -amount, applier, cardSource, silent: true);
         }
     }
 
-    public override async Task AfterPowerAmountChanged(PowerModel power, decimal amount, Creature? applier, CardModel? cardSource)
+    public override async Task AfterPowerAmountChanged(PlayerChoiceContext choiceContext, PowerModel power, decimal amount, Creature? applier, CardModel? cardSource)
     {
         if (amount != Amount && power == this)
         {
@@ -45,7 +45,7 @@ public class DeepEcologicalBombPower : AbstractMarisaPower, ITemporaryPower
             }
             else
             {
-                await PowerCmd.Apply<StrengthPower>(Owner, -amount, applier, cardSource, silent: true);
+                await PowerCmd.Apply<StrengthPower>(choiceContext, Owner, -amount, applier, cardSource, silent: true);
             }
         }
     }
@@ -56,7 +56,7 @@ public class DeepEcologicalBombPower : AbstractMarisaPower, ITemporaryPower
         {
             Flash();
             await PowerCmd.Remove(this);
-            await PowerCmd.Apply<StrengthPower>(Owner, Amount, Owner, null);
+            await PowerCmd.Apply<StrengthPower>(choiceContext, Owner, Amount, Owner, null);
         }
     }
 

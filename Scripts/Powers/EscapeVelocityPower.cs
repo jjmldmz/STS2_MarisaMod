@@ -20,7 +20,7 @@ public class EscapeVelocityPower : AbstractMarisaPower
 
         if (draw > 0)
         {
-            await PowerCmd.Apply<DrawCardsNextTurnPower>(Owner, draw, Owner, null);
+            await PowerCmd.Apply<DrawCardsNextTurnPower>(choiceContext, Owner, draw, Owner, null);
         }
     }
 }

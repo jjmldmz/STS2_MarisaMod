@@ -14,11 +14,14 @@ public class GalacticHalo : AbstractMarisaCard
     {
     }
 
-    protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new BlockVar(12,ValueProp.Move),
-        new DynamicVar("Power",2)
+    protected override IEnumerable<DynamicVar> CanonicalVars =>
+    [
+        new BlockVar(12, ValueProp.Move),
+        new DynamicVar("Power", 2)
     ];
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [
+
+    protected override IEnumerable<IHoverTip> ExtraHoverTips =>
+    [
         HoverTipFactory.FromPower<ChargeUpPower>()
     ];
 
@@ -31,6 +34,6 @@ public class GalacticHalo : AbstractMarisaCard
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, cardPlay);
-        await PowerCmd.Apply<ChargeUpPower>(Owner.Creature, DynamicVars["Power"].BaseValue, Owner.Creature, this);
+        await PowerCmd.Apply<ChargeUpPower>(choiceContext, Owner.Creature, DynamicVars["Power"].BaseValue, Owner.Creature, this);
     }
 }

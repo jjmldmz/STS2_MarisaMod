@@ -33,7 +33,7 @@ namespace marisamod.Scripts.Cards
 
         protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
         {
-            await PowerCmd.Apply<PlatingPower>(Owner.Creature, (int)((CalculatedVar)base.DynamicVars["Power"]).Calculate(cardPlay.Target), Owner.Creature, this);
+            await PowerCmd.Apply<PlatingPower>(choiceContext, Owner.Creature, (int)((CalculatedVar)base.DynamicVars["Power"]).Calculate(cardPlay.Target), Owner.Creature, this);
         }
     }
 }

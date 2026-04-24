@@ -73,7 +73,8 @@ namespace marisamod.Scripts.Cards
             {
                 cards2Add.Add(CombatState!.CreateCard<Burn>(Owner));
             }
-            await CardPileCmd.AddGeneratedCardsToCombat(cards2Add, PileType.Hand, addedByPlayer: true);
+
+            await CardPileCmd.AddGeneratedCardsToCombat(cards2Add, PileType.Hand, Owner);
 
             if (IsAmplified)
             {
