@@ -8,7 +8,8 @@
   "MARISAMOD-HUNGRY_FOR_MUSHROOMS_MARISA.pages.MEDLEY.description": "The [green]medley of mushrooms[/green] looks the most appetizing so you go for that.\n\n[red][jitter]“MY MUSHROOMS!!”[/jitter][/red]\n\nThe adventurer, presumably dead, attacks you! You knock them out, and with a seasoning of guilt, finish the rest of the fine meal.",
   "MARISAMOD-HUNGRY_FOR_MUSHROOMS_MARISA.title": "Hungry for Mushrooms",
   "MARISAMOD-HUNGRY_FOR_MUSHROOMS_MARISA.pages.PACK_THEM_ALL.description": "You packed them all and left.\nAs you hit the road, the mysterious [sine]HUNGER[/sine] gone without a trace.\nYou're pretty sure that you can do much more fantastic things with the mushrooms than merely putting them into your mouth.",
-  "MARISAMOD-HUNGRY_FOR_MUSHROOMS_MARISA.pages.PACK_THEM_ALL.title": "Pack them all",
+  "MARISAMOD-HUNGRY_FOR_MUSHROOMS_MARISA.options.PACK_THEM_ALL.description": "Why choose only one when you can take them all?",
+  "MARISAMOD-HUNGRY_FOR_MUSHROOMS_MARISA.options.PACK_THEM_ALL.title": "Pack them all",
   "MARISAMOD-HUNGRY_FOR_MUSHROOMS_MARISA.options.LOCKED.description": "You are not that greedy.",
   "MARISAMOD-HUNGRY_FOR_MUSHROOMS_MARISA.options.LOCKED.title": "Locked"
 }

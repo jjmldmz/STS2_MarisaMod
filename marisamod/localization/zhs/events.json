@@ -8,7 +8,8 @@
   "MARISAMOD-HUNGRY_FOR_MUSHROOMS_MARISA.pages.MEDLEY.description": "那份[green]蘑菇拼盘[/green]看上去最诱人，于是你直接下了手。\n\n[red][jitter][b]“我的蘑菇！！”[/b][/jitter][/red]\n\n那个本以为已经死透了的冒险者居然跳起来攻击你！你顺手把它放倒。最终，在一抹负罪感调味下，你干掉了剩下的美食。",
   "MARISAMOD-HUNGRY_FOR_MUSHROOMS_MARISA.title": "蘑菇饥渴",
   "MARISAMOD-HUNGRY_FOR_MUSHROOMS_MARISA.pages.PACK_THEM_ALL.description": "你把蘑菇打包然后离开了。\n当你踏上路，神秘的[sine]饥饿[/sine]消失得无影无踪。\n你知道比起把它们放进嘴里，这些蘑菇能用来做更美妙的事情。",
-  "MARISAMOD-HUNGRY_FOR_MUSHROOMS_MARISA.pages.PACK_THEM_ALL.title": "打包带走",
+  "MARISAMOD-HUNGRY_FOR_MUSHROOMS_MARISA.options.PACK_THEM_ALL.description": "小孩子才做选择，我魔理沙全都要！",
+  "MARISAMOD-HUNGRY_FOR_MUSHROOMS_MARISA.options.PACK_THEM_ALL.title": "打包带走",
   "MARISAMOD-HUNGRY_FOR_MUSHROOMS_MARISA.options.LOCKED.description": "你没有那么贪婪。",
   "MARISAMOD-HUNGRY_FOR_MUSHROOMS_MARISA.options.LOCKED.title": "已锁定"
 }

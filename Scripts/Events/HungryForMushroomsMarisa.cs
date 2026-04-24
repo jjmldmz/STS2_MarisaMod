@@ -3,6 +3,8 @@ using marisamod.Scripts.Characters;
 using marisamod.Scripts.Relics;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Events;
+using MegaCrit.Sts2.Core.Helpers;
+using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Models.Relics;
 using MegaCrit.Sts2.Core.Runs;
@@ -16,7 +18,9 @@ public class HungryForMushroomsMarisa : CustomEventModel
         return false;
     }
 
-    public override LocString InitialDescription => L10NLookup("HUNGRY_FOR_MUSHROOMS..pages.INITIAL.description");
+    public override string CustomInitialPortraitPath => ImageHelper.GetImagePath("events/hungry_for_mushrooms.png");
+
+    public override LocString InitialDescription => L10NLookup("HUNGRY_FOR_MUSHROOMS.pages.INITIAL.description");
 
     private async Task BigMushroom()
     {
@@ -35,7 +39,7 @@ public class HungryForMushroomsMarisa : CustomEventModel
         await RelicCmd.Obtain<ShroomBag>(Owner!);
         SetEventFinished(L10NLookup("MARISAMOD-HUNGRY_FOR_MUSHROOMS_MARISA.pages.PACK_THEM_ALL.description"));
     }
-    
+
     private async Task BigShroomBag()
     {
         var relic = Owner!.Relics.FirstOrDefault(x => x is ShroomBag);
@@ -54,11 +58,17 @@ public class HungryForMushroomsMarisa : CustomEventModel
         }
         else if (Owner.Relics.Any(x => x is ShroomBag))
         {
-            option = RelicOption<BigShroomBag>(BigShroomBag);
+            option = new EventOption(this, BigShroomBag, "MARISAMOD-HUNGRY_FOR_MUSHROOMS_MARISA.options.PACK_THEM_ALL",
+                HoverTipFactory.FromRelic<BigShroomBag>()
+            );
+            //option = RelicOption<BigShroomBag>(BigShroomBag);
         }
         else
         {
-            option = RelicOption<ShroomBag>(PackThemAll);
+            option = new EventOption(this, PackThemAll, "MARISAMOD-HUNGRY_FOR_MUSHROOMS_MARISA.options.PACK_THEM_ALL",
+                HoverTipFactory.FromRelic<ShroomBag>()
+            );
+            //option = RelicOption<ShroomBag>(PackThemAll);
         }
 
         return
@@ -68,6 +78,4 @@ public class HungryForMushroomsMarisa : CustomEventModel
             option
         ];
     }
-
-
 }
