@@ -15,6 +15,6 @@ public abstract class AbstractMarisaPotion : CustomPotionModel
 
     protected const string GodotIconPath = "res://icon.svg";
 
-    protected string PotionIconPath => $"res://marisamod/images/cards/{Id.Entry.ToLowerInvariant()}.png";
-    protected string PotionOutlinePath => $"res://marisamod/images/cards/{Id.Entry.ToLowerInvariant()}_outline.png";
+    protected string PotionIconPath => $"res://marisamod/images/potions/{Id.Entry.ToLowerInvariant()}.png";
+    protected string PotionOutlinePath => $"res://marisamod/images/potions/{Id.Entry.ToLowerInvariant()}_outline.png";
 }
