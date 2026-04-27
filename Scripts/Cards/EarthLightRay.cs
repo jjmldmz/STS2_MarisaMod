@@ -29,8 +29,9 @@ public class EarthLightRay : AbstractAmplifiedCard
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
+        await base.OnPlay(choiceContext, cardPlay);
         await CreatureCmd.Heal(Owner.Creature, DynamicVars.Heal.BaseValue);
-        if (IsAmplified && Owner.PlayerCombatState!.DiscardPile.Cards.Count > 0)
+        if (AmplifiedInPlay && Owner.PlayerCombatState!.DiscardPile.Cards.Count > 0)
         {
             if (IsUpgraded)
             {

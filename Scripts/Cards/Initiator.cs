@@ -21,7 +21,8 @@ public class Initiator : AbstractMarisaCard
         new EnergyVar(1)
     ];
 
-    public override IEnumerable<CardKeyword> CanonicalKeywords => [
+    public override IEnumerable<CardKeyword> CanonicalKeywords =>
+    [
         CardKeyword.Exhaust
     ];
 
@@ -48,17 +49,19 @@ public class Initiator : AbstractMarisaCard
                 await CardPileCmd.Add(card, PileType.Hand);
                 if (dmg > 0)
                 {
-                    if (card.DynamicVars.ContainsKey("CalculatedDamage"))
-                    {
-                        card.DynamicVars.CalculationBase.UpgradeValueBy(dmg);
-                    }
-                    else if (card.DynamicVars.ContainsKey("Damage"))
-                    {
-                        card.DynamicVars.Damage.UpgradeValueBy(dmg);
-                    }
+                    // if (card.DynamicVars.ContainsKey("CalculatedDamage"))
+                    // {
+                    //     card.DynamicVars.CalculationBase.UpgradeValueBy(dmg);
+                    // }
+                    // else if (card.DynamicVars.ContainsKey("Damage"))
+                    // {
+                    //     card.DynamicVars.Damage.UpgradeValueBy(dmg);
+                    // }
 
                     if (card is AbstractMarisaCard marisaCard)
                         _ = marisaCard.DoFlash();
+
+                    PowerUp.UpgradeCardDamage(card, dmg);
                 }
             }
         }

@@ -1,5 +1,4 @@
 using marisamod.Scripts.Cards;
-using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Powers;
@@ -20,8 +19,9 @@ public class MagicAndRedDreamPower : AbstractMarisaPower
             return Task.CompletedTask;
 
         _toTrigger = false;
-        if (cardPlay.Card.Type is CardType.Attack && Owner.HasPower<ChargeUpPower>() && Owner.GetPower<ChargeUpPower>()!.CalculateMult() > 1 
-            || cardPlay.Card is AbstractAmplifiedCard { IsAmplified: true })
+        if (cardPlay.Card.Type is CardType.Attack && Owner.HasPower<ChargeUpPower>() && Owner.GetPower<ChargeUpPower>()!.CalculateMult() > 1
+            //|| cardPlay.Card is AbstractAmplifiedCard { IsAmplified: true }
+           )
         {
             _toTrigger = true;
         }
@@ -31,6 +31,11 @@ public class MagicAndRedDreamPower : AbstractMarisaPower
 
     public override async Task AfterCardPlayed(PlayerChoiceContext context, CardPlay cardPlay)
     {
+        if (cardPlay.Card.Owner == Owner.Player && cardPlay.Card is AbstractAmplifiedCard { AmplifiedInPlay: true })
+        {
+            _toTrigger = true;
+        }
+
         if (_toTrigger)
         {
             _toTrigger = false;

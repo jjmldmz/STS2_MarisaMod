@@ -19,7 +19,8 @@ namespace marisamod.Scripts.Cards
 
         protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
         {
-            if (IsAmplified)
+            await base.OnPlay(choiceContext, cardPlay);
+            if (AmplifiedInPlay)
             {
                 List<CardModel> cards =
                 [
@@ -30,6 +31,7 @@ namespace marisamod.Scripts.Cards
                 {
                     CardCmd.Upgrade(cards, CardPreviewStyle.HorizontalLayout);
                 }
+
                 await CardPileCmd.AddGeneratedCardsToCombat(cards, PileType.Hand, Owner);
             }
             else
@@ -43,6 +45,7 @@ namespace marisamod.Scripts.Cards
                 {
                     CardCmd.Upgrade(cards, CardPreviewStyle.HorizontalLayout);
                 }
+
                 var cardModel = await CardSelectCmd.FromChooseACardScreen(choiceContext, cards, Owner, true);
                 if (cardModel != null)
                 {

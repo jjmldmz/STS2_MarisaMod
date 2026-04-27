@@ -33,10 +33,11 @@ public class UnstableBomb : AbstractAmplifiedCard //AbstractMarisaCard
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
+        await base.OnPlay(choiceContext, cardPlay);
         var hit = DynamicVars["RepeatBase"].IntValue +
                   RandomPool.TakeRandom(1, RunState!.Rng.CombatCardSelection).FirstOrDefault();
 
-        hit += IsAmplified ? DynamicVars["RepeatAmp"].IntValue : 0;
+        hit += AmplifiedInPlay ? DynamicVars["RepeatAmp"].IntValue : 0;
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue).WithHitCount(hit).FromCard(this)
             .TargetingRandomOpponents(CombatState!)
             .WithHitFx("vfx/vfx_attack_slash")

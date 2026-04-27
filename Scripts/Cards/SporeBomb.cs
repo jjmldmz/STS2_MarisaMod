@@ -31,7 +31,8 @@ namespace marisamod.Scripts.Cards
 
         protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
         {
-            if (IsAmplified)
+            await base.OnPlay(choiceContext, cardPlay);
+            if (AmplifiedInPlay)
             {
                 foreach (Creature enemy in CombatState!.HittableEnemies)
                 {

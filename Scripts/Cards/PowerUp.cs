@@ -22,17 +22,28 @@ namespace marisamod.Scripts.Cards
         {
             foreach (CardModel card in Owner.PlayerCombatState!.Hand.Cards.Where(x => x.Type == CardType.Attack).ToArray())
             {
-                if (card.DynamicVars.ContainsKey("CalculatedDamage"))
-                {
-                    card.DynamicVars.CalculationBase.UpgradeValueBy(DynamicVars["Add"].BaseValue);
-                }
-                else if (card.DynamicVars.ContainsKey("Damage"))
-                {
-                    card.DynamicVars.Damage.UpgradeValueBy(DynamicVars["Add"].BaseValue);
-                }
+                UpgradeCardDamage(card, DynamicVars["Add"].BaseValue);
             }
 
             return Task.CompletedTask;
+        }
+
+        public static void UpgradeCardDamage(CardModel card,decimal amount)
+        {
+            
+            if (card.DynamicVars.ContainsKey("CalculatedDamage"))
+            {
+                card.DynamicVars.CalculationBase.UpgradeValueBy(amount);
+            }
+            else if (card.DynamicVars.ContainsKey("Damage"))
+            {
+                card.DynamicVars.Damage.UpgradeValueBy(amount);
+            }
+
+            if (card.DynamicVars.ContainsKey("DamageAmplified"))
+            {
+                card.DynamicVars["DamageAmplified"].UpgradeValueBy(amount);
+            }
         }
     }
 }

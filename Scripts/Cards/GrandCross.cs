@@ -25,6 +25,7 @@ public class GrandCross : AbstractMarisaCard
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
+        await base.OnPlay(choiceContext, cardPlay);
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this).Targeting(cardPlay.Target)
             .WithHitFx("vfx/vfx_attack_slash")
@@ -33,7 +34,7 @@ public class GrandCross : AbstractMarisaCard
 
     public override Task BeforeCardPlayed(CardPlay cardPlay)
     {
-        if (cardPlay.Card is AbstractAmplifiedCard { IsAmplified: true } && cardPlay.Card.Owner == Owner)
+        if (cardPlay.Card is AbstractAmplifiedCard { AmplifiedInPlay: true } && cardPlay.Card.Owner == Owner)
         {
             EnergyCost.SetThisTurn(0);
         }

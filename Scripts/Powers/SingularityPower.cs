@@ -12,26 +12,29 @@ namespace marisamod.Scripts.Powers
 
         public override PowerStackType StackType => PowerStackType.Counter;
 
-        public override async Task AfterCardPlayed(PlayerChoiceContext context, CardPlay cardPlay)
+        public override Task AfterCardPlayed(PlayerChoiceContext context, CardPlay cardPlay)
         {
             if (cardPlay.Card.Owner == Owner.Player && cardPlay.Resources.EnergySpent == 0)
             {
                 var card = Owner.Player.PlayerCombatState!.Hand.Cards.Where(x => x.Type == CardType.Attack).TakeRandom(1, Owner.Player.RunState.Rng.CombatCardSelection).FirstOrDefault();
-                if (card != default)
+                if (card != null)
                 {
                     Flash();
                     if (card is AbstractMarisaCard marisaCard)
                         _ = marisaCard.DoFlash();
-                    if (card.DynamicVars.ContainsKey("CalculatedDamage"))
-                    {
-                        card.DynamicVars.CalculationBase.UpgradeValueBy(Amount);
-                    }
-                    else if (card.DynamicVars.ContainsKey("Damage"))
-                    {
-                        card.DynamicVars.Damage.UpgradeValueBy(Amount);
-                    }
+                    // if (card.DynamicVars.ContainsKey("CalculatedDamage"))
+                    // {
+                    //     card.DynamicVars.CalculationBase.UpgradeValueBy(Amount);
+                    // }
+                    // else if (card.DynamicVars.ContainsKey("Damage"))
+                    // {
+                    //     card.DynamicVars.Damage.UpgradeValueBy(Amount);
+                    // }
+                    PowerUp.UpgradeCardDamage(card, Amount);
                 }
             }
+
+            return Task.CompletedTask;
         }
     }
 }

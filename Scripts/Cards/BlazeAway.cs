@@ -43,7 +43,7 @@ namespace marisamod.Scripts.Cards
                 int energyGain = card.EnergyCost.GetWithModifiers(CostModifiers.All);
                 //if (IsUpgraded)
                 {
-                    if (card is AbstractAmplifiedCard amplifiedCard && !amplifiedCard.CostModifiedForAmplify)
+                    if (card is AbstractAmplifiedCard amplifiedCard)
                     {
                         energyGain += amplifiedCard.KickerCost;
                     }

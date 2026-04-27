@@ -25,10 +25,11 @@ public class FairyDestructionRay : AbstractAmplifiedCard
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
+        await base.OnPlay(choiceContext, cardPlay);
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this).TargetingAllOpponents(CombatState!)
             .WithHitFx("vfx/vfx_attack_blunt", null, "heavy_attack.mp3")
             .Execute(choiceContext);
-        if (IsAmplified)
+        if (AmplifiedInPlay)
         {
             foreach (var hittableEnemy in CombatState!.HittableEnemies)
             {

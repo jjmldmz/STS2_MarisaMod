@@ -23,9 +23,10 @@ namespace marisamod.Scripts.Cards
 
         protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
         {
-            decimal amount = await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, cardPlay);
-            if (IsAmplified)
-                await PowerCmd.Apply<BlockNextTurnPower>(choiceContext,Owner.Creature, amount, Owner.Creature, this);
+            await base.OnPlay(choiceContext, cardPlay);
+            var amount = await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, cardPlay);
+            if (AmplifiedInPreview)
+                await PowerCmd.Apply<BlockNextTurnPower>(choiceContext, Owner.Creature, amount, Owner.Creature, this);
         }
 
         protected override void OnUpgrade()

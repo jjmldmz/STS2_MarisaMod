@@ -21,16 +21,20 @@ public class FinalMasterSpark : AbstractAmplifiedCard
     }
 
     protected override IEnumerable<DynamicVar> CanonicalVars => base.CanonicalVars.Concat([
-        new CalculationBaseVar(16m),
-        new ExtraDamageVar(14m),
-        new CalculatedDamageVar(ValueProp.Move).WithMultiplier((card, _) => card is AbstractAmplifiedCard { IsAmplified: true } ? 1 : 0)
+        // new CalculationBaseVar(16m),
+        // new ExtraDamageVar(14m),
+        // new CalculatedDamageVar(ValueProp.Move).WithMultiplier((card, _) => card is AbstractAmplifiedCard { IsAmplified: true } ? 1 : 0)
+        new DamageVar(16m, ValueProp.Move),
+        new DamageVar("DamageAmplified", 30, ValueProp.Move)
     ]);
 
     protected override HashSet<CardTag> CanonicalTags => [MarisaCardTags.Spark];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await DamageCmd.Attack(DynamicVars.CalculatedDamage).FromCard(this).TargetingAllOpponents(CombatState!)
+        await base.OnPlay(choiceContext, cardPlay);
+        var damage = !AmplifiedInPlay ? DynamicVars.Damage : DynamicVars["DamageAmplified"];
+        await DamageCmd.Attack(damage.BaseValue).FromCard(this).TargetingAllOpponents(CombatState!)
             .WithHitFx("vfx/vfx_attack_slash", null, "blunt_attack.mp3").WithAttackerAnim(Owner.Character is MarisaCharacter ? "Spark" : "Cast", 0.3f)
             .BeforeDamage(async delegate
             {
@@ -57,7 +61,9 @@ public class FinalMasterSpark : AbstractAmplifiedCard
 
     protected override void OnUpgrade()
     {
-        DynamicVars.CalculationBase.UpgradeValueBy(6m);
-        DynamicVars.ExtraDamage.UpgradeValueBy(4m);
+        // DynamicVars.CalculationBase.UpgradeValueBy(6m);
+        // DynamicVars.ExtraDamage.UpgradeValueBy(4m);
+        DynamicVars.Damage.UpgradeValueBy(6);
+        DynamicVars["DamageAmplified"].UpgradeValueBy(10);
     }
 }

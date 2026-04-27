@@ -1,9 +1,7 @@
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
-using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
-using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.Nodes.Rooms;
 using MegaCrit.Sts2.Core.ValueProps;
 
@@ -39,6 +37,7 @@ namespace marisamod.Scripts.Cards
 
         protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
         {
+            await base.OnPlay(choiceContext, cardPlay);
             ArgumentNullException.ThrowIfNull(cardPlay.Target);
             var attackCommand = await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this).Targeting(cardPlay.Target)
                 .WithHitFx("vfx/vfx_attack_slash")
@@ -46,7 +45,7 @@ namespace marisamod.Scripts.Cards
             var gain = attackCommand.Results.Sum(r => r.UnblockedDamage);
             if (gain > 0)
             {
-                if (IsAmplified)
+                if (AmplifiedInPlay)
                     gain *= 2;
                 await PlayerCmd.GainGold(gain, Owner);
                 var monsterPos = NCombatRoom.Instance?.GetCreatureNode(cardPlay.Target)?.VfxSpawnPosition;

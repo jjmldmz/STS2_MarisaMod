@@ -17,6 +17,8 @@ namespace marisamod.Scripts.Cards.Colorless
 
         public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Unplayable];
 
+        public override int MaxUpgradeLevel => 0;
+
         public override decimal ModifyPowerAmountGiven(PowerModel power, Creature giver, decimal amount, Creature? target, CardModel? cardSource)
         {
             if (power is ChargeUpPower && target == Owner.Creature && Owner.PlayerCombatState != null && Owner.PlayerCombatState.Hand.Cards.Contains(this))

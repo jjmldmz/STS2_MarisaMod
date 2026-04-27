@@ -15,9 +15,11 @@ namespace marisamod.Scripts.Cards
         }
 
         protected override IEnumerable<DynamicVar> CanonicalVars => base.CanonicalVars.Concat([
-            new CalculationBaseVar(5m),
-            new CalculationExtraVar(2m),
-            new CalculatedVar("Power").WithMultiplier((card, _) => card is AbstractAmplifiedCard { IsAmplified: true } ? 1 : 0),
+            // new CalculationBaseVar(5m),
+            // new CalculationExtraVar(2m),
+            // new CalculatedVar("Power").WithMultiplier((card, _) => card is AbstractAmplifiedCard { IsAmplified: true } ? 1 : 0),
+            new DynamicVar("Power", 5),
+            new DynamicVar("PowerAmplifiedPlus", 2)
         ]);
 
         protected override IEnumerable<IHoverTip> ExtraHoverTips =>
@@ -27,13 +29,18 @@ namespace marisamod.Scripts.Cards
 
         protected override void OnUpgrade()
         {
-            DynamicVars.CalculationExtra.UpgradeValueBy(1);
-            DynamicVars.CalculationBase.UpgradeValueBy(1);
+            // DynamicVars.CalculationExtra.UpgradeValueBy(1);
+            // DynamicVars.CalculationBase.UpgradeValueBy(1);
+            DynamicVars["Power"].UpgradeValueBy(1);
+            DynamicVars["PowerAmplifiedPlus"].UpgradeValueBy(1);
         }
 
         protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
         {
-            await PowerCmd.Apply<PlatingPower>(choiceContext, Owner.Creature, (int)((CalculatedVar)base.DynamicVars["Power"]).Calculate(cardPlay.Target), Owner.Creature, this);
+            await base.OnPlay(choiceContext, cardPlay);
+            var amt = !AmplifiedInPlay ? DynamicVars["Power"].IntValue : DynamicVars["Power"].IntValue + DynamicVars["PowerAmplifiedPlus"].IntValue;
+            await PowerCmd.Apply<PlatingPower>(choiceContext, Owner.Creature, amt //(int)((CalculatedVar)base.DynamicVars["Power"]).Calculate(cardPlay.Target)
+                , Owner.Creature, this);
         }
     }
 }

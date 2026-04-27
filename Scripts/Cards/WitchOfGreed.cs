@@ -27,8 +27,9 @@ namespace marisamod.Scripts.Cards
 
         protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
         {
+            await base.OnPlay(choiceContext, cardPlay);
             await PowerCmd.Apply<RoyaltiesPower>(choiceContext, Owner.Creature, DynamicVars.Gold.BaseValue, Owner.Creature, this);
-            if (IsAmplified)
+            if (AmplifiedInPlay)
             {
                 await PowerCmd.Apply<WitchOfGreedPotionPower>(choiceContext, Owner.Creature, DynamicVars["Potion"].BaseValue, Owner.Creature, this);
             }

@@ -2,6 +2,7 @@ using marisamod.Scripts.Cards;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Relics;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.ValueProps;
 
@@ -13,13 +14,15 @@ namespace marisamod.Scripts.Relics
 
         //private bool _trigger;
 
-        protected override IEnumerable<DynamicVar> CanonicalVars => [
-            new BlockVar(4,ValueProp.Unpowered)
+        protected override IEnumerable<DynamicVar> CanonicalVars =>
+        [
+            new BlockVar(4, ValueProp.Unpowered)
         ];
 
-        public override async Task BeforeCardPlayed(CardPlay cardPlay)
+        //public override async Task BeforeCardPlayed(CardPlay cardPlay)
+        public override async Task AfterCardPlayed(PlayerChoiceContext choiceContext, CardPlay cardPlay)
         {
-            if (cardPlay.Card.Owner == Owner && cardPlay.Card is AbstractAmplifiedCard { IsAmplified: true })
+            if (cardPlay.Card.Owner == Owner && cardPlay.Card is AbstractAmplifiedCard { AmplifiedInPlay: true })
             {
                 //_trigger = true;
                 await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block.BaseValue, ValueProp.Unpowered, null);

@@ -1,8 +1,8 @@
 using marisamod.Scripts.PatchesNModels;
 using marisamod.Scripts.Powers;
+using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
-using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
@@ -13,11 +13,14 @@ namespace marisamod.Scripts.Cards
     {
         public int KickerCost { get; } = kickerCost;
 
-        public bool IsAmplified { get; protected set; }
+        //public bool IsAmplified { get; protected set; }
+        public bool AmplifiedInPreview;
 
-        private bool _costModifiedForAmplify;
+        public bool AmplifiedInPlay;
 
-        public bool CostModifiedForAmplify => _costModifiedForAmplify;
+        //private bool _costModifiedForAmplify;
+
+        //public bool CostModifiedForAmplify => _costModifiedForAmplify;
 
         protected override IEnumerable<DynamicVar> CanonicalVars =>
         [
@@ -29,7 +32,24 @@ namespace marisamod.Scripts.Cards
             MarisaCardKeyWords.Amplify
         ];
 
-        protected override bool ShouldGlowGoldInternal => IsAmplified;
+        protected override bool ShouldGlowGoldInternal => AmplifiedInPreview; //IsAmplified;
+
+        protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
+        {
+            AmplifiedInPlay = false;
+            if (Owner.Creature.HasPower<OneTimeOffPower>())
+            {
+            }
+            else if (cardPlay.IsAutoPlay || Owner.Creature.HasPower<MillisecondPulsarsPower>() || Owner.Creature.HasPower<PulseMagicPower>())
+            {
+                AmplifiedInPlay = true;
+            }
+            else if (Owner.PlayerCombatState?.Energy >= KickerCost)
+            {
+                AmplifiedInPlay = true;
+                await PlayerCmd.LoseEnergy(DynamicVars.Energy.BaseValue, Owner);
+            }
+        }
 
         // public override IEnumerable<CardKeyword> CanonicalKeywords => [
         //     MarisaCardKeyWords.Amplify
@@ -70,18 +90,19 @@ namespace marisamod.Scripts.Cards
 
         private void SetAmplifyState(bool isAmplified, bool costFree)
         {
-            IsAmplified = isAmplified;
-            if (isAmplified && !costFree && !_costModifiedForAmplify)
-            {
-                EnergyCost.AddThisCombat(KickerCost);
-                _costModifiedForAmplify = true;
-            }
-
-            if (!isAmplified && _costModifiedForAmplify || costFree && _costModifiedForAmplify)
-            {
-                EnergyCost.AddThisCombat(-KickerCost);
-                _costModifiedForAmplify = false;
-            }
+            AmplifiedInPreview = isAmplified;
+            //IsAmplified = isAmplified;
+            // if (isAmplified && !costFree && !_costModifiedForAmplify)
+            // {
+            //     EnergyCost.AddThisCombat(KickerCost);
+            //     _costModifiedForAmplify = true;
+            // }
+            //
+            // if (!isAmplified && _costModifiedForAmplify || costFree && _costModifiedForAmplify)
+            // {
+            //     EnergyCost.AddThisCombat(-KickerCost);
+            //     _costModifiedForAmplify = false;
+            // }
             //TODO CardText update
         }
 
@@ -116,14 +137,14 @@ namespace marisamod.Scripts.Cards
         //     ValidateAmplify();
         //     return Task.CompletedTask;
         // }
-        
+
         public override Task BeforeCardAutoPlayed(CardModel card, Creature? target, AutoPlayType type)
         {
             if (card == this)
             {
                 SetAmplifyState(true, true);
             }
-        
+
             return Task.CompletedTask;
         }
     }

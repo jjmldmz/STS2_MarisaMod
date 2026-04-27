@@ -12,32 +12,40 @@ namespace marisamod.Scripts.Cards
 {
     public class ShootTheMoon : AbstractAmplifiedCard
     {
-        public ShootTheMoon() : base(1, 1, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy) { }
+        public ShootTheMoon() : base(1, 1, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy)
+        {
+        }
 
 
         protected override IEnumerable<DynamicVar> CanonicalVars => base.CanonicalVars.Concat([
-            new CalculationBaseVar(8m),
-            new ExtraDamageVar(5m),
-            new CalculatedDamageVar(ValueProp.Move).WithMultiplier((card, _) => card is AbstractAmplifiedCard { IsAmplified: true } ? 1 : 0)
-            ]);
+            // new CalculationBaseVar(8m),
+            // new ExtraDamageVar(5m),
+            // new CalculatedDamageVar(ValueProp.Move).WithMultiplier((card, _) => card is AbstractAmplifiedCard { IsAmplified: true } ? 1 : 0)
+            new DamageVar(8, ValueProp.Move),
+            new DamageVar("DamageAmplified", 12, ValueProp.Move)
+        ]);
 
         protected override void OnUpgrade()
         {
-            DynamicVars.CalculationBase.UpgradeValueBy(3);
-            DynamicVars.ExtraDamage.UpgradeValueBy(2);
+            // DynamicVars.CalculationBase.UpgradeValueBy(3);
+            // DynamicVars.ExtraDamage.UpgradeValueBy(2);
+            DynamicVars.Damage.UpgradeValueBy(3);
+            DynamicVars["DamageAmplified"].UpgradeValueBy(5);
         }
 
 
         protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
         {
+            await base.OnPlay(choiceContext, cardPlay);
             ArgumentNullException.ThrowIfNull(cardPlay.Target);
-            await DamageCmd.Attack(DynamicVars.CalculatedDamage).FromCard(this).Targeting(cardPlay.Target)
+            var damage = AmplifiedInPlay ? DynamicVars["DamageAmplified"].BaseValue : DynamicVars.Damage.BaseValue;
+            await DamageCmd.Attack(damage).FromCard(this).Targeting(cardPlay.Target)
                 .WithHitFx("vfx/vfx_attack_slash")
                 .Execute(choiceContext);
 
             if (Owner.RunState.CurrentRoom!.RoomType != MegaCrit.Sts2.Core.Rooms.RoomType.Boss)
             {
-                if (IsAmplified)
+                if (AmplifiedInPlay)
                 {
                     foreach (PowerModel item in cardPlay.Target.Powers.Where(x => x.Type == PowerType.Buff).ToArray())
                     {

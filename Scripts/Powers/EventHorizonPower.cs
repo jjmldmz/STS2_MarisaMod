@@ -14,13 +14,14 @@ public class EventHorizonPower : AbstractMarisaPower
     public override PowerStackType StackType => PowerStackType.Counter;
 
     private int _triggerCounterForTurn;
-    private bool _triggerFlag;
+    // private bool _triggerFlag;
 
     public override async Task AfterCardPlayed(PlayerChoiceContext context, CardPlay cardPlay)
     {
-        if (_triggerFlag)
+        //if (_triggerFlag)
+        if (cardPlay.Card is AbstractAmplifiedCard { AmplifiedInPlay: true } && cardPlay.Card.Owner == Owner.Player && _triggerCounterForTurn < Amount)
         {
-            _triggerFlag = false;
+            //_triggerFlag = false;
             var cards = PileType.Discard.GetPile(Owner.Player!).Cards.Where(c => c.Type == CardType.Attack).ToArray();
             if (cards.Length > 0)
             {
@@ -35,19 +36,19 @@ public class EventHorizonPower : AbstractMarisaPower
         }
     }
 
-    public override Task BeforeCardPlayed(CardPlay cardPlay)
-    {
-        if (cardPlay.Card is not AbstractAmplifiedCard { IsAmplified: true } || _triggerCounterForTurn >= Amount) return Task.CompletedTask;
-        _triggerCounterForTurn++;
-        _triggerFlag = true;
-        return Task.CompletedTask;
-    }
+    // public override Task BeforeCardPlayed(CardPlay cardPlay)
+    // {
+    //     if (cardPlay.Card is not AbstractAmplifiedCard { AmplifiedInPlay: true } || _triggerCounterForTurn >= Amount) return Task.CompletedTask;
+    //     _triggerCounterForTurn++;
+    //     _triggerFlag = true;
+    //     return Task.CompletedTask;
+    // }
 
     public override Task AfterPlayerTurnStart(PlayerChoiceContext choiceContext, Player player)
     {
         if (player != Owner.Player) return Task.CompletedTask;
         _triggerCounterForTurn = 0;
-        _triggerFlag = false;
+        //_triggerFlag = false;
         return Task.CompletedTask;
     }
 }

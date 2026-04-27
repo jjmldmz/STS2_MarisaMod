@@ -64,6 +64,7 @@ namespace marisamod.Scripts.Cards
 
         protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
         {
+            await base.OnPlay(choiceContext, cardPlay);
             ArgumentNullException.ThrowIfNull(cardPlay.Target);
             await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this).Targeting(cardPlay.Target)
                 .WithHitFx("vfx/vfx_attack_slash")
@@ -76,7 +77,7 @@ namespace marisamod.Scripts.Cards
 
             await CardPileCmd.AddGeneratedCardsToCombat(cards2Add, PileType.Hand, Owner);
 
-            if (IsAmplified)
+            if (AmplifiedInPlay)
             {
                 //AddKeyword(CardKeyword.Exhaust);
                 await CreatureCmd.Stun(cardPlay.Target);

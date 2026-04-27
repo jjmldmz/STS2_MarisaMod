@@ -15,10 +15,12 @@ namespace marisamod.Scripts.Cards
         }
 
         public override bool GainsBlock => true;
-        protected override IEnumerable<DynamicVar> CanonicalVars => [
+
+        protected override IEnumerable<DynamicVar> CanonicalVars =>
+        [
             new BlockVar(5m, ValueProp.Move),
-        new DynamicVar("Add",1)
-            ];
+            new DynamicVar("Add", 1)
+        ];
 
         protected override void OnUpgrade()
         {
@@ -36,14 +38,15 @@ namespace marisamod.Scripts.Cards
             {
                 //Hook.ModifyDamage(base.Owner.RunState, base.Owner.Creature.CombatState, null, base.Owner.Creature, DynamicVars["Add"].BaseValue, ValueProp.Move, card, ModifyDamageHookType.All, CardPreviewMode.None, out IEnumerable<AbstractModel> _);
 
-                if (card.DynamicVars.ContainsKey("CalculatedDamage"))
-                {
-                    card.DynamicVars.CalculationBase.UpgradeValueBy(DynamicVars["Add"].BaseValue);
-                }
-                else if (card.DynamicVars.ContainsKey("Damage"))
-                {
-                    card.DynamicVars.Damage.UpgradeValueBy(DynamicVars["Add"].BaseValue);
-                }
+                // if (card.DynamicVars.ContainsKey("CalculatedDamage"))
+                // {
+                //     card.DynamicVars.CalculationBase.UpgradeValueBy(DynamicVars["Add"].BaseValue);
+                // }
+                // else if (card.DynamicVars.ContainsKey("Damage"))
+                // {
+                //     card.DynamicVars.Damage.UpgradeValueBy(DynamicVars["Add"].BaseValue);
+                // }
+                PowerUp.UpgradeCardDamage(card, DynamicVars["Add"].BaseValue);
             }
         }
     }

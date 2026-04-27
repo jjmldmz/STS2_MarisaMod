@@ -31,8 +31,9 @@ namespace marisamod.Scripts.Cards
 
         protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
         {
+            await base.OnPlay(choiceContext, cardPlay);
             ArgumentNullException.ThrowIfNull(cardPlay.Target);
-            var repeat = IsAmplified ? DynamicVars.Repeat.IntValue : 1;
+            var repeat = AmplifiedInPlay ? DynamicVars.Repeat.IntValue : 1;
             //await DamageCmd.Attack(DynamicVars.CalculatedDamage).FromCard(this).Targeting(cardPlay.Target)
             await DamageCmd.Attack(DynamicVars.Damage.BaseValue).WithHitCount(repeat).FromCard(this).Targeting(cardPlay.Target)
                 .WithHitFx("vfx/vfx_attack_slash")
