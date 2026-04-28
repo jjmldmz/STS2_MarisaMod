@@ -69,13 +69,13 @@ public class ShroomBrew : AbstractMarisaPotion
         }
     }
 
-    protected override string GetImagePath()
-    {
-        return GodotIconPath;
-    }
-
-    protected override string GetOutlinePath()
-    {
-        return GodotIconPath;
-    }
+    // protected override string GetImagePath()
+    // {
+    //     return GodotIconPath;
+    // }
+    //
+    // protected override string GetOutlinePath()
+    // {
+    //     return GodotIconPath;
+    // }
 }

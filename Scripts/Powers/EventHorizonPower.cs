@@ -21,6 +21,7 @@ public class EventHorizonPower : AbstractMarisaPower
         //if (_triggerFlag)
         if (cardPlay.Card is AbstractAmplifiedCard { AmplifiedInPlay: true } && cardPlay.Card.Owner == Owner.Player && _triggerCounterForTurn < Amount)
         {
+            _triggerCounterForTurn++;
             //_triggerFlag = false;
             var cards = PileType.Discard.GetPile(Owner.Player!).Cards.Where(c => c.Type == CardType.Attack).ToArray();
             if (cards.Length > 0)

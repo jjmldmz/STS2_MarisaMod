@@ -26,13 +26,13 @@ public class BottledSpark : AbstractMarisaPotion
             await Spark.CreateInHand(Owner, DynamicVars.Cards.IntValue, Owner.Creature.CombatState);
     }
 
-    protected override string GetImagePath()
-    {
-        return PotionIconPath;
-    }
-
-    protected override string GetOutlinePath()
-    {
-        return PotionOutlinePath;
-    }
+    // protected override string GetImagePath()
+    // {
+    //     return PotionIconPath;
+    // }
+    //
+    // protected override string GetOutlinePath()
+    // {
+    //     return PotionOutlinePath;
+    // }
 }

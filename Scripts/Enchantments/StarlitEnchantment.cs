@@ -8,16 +8,29 @@ namespace marisamod.Scripts.Enchantments;
 
 public class StarlitEnchantment : AbstractMarisaEnchantment
 {
+    public decimal AmplifyCost = 0;
+
     public override bool CanEnchant(CardModel card)
     {
         return card.Enchantment == null && !card.Keywords.Contains(CardKeyword.Unplayable);
+    }
+
+    public override Task BeforeCardPlayed(CardPlay cardPlay)
+    {
+        if (cardPlay.Card == Card)
+        {
+            AmplifyCost = 0;
+        }
+
+        return Task.CompletedTask;
     }
 
     public override async Task AfterCardPlayed(PlayerChoiceContext context, CardPlay cardPlay)
     {
         if (cardPlay.Card == Card && cardPlay.Resources.EnergySpent > 0)
         {
-            await PowerCmd.Apply<StarlitPower>(context, Card.Owner.Creature, cardPlay.Resources.EnergySpent, Card.Owner.Creature, Card);
+            var amt = AmplifyCost + cardPlay.Resources.EnergySpent;
+            await PowerCmd.Apply<StarlitPower>(context, Card.Owner.Creature, amt, Card.Owner.Creature, Card);
         }
     }
 }

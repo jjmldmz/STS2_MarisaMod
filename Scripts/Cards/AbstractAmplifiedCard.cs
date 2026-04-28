@@ -1,3 +1,4 @@
+using marisamod.Scripts.Enchantments;
 using marisamod.Scripts.PatchesNModels;
 using marisamod.Scripts.Powers;
 using MegaCrit.Sts2.Core.Commands;
@@ -47,6 +48,11 @@ namespace marisamod.Scripts.Cards
             else if (Owner.PlayerCombatState?.Energy >= KickerCost)
             {
                 AmplifiedInPlay = true;
+                if (Enchantment is StarlitEnchantment enchantment)
+                {
+                    enchantment.AmplifyCost = DynamicVars.Energy.BaseValue;
+                }
+
                 await PlayerCmd.LoseEnergy(DynamicVars.Energy.BaseValue, Owner);
             }
         }

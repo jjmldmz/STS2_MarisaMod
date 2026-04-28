@@ -25,13 +25,13 @@ public class LoveColouredPotion : AbstractMarisaPotion
         await PowerCmd.Apply<ChargeUpPower>(choiceContext, target, DynamicVars["Power"].IntValue, Owner.Creature, null);
     }
 
-    protected override string GetImagePath()
-    {
-        return GodotIconPath;
-    }
-
-    protected override string GetOutlinePath()
-    {
-        return GodotIconPath;
-    }
+    // protected override string GetImagePath()
+    // {
+    //     return PotionIconPath;
+    // }
+    //
+    // protected override string GetOutlinePath()
+    // {
+    //     return PotionOutlinePath;
+    // }
 }
