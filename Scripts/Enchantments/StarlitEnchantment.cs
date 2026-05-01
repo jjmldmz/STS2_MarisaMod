@@ -27,9 +27,9 @@ public class StarlitEnchantment : AbstractMarisaEnchantment
 
     public override async Task AfterCardPlayed(PlayerChoiceContext context, CardPlay cardPlay)
     {
-        if (cardPlay.Card == Card && cardPlay.Resources.EnergySpent > 0)
+        var amt = AmplifyCost + cardPlay.Resources.EnergySpent;
+        if (cardPlay.Card == Card && amt > 0)
         {
-            var amt = AmplifyCost + cardPlay.Resources.EnergySpent;
             await PowerCmd.Apply<StarlitPower>(context, Card.Owner.Creature, amt, Card.Owner.Creature, Card);
         }
     }

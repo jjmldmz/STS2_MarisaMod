@@ -9,13 +9,13 @@ namespace marisamod.Scripts.Cards;
 
 public class CollectingQuirk : AbstractMarisaCard
 {
-    public CollectingQuirk() : base(2, CardType.Attack, CardRarity.Rare, TargetType.RandomEnemy)
+    public CollectingQuirk() : base(1, CardType.Attack, CardRarity.Rare, TargetType.RandomEnemy)
     {
     }
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new DamageVar(9m, ValueProp.Move),
+        new DamageVar(5m, ValueProp.Move),
         new DynamicVar("Div", 4),
         new CalculationBaseVar(0),
         new CalculationExtraVar(1m),

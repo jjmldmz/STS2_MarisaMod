@@ -28,7 +28,8 @@ public class ViolentTricholoma : AbstractMarisaCard
 
     protected override void OnUpgrade()
     {
-        DynamicVars["ChargeUpPower"].UpgradeValueBy(2);
+        //DynamicVars["ChargeUpPower"].UpgradeValueBy(2);
+        DynamicVars.Cards.UpgradeValueBy(1);
     }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
