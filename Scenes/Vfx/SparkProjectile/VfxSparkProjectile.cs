@@ -1,8 +1,7 @@
-using System;
 using Godot;
-using marisamod.Scripts.Cards;
 using MegaCrit.Sts2.Core.Logging;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Nodes.Cards;
 using MegaCrit.Sts2.Core.Nodes.Combat;
 using MegaCrit.Sts2.Core.Nodes.Rooms;
 
@@ -15,62 +14,33 @@ public partial class VfxSparkProjectile : Node2D
     #region 公开属性
     public Vector2 Velocity = Vector2.Zero;
     public NCreature? PlayerOwner;//发射它的玩家
-    public ISparkCard CardOwner;
-
-    public float TimeLeft //动画总时间
-    {
-        get
-        {
-            if (NoIdle)
-                return ChaseDuration;
-            else
-                return DampingDuration + ChaseDuration;
-            
-        }
-    }
+    public Vector2? Target;//目标
+    public float VfxTime => NoIdle ? _chaseDuration : _chaseDuration + _dampingDuration;
     public bool NoIdle = false;//减速结束后是否直接射向目标
+    public NCard? TargetCard = null;
     #endregion
     
-    #region 动画参数
-    //初始速度，用于参考,依据窗口初始化
+    #region AnimationParament
     private float _startSpeed = 50f;
-    //减速阶段参数
     private float _dampingAcceleration = 0.9f;
-    public const float DampingDuration = 0.6f;
-    //漫游阶段
-    private float _orbitPhase = Mathf.Tau;
-    private float _orbitSpeed = 1f;
-    private float _ellipseRotation = Mathf.Tau;
-    private float _ellipseRotationSpeed = 0.2f;
-    private float _majorRadius;
-    private float _minorRadius;
-    //追踪阶段
-    public const float ChaseDuration = 0.15f;
-    private Vector2? _target;//目标
-    //淡出
-    private const float FadingDuration = 1f;
+    private float _dampingDuration = 0.15f;
+    private float _chaseDuration = 0.15f;
+    private float _chasingSpeedMixMin = 0.4f;
+    private float _chasingDirMixMin = 0.4f;
+    const float FadingDuration = 1f;
     #endregion
-    
-    #region 状态
-
-    private enum ProjectileState
+    public void SetAnimationParament(float dampingDuration = 0.15f,float chaseDuration = 0.15f,float chasingSpeedMixMin = 0.4f,float chasingDirMixMin = 0.4f)
     {
-        Damping,    // 减速阶段：发射后逐渐减速
-        Idle,       // 待机阶段：接近静止状态，等待触发
-        Wandering,  // 随机漫游阶段：触发被取消，环绕玩家游走
-        Chasing,    // 追踪阶段：向目标移动
-        FadingOut   // 淡出阶段：生命周期结束
+        _dampingDuration =  dampingDuration;
+        _chaseDuration = chaseDuration;
+        _chasingSpeedMixMin = chasingSpeedMixMin;
+        _chasingDirMixMin = chasingDirMixMin;
     }
-    private ProjectileState _state = ProjectileState.Damping;
-    #endregion
-
-    #region 子节点与材质缓存
-
+    #region ChildNode and Material
     private Trail? _trail;
     public Trail Trail => _trail ??= GetNode<Trail>("trail");
     private ShaderMaterial? _trailShader;
     private ShaderMaterial TrailShader => _trailShader ??= (ShaderMaterial)Trail.Material;
-
     private MeshInstance2D? _slug;
     public MeshInstance2D Slug => _slug ??= GetNode<MeshInstance2D>("slug");
     private ShaderMaterial? _slugShader;
@@ -78,19 +48,28 @@ public partial class VfxSparkProjectile : Node2D
     private GpuParticles2D? _particles;
     public GpuParticles2D Particles => _particles ??= GetNode<GpuParticles2D>("particles");
     private ParticleProcessMaterial? _particleProcess;
-
     public ParticleProcessMaterial ParticleProcess =>
         _particleProcess ??= (ParticleProcessMaterial)Particles.ProcessMaterial;
-
+    #endregion
+        
+    #region State
+    private enum ProjectileState
+    {
+        Damping,    // 减速阶段：发射后逐渐减速
+        Idle,       // 待机阶段：接近静止状态，等待触发
+        Chasing,    // 追踪阶段：向目标移动
+        FadingOut   // 淡出阶段：生命周期结束
+    }
+    private ProjectileState _state = ProjectileState.Damping;
     #endregion
 
-    #region 状态计时
+    #region State Time Counter
     private float _dampingTimeLeft;
     private float _chaseTimeLeft;
     private float _fadeTimeLeft;
     #endregion
     
-    #region 状态逻辑
+    #region State update
     private void ResetShader()
     {
         SlugShader.SetShaderParameter("visible", 1.0);
@@ -101,7 +80,7 @@ public partial class VfxSparkProjectile : Node2D
         Log.Info($"start damping");
         if (_state == ProjectileState.FadingOut) ResetShader();
         _state =  ProjectileState.Damping; 
-        _dampingTimeLeft = DampingDuration;
+        _dampingTimeLeft = _dampingDuration;
     }
     private void UpdateDamping(double delta)
     {
@@ -148,75 +127,29 @@ public partial class VfxSparkProjectile : Node2D
             Trail.LifeTimeOverwrite = 0.0001f;
 
     }
-    public void StartWandering()
-    {
-        Log.Info($"start wandering");
-        if (_state == ProjectileState.FadingOut) ResetShader();
-        _state = ProjectileState.Wandering;
-        Trail.LifeTimeOverwrite = -1;
-        Trail.CleanTrail();
-    }
-    private void UpdateWandering(float delta)
-    {
-        if (PlayerOwner == null)
-            return;
-
-        Vector2 center = PlayerOwner.VfxSpawnPosition;
-
-        _orbitPhase += _orbitSpeed * delta;
-        _ellipseRotation += _ellipseRotationSpeed * delta;
-
-        // 椭圆上的局部点
-        Vector2 localTarget = new Vector2(
-            Mathf.Cos(_orbitPhase) * _majorRadius,
-            Mathf.Sin(_orbitPhase) * _minorRadius
-        );
-
-        // 整个椭圆旋转
-        Vector2 targetPos = center + localTarget.Rotated(_ellipseRotation);
-
-        Vector2 toTarget = targetPos - Position;
-        float dist = toTarget.Length();
-        
-        float desiredSpeed = Mathf.Lerp(
-            0.35f * _startSpeed,
-            0.85f * _startSpeed,
-            Mathf.Clamp(dist / 80f, 0f, 1f)
-        );
-        if (toTarget.Length() <= desiredSpeed)
-        {
-            Velocity = toTarget;
-        }
-        else
-        {
-            Vector2 desiredVelocity = toTarget.Normalized() * desiredSpeed;
-            float steering = 4.0f;
-            Velocity = Velocity.Lerp(desiredVelocity, steering * delta);
-        }
-
-    }
 
     public void StartChasing(Vector2? target = null)
     {
         Log.Info($"start chasing");
         if (_state == ProjectileState.FadingOut) ResetShader();
-        if (target != null)
-            _target = target;
-        _state = ProjectileState.Chasing;
-        _chaseTimeLeft =  ChaseDuration;
+        //if (_state == ProjectileState.Idle)Trail.CleanTrail();
         Trail.CleanTrail();
+        if (target != null)
+            Target = target;
+        _state = ProjectileState.Chasing;
+        _chaseTimeLeft =  _chaseDuration;
         Particles.Emitting = true;
         Trail.LifeTimeOverwrite = -1;
     }
     private void UpdateChasing(double delta)
     {
-        if (_target == null)
+        if (Target == null)
         {
             StartFading();
             return;
         }
 
-        Vector2 target = (Vector2)_target;
+        Vector2 target = (Vector2)Target;
         float deltaF = (float)delta;
         _chaseTimeLeft -= deltaF;
         
@@ -244,7 +177,7 @@ public partial class VfxSparkProjectile : Node2D
         float oldSpeed = Velocity.Length();
         
         // 速度混合：progress 0→1，时间从 ChaseDuration 到 0
-        float progress = 1f - Mathf.Min(1f, _chaseTimeLeft / ChaseDuration);
+        float progress = 1f - Mathf.Min(1f, _chaseTimeLeft / _chaseDuration);
         float speedMix = Mathf.Clamp(progress + 0.4f, 0f, 1f);
         targetSpeed = Mathf.Lerp(oldSpeed, targetSpeed, speedMix);
         targetVelocity = targetVelocity.Normalized() * targetSpeed;
@@ -277,6 +210,17 @@ public partial class VfxSparkProjectile : Node2D
     #endregion
     
     #region 更新函数
+
+    private void UpdateCardTarget()
+    {
+        if (TargetCard == null)
+            return;
+        Vector2? local =
+            NCombatRoom.Instance?.CombatVfxContainer.GetGlobalTransformWithCanvas().AffineInverse() *
+            TargetCard.GetGlobalTransformWithCanvas().Origin;
+        if (local != null)
+            Target = local.Value;
+    }
     private void UpdateTrailParticles(Vector2 displacement)
     {
         if (_state != ProjectileState.Chasing)
@@ -316,14 +260,10 @@ public partial class VfxSparkProjectile : Node2D
             case ProjectileState.Chasing:
                 UpdateChasing(delta);
                 break;
-            case ProjectileState.Wandering:
-                UpdateWandering((float)delta);
-                break;
             case ProjectileState.FadingOut:
                 UpdateFading(delta);
                 break;
         }
-        
         // 更新位置和拖尾粒子（仅在移动状态）
         if (_state != ProjectileState.FadingOut)
         {
@@ -337,94 +277,76 @@ public partial class VfxSparkProjectile : Node2D
     #endregion
     public override void _Process(double delta)
     {
+        UpdateCardTarget();
         UpdateMovement(delta);
     }
-    
+
+
     public void SetColor(Vector4 color)
     {
         SlugShader.SetShaderParameter("spark_color", color);
         TrailShader.SetShaderParameter("spark_color", color);
     }
-    public void ApplySize(float scale)
+
+    public void ApplySize(float scale)//初始scale不是1
     {
         Slug.Scale *= scale;
         Trail.Scale *= scale;
     }
-    public void VelocityInit(Vector2? target = null)
+    public void ApplySizeFromDamage(int damage)//初始scale不是1
+    {
+        float damageCut = Mathf.Clamp(damage,2f, 128f);
+        float scale = Mathf.Log(damageCut) / Mathf.Log(8);
+        ApplySize(scale);
+    }
+
+    public void VelocityInit(float dir = 0)
     {
         Vector2 containerSize = NCombatRoom.Instance?.CombatVfxContainer.Size ?? new Vector2(1,640);
         float baseScale = containerSize.Y;
-        float dampingDistance = 0.15f * baseScale;//减速距离为0.15个屏幕宽度
+        float dampingDistance = 0.2f * baseScale;
         
-        float speed = 2.0f* dampingDistance / DampingDuration;
+        float speed = 2.0f* dampingDistance / _dampingDuration;
         _startSpeed = speed;
-        _dampingAcceleration = _startSpeed/DampingDuration;
+        _dampingAcceleration = _startSpeed/_dampingDuration;
         
-        //随机化方向
-        float dir = 0;
-        if (target.HasValue)
-        {
-            dir = (target.Value - Position).Angle();
-        }
         dir += -0.4f * Mathf.Pi + 0.8f * Mathf.Pi * GD.Randf();
         
         Velocity = speed * Vector2.FromAngle(dir);
-        
-        //设定漫游参数
-        _majorRadius = baseScale * 0.2f *(float)GD.RandRange(1f, 1.25f);
-        _minorRadius = baseScale * 0.1f*(float)GD.RandRange(0.8f, 1f);
-        _orbitPhase *= GD.Randf();
-        _ellipseRotation *= GD.Randf();
-        _orbitSpeed = (float)GD.RandRange(1.4f, 1.8f);
-        _ellipseRotationSpeed = (float)GD.RandRange(0.1f, 0.3f);
-        if (GD.Randf() < 0.5f)
-            _ellipseRotationSpeed *= -1;
+        Velocity *= (float)GD.RandRange(0.95f,1.05f);
     }
     
-    //一共三种情况create，从手牌拖动预生成，直接打出牌，单纯装饰火花。
-    
-    //单纯生成火花。
     public static VfxSparkProjectile Create()
     {
         VfxSparkProjectile instance = GD.Load<PackedScene>(ScenePath)
             .Instantiate<VfxSparkProjectile>();
-        
         return instance;
     }
-    //为卡牌生成火花。初始化速度。
-    public static VfxSparkProjectile? Create(ISparkCard card)
+    
+    public static VfxSparkProjectile Create(NCreature player, Vector4 color)
     {
-        if (card is not AbstractMarisaCard marisaCard)
-        {
-            //TODO:日志
-            return null;
-        }
-        NCreature? player = marisaCard.Owner.Creature.GetCreatureNode();
-        if (player == null)
-        {
-            //TODO:日志
-            return null;
-        }
         VfxSparkProjectile vfx = Create();
-        vfx.SetColor(card.SparkColor);
+        vfx.SetColor(color);
         vfx.Position = player.VfxSpawnPosition;
         vfx.PlayerOwner= player;
-        vfx.CardOwner = card;
         vfx.VelocityInit();
         vfx.StartDamping();
         return vfx;
     }
-    //生成后直接射向目标
-    public static VfxSparkProjectile? Create(ISparkCard card,NCreature target)
+    public static VfxSparkProjectile Create(CardModel card, Vector4 color)
     {
-        VfxSparkProjectile? vfx = Create(card);
-        if (vfx == null)
-        {
-            //TODO:
-            return null;
-        }
-        vfx._target = target.VfxSpawnPosition;
+        NCreature player = card.Owner.Creature.GetCreatureNode();
+        //if (player == null ) 
+        VfxSparkProjectile vfx = Create(player, color);
+        vfx.ApplySizeFromDamage(card.DynamicVars.Damage.IntValue);
+        return vfx;
+    }
+    public static VfxSparkProjectile Create(CardModel card,Vector4 color,NCreature target)
+    {
+        VfxSparkProjectile vfx = Create(card,color);
+        vfx.Target = target.VfxSpawnPosition;
         vfx.NoIdle = true;
         return vfx;
     }
+    
 }

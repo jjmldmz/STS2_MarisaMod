@@ -9,10 +9,10 @@ public partial class Trail : MeshInstance2D
         public float Time;
     }
 
-    public float Lifetime = 0.5f;
-    public float BaseWidth = 1f;
-    public float MinDistance = 1f;
-    public int InterpolationPerSegment = 4;
+    [Export] public float Lifetime = 0.4f;
+    [Export] public float BaseWidth = 1f;
+    [Export] public float MinDistance = 10f;
+    [Export] public int InterpolationPerSegment = 3;
 
     public float LifeTimeOverwrite = -1;//大于0时代替Lifetime来影响尾迹点更新
     private readonly List<TrailPoint> _points = [];
@@ -44,76 +44,10 @@ public partial class Trail : MeshInstance2D
             return;
         }
     }
-
-    private ArrayMesh CalculateMesh(List<Vector2> smoothPoints,List<float> lengths,float totalLength)
-    {
-        // 构建mesh
-        var verts = new List<Vector2>();
-        var uvs = new List<Vector2>();
-        var indices = new List<int>();
-
-        for (int i = 0; i < smoothPoints.Count; i++)
-        {
-            Vector2 p = smoothPoints[i];
-            // 方向
-            Vector2 dir;
-            if (i == 0)
-                dir = (smoothPoints[i + 1] - p).Normalized();
-            else if (i == smoothPoints.Count - 1)
-                dir = (p - smoothPoints[i - 1]).Normalized();
-            else
-                dir = (smoothPoints[i + 1] - smoothPoints[i - 1]).Normalized();
-
-            Vector2 normal = new Vector2(-dir.Y, dir.X);
-
-            // 时间映射（用原始点时间）
-            float t =i/(float)smoothPoints.Count;
-
-            float width = BaseWidth * Mathf.Pow(t, 0.5f);
-
-            Vector2 left = p - normal * width;
-            Vector2 right = p + normal * width;
-
-            verts.Add(left);
-            verts.Add(right);
-
-            float u = lengths[i] / totalLength;
-
-            uvs.Add(new Vector2(u, 0));
-            uvs.Add(new Vector2(u, 1));
-        }
-
-        // 索引
-        for (int i = 0; i < smoothPoints.Count - 1; i++)
-        {
-            int idx = i * 2;
-
-            indices.Add(idx);
-            indices.Add(idx + 1);
-            indices.Add(idx + 2);
-
-            indices.Add(idx + 1);
-            indices.Add(idx + 3);
-            indices.Add(idx + 2);
-        }
-
-        //6. 提交mesh
-        ArrayMesh mesh = new ArrayMesh();
-
-        var arrays = new Godot.Collections.Array();
-        arrays.Resize((int)Mesh.ArrayType.Max);
-
-        arrays[(int)Mesh.ArrayType.Vertex] = verts.ToArray();
-        arrays[(int)Mesh.ArrayType.TexUV] = uvs.ToArray();
-        arrays[(int)Mesh.ArrayType.Index] = indices.ToArray();
-
-        mesh.AddSurfaceFromArrays(Mesh.PrimitiveType.Triangles, arrays);
-        return mesh;
-    }
+    
     public override void _Process(double delta)
     {
         float now = Time.GetTicksMsec() / 1000f;
-        
         UpdatePoints(now);
         //生成插值数组并转换为局部坐标
         List<Vector2> smoothPoints = CatmullRom(_points, InterpolationPerSegment);
@@ -170,23 +104,70 @@ public partial class Trail : MeshInstance2D
             (-p0 + 3 * p1 - 3 * p2 + p3) * t3
         );
     }
-
-    // ===== 位置反推=====
-    private float GetTimeFactor(Vector2 pos, float now)
+    private ArrayMesh CalculateMesh(List<Vector2> smoothPoints,List<float> lengths,float totalLength)
     {
-        // 简单最近点匹配
-        float minDist = float.MaxValue;
-        float time = now;
-        foreach (var p in _points)
+        // 构建mesh
+        var verts = new List<Vector2>();
+        var uvs = new List<Vector2>();
+        var indices = new List<int>();
+
+        for (int i = 0; i < smoothPoints.Count; i++)
         {
-            float d = p.Position.DistanceTo(pos);
-            if (d < minDist)
-            {
-                minDist = d;
-                time = p.Time;
-            }
+            Vector2 p = smoothPoints[i];
+            //方向
+            Vector2 dir;
+            if (i == 0)
+                dir = (smoothPoints[i + 1] - p).Normalized();
+            else if (i == smoothPoints.Count - 1)
+                dir = (p - smoothPoints[i - 1]).Normalized();
+            else
+                dir = (smoothPoints[i + 1] - smoothPoints[i - 1]).Normalized();
+
+            Vector2 normal = new Vector2(-dir.Y, dir.X);
+
+            //时间映射（用原始点时间）
+            float t =i/(float)smoothPoints.Count;
+
+            float width = BaseWidth * Mathf.Pow(t, 0.5f);
+
+            Vector2 left = p - normal * width;
+            Vector2 right = p + normal * width;
+
+            verts.Add(left);
+            verts.Add(right);
+
+            float u = lengths[i] / totalLength;
+
+            uvs.Add(new Vector2(u, 0));
+            uvs.Add(new Vector2(u, 1));
         }
 
-        return Mathf.Clamp((now - time) / Lifetime, 0, 1);
+        //索引
+        for (int i = 0; i < smoothPoints.Count - 1; i++)
+        {
+            int idx = i * 2;
+
+            indices.Add(idx);
+            indices.Add(idx + 1);
+            indices.Add(idx + 2);
+
+            indices.Add(idx + 1);
+            indices.Add(idx + 3);
+            indices.Add(idx + 2);
+        }
+
+        //提交mesh
+        ArrayMesh mesh = new ArrayMesh();
+
+        var arrays = new Godot.Collections.Array();
+        arrays.Resize((int)Mesh.ArrayType.Max);
+
+        arrays[(int)Mesh.ArrayType.Vertex] = verts.ToArray();
+        arrays[(int)Mesh.ArrayType.TexUV] = uvs.ToArray();
+        arrays[(int)Mesh.ArrayType.Index] = indices.ToArray();
+
+        mesh.AddSurfaceFromArrays(Mesh.PrimitiveType.Triangles, arrays);
+        return mesh;
     }
+
 }

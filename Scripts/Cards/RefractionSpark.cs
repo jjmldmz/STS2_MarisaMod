@@ -1,9 +1,19 @@
+using Godot;
+using marisamod.Scenes.Vfx.SparkProjectile;
 using marisamod.Scripts.PatchesNModels;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using MegaCrit.Sts2.Core.Logging;
+using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Nodes.Cards;
+using MegaCrit.Sts2.Core.Nodes.Combat;
+using MegaCrit.Sts2.Core.Nodes.Rooms;
 using MegaCrit.Sts2.Core.ValueProps;
+using Color = System.Drawing.Color;
 
 namespace marisamod.Scripts.Cards
 {
@@ -40,12 +50,18 @@ namespace marisamod.Scripts.Cards
             var damage = !AmplifiedInPlay ? DynamicVars.Damage.BaseValue : DynamicVars["DamageAmplified"].BaseValue;
             var dmgCmd = await DamageCmd.Attack(damage).FromCard(this).Targeting(cardPlay.Target)
                 .WithHitFx("vfx/vfx_attack_slash")
+                .WithHitVfxNode((Creature t) => VfxSparkProjectile.Create(this,new(1f,1f,1f,1.0f),NCombatRoom.Instance?.GetCreatureNode(t)))
                 .Execute(choiceContext);
 
             var add = dmgCmd.Results.Sum(x => x.UnblockedDamage);
 
             if (add > 0)
-                foreach (var card in Owner.PlayerCombatState!.Hand.Cards.Where(x => x.Tags.Contains(MarisaCardTags.Spark)).ToArray())
+            {
+                NCreature player = NCombatRoom.Instance?.GetCreatureNode(Owner.Creature);
+                NCreature enemy = NCombatRoom.Instance?.GetCreatureNode(cardPlay.Target);
+                float hue = 0;
+                var cards = Owner.PlayerCombatState!.Hand.Cards.Where(x => x.Tags.Contains(MarisaCardTags.Spark)).ToArray();
+                foreach (var card in cards)
                 {
                     // if (card.DynamicVars.ContainsKey("CalculatedDamage"))
                     // {
@@ -54,9 +70,66 @@ namespace marisamod.Scripts.Cards
                     // else if (card.DynamicVars.ContainsKey("Damage"))
                     // {
                     //     card.DynamicVars.Damage.UpgradeValueBy(add);
-                    // }
+                    // 
+                    NCombatRoom.Instance?.CombatVfxContainer.AddChildSafely(CreatePowerUpSpark(player,enemy, card,hue,add));
                     PowerUp.UpgradeCardDamage(card, add);
+                    hue += 1f / cards.Length;
                 }
+            }
+        }
+        public static Vector4 Hsv2Rgba(float h,float s,float v)
+        {
+            if (s <= float.Epsilon)
+            {
+                return new Vector4(v, v, v,1);
+            }
+            float hue = h * 360f;
+
+            float huePrime = hue / 60f;
+            int i = Mathf.FloorToInt(huePrime);
+            float f = huePrime - i;
+            
+            float p = v * (1f - s);
+            float q = v * (1f - s * f);
+            float t = v * (1f - s * (1f - f));
+            switch (i)
+            {
+                case 0:
+                    return new Vector4(v, t, p,1);
+                case 1:
+                    return new Vector4(q, v, p,1);
+                case 2:
+                    return new Vector4(p, v, t,1);
+                case 3:
+                    return new Vector4(p, q, v,1);
+                case 4:
+                    return new Vector4(t, p, v,1);
+                default: 
+                    return new Vector4(v, p, q,1);
+            }
+        }
+        public static VfxSparkProjectile CreatePowerUpSpark(NCreature player, NCreature enemy, CardModel targetCard,float hue,int damage)
+        {
+            VfxSparkProjectile vfx =VfxSparkProjectile.Create();
+            vfx.SetAnimationParament(chasingSpeedMixMin:0.2f,chasingDirMixMin:0.2f);
+            vfx.SetColor(Hsv2Rgba(hue,0.8f,1));
+            vfx.PlayerOwner= player;
+            vfx.Position = enemy.VfxSpawnPosition;
+            Vector2 target = player.VfxSpawnPosition;
+            NCard targetCardNode = NCombatRoom.Instance?.Ui.Hand.GetCard(targetCard);
+            Vector2? local =
+                NCombatRoom.Instance?.CombatVfxContainer.GetGlobalTransformWithCanvas().AffineInverse() *
+                targetCardNode.GetGlobalTransformWithCanvas().Origin;
+            if (local != null)
+                target = local.Value;
+            
+            float dir = (enemy.VfxSpawnPosition - player.VfxSpawnPosition).Angle();
+            vfx.VelocityInit(dir);
+            vfx.StartDamping();
+            vfx.Target = target;
+            vfx.NoIdle = true;
+            vfx.ApplySizeFromDamage(damage);
+            return vfx;
         }
     }
 }
