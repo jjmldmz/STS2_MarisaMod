@@ -1,20 +1,27 @@
 using BaseLib.Utils;
+using Godot;
+using marisamod.Scenes.Vfx.SparkProjectile;
 using marisamod.Scripts.PatchesNModels;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.CardPools;
+using MegaCrit.Sts2.Core.Nodes.Combat;
+using MegaCrit.Sts2.Core.Nodes.Rooms;
 using MegaCrit.Sts2.Core.ValueProps;
 
 namespace marisamod.Scripts.Cards.Colorless
 {
     [Pool(typeof(TokenCardPool))]
-    public class Spark : AbstractMarisaCard
+    public class Spark : AbstractMarisaCard,ISparkCard
     {
+        private Godot.Vector3 _sparkColor;
+
         public Spark() : base(0, CardType.Attack, CardRarity.Token, TargetType.AnyEnemy)
         {
         }
@@ -34,7 +41,30 @@ namespace marisamod.Scripts.Cards.Colorless
         {
             ArgumentNullException.ThrowIfNull(cardPlay.Target);
             await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this).Targeting(cardPlay.Target)
-                .WithHitFx("vfx/vfx_attack_slash")
+                //.WithHitFx("vfx/vfx_attack_slash")
+                .BeforeDamage(async delegate
+                {
+                    NCreature? player = NCombatRoom.Instance?.GetCreatureNode(base.Owner.Creature);
+                    NCreature? enemy = NCombatRoom.Instance?.GetCreatureNode(cardPlay.Target);
+                    if (player != null && enemy != null)
+                    {
+                        if (_vfx != null && _vfx.GetParent() == NCombatRoom.Instance?.CombatVfxContainer)
+                        {
+                            _vfx.StartChasing(enemy.VfxSpawnPosition);
+                        }
+                        else
+                        {
+                            _vfx = VfxSparkProjectile.Create(this,enemy);
+                            _vfx.NoIdle = true;
+                            _vfx.StartDamping();
+                            NCombatRoom.Instance?.CombatVfxContainer.AddChildSafely(_vfx);
+                            await Cmd.Wait(VfxSparkProjectile.DampingDuration/4f);
+                            _vfx.StartChasing(enemy.VfxSpawnPosition);
+                        }
+                        //TODO:按伤害重设尺寸或添加特效
+                        await Cmd.Wait(VfxSparkProjectile.ChaseDuration);
+                    }
+                })
                 .Execute(choiceContext);
         }
 
@@ -64,5 +94,27 @@ namespace marisamod.Scripts.Cards.Colorless
             await CardPileCmd.AddGeneratedCardsToCombat(sparks, PileType.Hand, owner);
             return sparks;
         }
+
+        #region ISparkCard
+        private VfxSparkProjectile _vfx;
+        public Vector4 SparkColor => new(0.8f,0.1f,0.25f,1.0f);
+        public void OnDrag()
+        {
+            if (_vfx != null && _vfx.GetParent() == NCombatRoom.Instance?.CombatVfxContainer)
+            {
+                _vfx.StartDamping();
+            }
+            else
+            {
+                _vfx = VfxSparkProjectile.Create(this);
+                NCombatRoom.Instance?.CombatVfxContainer.AddChildSafely(_vfx);
+            }
+        }
+        public void OnCancelPlay()
+        {
+            _vfx.StartWandering();
+        }
+        #endregion
+
     }
 }

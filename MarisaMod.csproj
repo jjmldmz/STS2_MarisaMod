@@ -7,10 +7,10 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 
     <!--  -->
-    <Sts2Dir>C:/Program Files (x86)/Steam/steamapps/common/Slay the Spire 2</Sts2Dir>
+    <Sts2Dir>C:\Program Files (x86)\Steam\steamapps\common\Slay the Spire 2</Sts2Dir>
     <!--  -->
     
-    <GodotExe>C:\megadot\MegaDot_v4.5.1-stable_mono_win64.exe</GodotExe>
+    <GodotExe>C:/工具/Godot_v4.5.1-stable_mono_win64/Godot_v4.5.1-stable_mono_win64/Godot_v4.5.1-stable_mono_win64.exe</GodotExe>
     <Sts2DataDir>$(Sts2Dir)/data_sts2_windows_x86_64</Sts2DataDir>
   </PropertyGroup>
 
@@ -54,6 +54,44 @@
     <Content Include="marisamod\localization\zhs\powers.json" />
     <Content Include="marisamod\localization\zhs\relics.json" />
     <Content Include="marisamod\localization\zhs\settings_ui.json" />
+    <Content Include="marisamod\scenes\marisa_icon.tscn" />
+    <Content Include="marisamod\scenes\marisa_merchant.tscn" />
+    <Content Include="marisamod\scenes\marisa_rest_site.tscn" />
+    <Content Include="marisamod\scenes\selection_reticle.tscn" />
+    <Content Include="marisamod\scenes\test_bg.tscn" />
+    <Content Include="marisamod\scenes\test_character.tscn" />
+    <Content Include="marisamod\scenes\test_energy_counter.tscn" />
+    <Content Include="marisamod\scenes\vfx\energy_vfx_back.tscn" />
+    <Content Include="marisamod\scenes\vfx\energy_vfx_front.tscn" />
+    <Content Include="marisamod\scenes\vfx\particle_a.tscn" />
+    <Content Include="marisamod\scenes\vfx\particle_a_cpu.tscn" />
+    <Content Include="marisamod\scenes\vfx\particle_b.tscn" />
+    <Content Include="marisamod\scenes\vfx\particle_b_cpu.tscn" />
+    <Content Include="Materials\ParticleProcess\DelaySpreadParticle.tres" />
+    <Content Include="Materials\ParticleProcess\SpreadSpawnParticle.tres" />
+    <Content Include="Materials\Shader\Spark\Spark.gdshader" />
+    <Content Include="Materials\Shader\Spark\Spark.gdshader.uid" />
+    <Content Include="Materials\Shader\Spark\Spark.tres" />
+    <Content Include="Materials\Shader\Spark\SparkDark.gdshader" />
+    <Content Include="Materials\Shader\Spark\SparkDark.gdshader.uid" />
+    <Content Include="Materials\Shader\Spark\SparkDark.tres" />
+    <Content Include="Materials\test\GlowTrail.gdshader" />
+    <Content Include="Materials\test\GlowTrail.gdshader.uid" />
+    <Content Include="Materials\test\rainbowTrail.gdshader" />
+    <Content Include="Materials\test\rainbowTrail.gdshader.uid" />
+    <Content Include="Materials\test\Trail_visualization.tscn" />
+    <Content Include="Scenes\Vfx\DarkSpark\VfxDarkSpark.cs.uid" />
+    <Content Include="Scenes\Vfx\DarkSpark\VfxDarkSpark.tscn" />
+    <Content Include="Scenes\Vfx\DarkSpark\VfxDarkSparkBeam.gdshader" />
+    <Content Include="Scenes\Vfx\DarkSpark\VfxDarkSparkBeam.gdshader.uid" />
+    <Content Include="Scenes\Vfx\DarkSpark\VfxDarkSparkStar.gdshader" />
+    <Content Include="Scenes\Vfx\DarkSpark\VfxDarkSparkStar.gdshader.uid" />
+    <Content Include="Scenes\Vfx\FinalSpark\VfxFinalSpark.cs.uid" />
+    <Content Include="Scenes\Vfx\FinalSpark\VfxFinalSpark.tscn" />
+    <Content Include="Scenes\Vfx\FinalSpark\VfxFinalSparkBeam.gdshader" />
+    <Content Include="Scenes\Vfx\FinalSpark\VfxFinalSparkBeam.gdshader.uid" />
+    <Content Include="Scenes\Vfx\FinalSpark\VfxFinalSparkStar.gdshader" />
+    <Content Include="Scenes\Vfx\FinalSpark\VfxFinalSparkStar.gdshader.uid" />
   </ItemGroup>
 
   <!--  -->
@@ -64,7 +102,7 @@
     <Copy SourceFiles="$(MSBuildProjectName).json" DestinationFolder="$(Sts2Dir)/mods/$(MSBuildProjectName)/" />
   </Target>
 
-  <Target Name="ExportPck">
+  <Target Name="ExportPck" AfterTargets="PostBuildEvent">
     <Message Text="Copying PCK to Slay the Spire 2 mods folder..." Importance="high" />
     <Exec Command="&quot;$(GodotExe)&quot; --headless --export-pack &quot;Windows Desktop&quot; &quot;$(Sts2Dir)/mods/$(MSBuildProjectName)/$(MSBuildProjectName).pck&quot;"
       EnvironmentVariables="IsInnerGodotExport=true;MSBUILDDISABLENODEREUSE=1"
