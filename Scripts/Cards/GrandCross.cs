@@ -32,7 +32,12 @@ public class GrandCross : AbstractMarisaCard
             .Execute(choiceContext);
     }
 
-    public override Task BeforeCardPlayed(CardPlay cardPlay)
+    public override Task AfterCardPlayed(PlayerChoiceContext choiceContext, CardPlay cardPlay)
+        // {
+        //     return base.AfterCardPlayed(choiceContext, cardPlay);
+        // }
+        //
+        // public override Task BeforeCardPlayed(CardPlay cardPlay)
     {
         if (cardPlay.Card is AbstractAmplifiedCard { AmplifiedInPlay: true } && cardPlay.Card.Owner == Owner)
         {
