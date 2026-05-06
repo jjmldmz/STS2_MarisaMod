@@ -194,5 +194,7 @@
   "MARISAMOD-WITCH_LEYLINE.title": "魔女射线",
   "MARISAMOD-WITCH_LEYLINE.description": "造成{Damage:diff()}点伤害。\n将一张[gold]灼伤[/gold]加入你的[gold]手牌[/gold]。",
   "MARISAMOD-WITCH_OF_GREED.title": "强欲魔女",
-  "MARISAMOD-WITCH_OF_GREED.description": "战斗结束时，获得{Gold:diff()}金币。\n增幅{Energy:energyIcons()}：额外获得一瓶[gold]药水[/gold]."
+  "MARISAMOD-WITCH_OF_GREED.description": "战斗结束时，获得{Gold:diff()}金币。\n增幅{Energy:energyIcons()}：额外获得一瓶[gold]药水[/gold]。",
+  "MARISAMOD-CARD_SWIPER.description": "从队友处偷一张卡。",
+  "MARISAMOD-CARD_SWIPER.title": "小偷小摸"
 }

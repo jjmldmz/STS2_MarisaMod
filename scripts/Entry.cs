@@ -56,6 +56,7 @@ public class Entry
         //const string modPath = "res://marisamod/images/atlases/ui_atlas.sprites/card/energy_test.tres";
         //Log.Info($"{LogPrefix} energy_test.tres 存在性: res://images/... = {ResourceLoader.Exists(gamePath)}, res://marisamod/images/... = {ResourceLoader.Exists(modPath)}");
     }
+    
 
     [HarmonyPatch(typeof(ProgressSaveManager), "ObtainCharUnlockEpoch")]
     public static class ProgressSaveManager_ObtainCharUnlockEpoch_Patch
