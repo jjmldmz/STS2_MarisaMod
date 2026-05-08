@@ -38,7 +38,7 @@ public class Initiator : AbstractMarisaCard
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);
 
-        var dmg = dmgCmd.Results.Sum(x => x.UnblockedDamage);
+        var dmg = dmgCmd.Results.SelectMany(r => r).Sum(x => x.UnblockedDamage);
         var draw = Owner.PlayerCombatState!.DrawPile.Cards.Where(x => x.Type is CardType.Attack).ToArray();
         var cards2Add = draw.TakeRandom(Mathf.Min(draw.Length, DynamicVars.Cards.IntValue), Owner.RunState.Rng.CombatCardSelection).ToArray();
         if (cards2Add.Length != 0)

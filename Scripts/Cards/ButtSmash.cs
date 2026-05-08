@@ -25,7 +25,7 @@ namespace marisamod.Scripts.Cards
             var attackCommand = await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this).Targeting(cardPlay.Target)
                 .WithHitFx("vfx/vfx_attack_slash")
                 .Execute(choiceContext);
-            await CreatureCmd.GainBlock(Owner.Creature, attackCommand.Results.Sum((DamageResult r) => r.UnblockedDamage), ValueProp.Move, cardPlay);
+            await CreatureCmd.GainBlock(Owner.Creature, attackCommand.Results.SelectMany(r => r).Sum((DamageResult r) => r.UnblockedDamage), ValueProp.Move, cardPlay);
         }
 
         protected override void OnUpgrade()

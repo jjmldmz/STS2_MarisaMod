@@ -42,7 +42,7 @@ public class TreasureHunter : AbstractMarisaCard
             .WithHitFx("vfx/vfx_bite", null, "blunt_attack.mp3")
             .Execute(choiceContext);
         if (Owner.RunState.CurrentRoom!.RoomType is RoomType.Boss or RoomType.Elite
-            && shouldTriggerFatal && attackCommand.Results.Any((r) => r.WasTargetKilled))
+            && shouldTriggerFatal && attackCommand.Results.SelectMany(r => r).Any(r => r.WasTargetKilled))
         {
             if (RunState!.CurrentRoom is CombatRoom combatRoom)
                 combatRoom.AddExtraReward(Owner, new RelicReward(Owner));

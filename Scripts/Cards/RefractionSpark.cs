@@ -4,17 +4,13 @@ using marisamod.Scripts.PatchesNModels;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Context;
 using MegaCrit.Sts2.Core.Entities.Cards;
-using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
-using MegaCrit.Sts2.Core.Logging;
-using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Nodes.Cards;
 using MegaCrit.Sts2.Core.Nodes.Combat;
 using MegaCrit.Sts2.Core.Nodes.Rooms;
 using MegaCrit.Sts2.Core.ValueProps;
-using Color = System.Drawing.Color;
 
 namespace marisamod.Scripts.Cards
 {
@@ -62,11 +58,11 @@ namespace marisamod.Scripts.Cards
                 //.WithHitVfxNode((Creature t) => )
                 .Execute(choiceContext);
 
-            var add = dmgCmd.Results.Sum(x => x.UnblockedDamage);
+            var add = dmgCmd.Results.SelectMany(r=>r).Sum(r=>r.UnblockedDamage);
 
             if (add > 0)
             {
-                NCreature player = NCombatRoom.Instance?.GetCreatureNode(Owner.Creature);
+                NCreature player = NCombatRoom.Instance!.GetCreatureNode(Owner.Creature);
                 float hue = 0;
                 var cards = Owner.PlayerCombatState!.Hand.Cards.Where(x => x.Tags.Contains(MarisaCardTags.Spark)).ToArray();
                 foreach (var card in cards)

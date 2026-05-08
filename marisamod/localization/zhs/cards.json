@@ -35,7 +35,7 @@
   "MARISAMOD-BLAZING_STAR.title": "彗星",
   "MARISAMOD-BLAZING_STAR.description": "造成{Damage:diff()}点伤害。将{Cards:diff()}张[gold]灼伤[/gold]加入你的[gold]手牌[/gold]。\n增幅{Energy:energyIcons()}：[gold]击晕[/gold]敌人并将此牌[gold]消耗[/gold]。",
   "MARISAMOD-BOUND_OF_PROTAGONISTS.title": "主角的羁绊",
-  "MARISAMOD-BOUND_OF_PROTAGONISTS.description": "你的下{Power:diff()}次生命损失减半。",
+  "MARISAMOD-BOUND_OF_PROTAGONISTS.description": "如果你在回合结束时没有任何[gold]格挡[/gold]，获得1层[gold]飞行[/gold]。\n{IfUpgraded:show:|增幅{Energy:energyIcons()}：}获得1层[gold]飞行[/gold]。",
   "MARISAMOD-BUTT_SMASH.title": "尻击",
   "MARISAMOD-BUTT_SMASH.description": "造成{Damage:diff()}点伤害。\n获得等于所造成未被格挡伤害的[gold]格挡[/gold]。",
   "MARISAMOD-CASKET_OF_STAR.title": "星之器",

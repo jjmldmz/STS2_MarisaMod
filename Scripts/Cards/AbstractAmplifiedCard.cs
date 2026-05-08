@@ -10,7 +10,12 @@ using MegaCrit.Sts2.Core.Models;
 
 namespace marisamod.Scripts.Cards
 {
-    public abstract class AbstractAmplifiedCard(int baseCost, int kickerCost, CardType type, CardRarity rarity, TargetType target) : AbstractMarisaCard(baseCost, type, rarity, target)
+    public abstract class AbstractAmplifiedCard(
+        int baseCost,
+        int kickerCost,
+        CardType type,
+        CardRarity rarity,
+        TargetType target) : AbstractMarisaCard(baseCost, type, rarity, target)
     {
         public int KickerCost { get; } = kickerCost;
 
@@ -41,19 +46,23 @@ namespace marisamod.Scripts.Cards
             if (Owner.Creature.HasPower<OneTimeOffPower>())
             {
             }
-            else if (cardPlay.IsAutoPlay || Owner.Creature.HasPower<MillisecondPulsarsPower>() || Owner.Creature.HasPower<PulseMagicPower>())
+            else if (cardPlay.IsAutoPlay || Owner.Creature.HasPower<MillisecondPulsarsPower>() ||
+                     Owner.Creature.HasPower<PulseMagicPower>())
             {
                 AmplifiedInPlay = true;
             }
             else if (Owner.PlayerCombatState?.Energy >= KickerCost)
             {
                 AmplifiedInPlay = true;
-                if (Enchantment is StarlitEnchantment enchantment)
+                if (KickerCost > 0)
                 {
-                    enchantment.AmplifyCost = DynamicVars.Energy.BaseValue;
-                }
+                    if (Enchantment is StarlitEnchantment enchantment)
+                    {
+                        enchantment.AmplifyCost = DynamicVars.Energy.BaseValue;
+                    }
 
-                await PlayerCmd.LoseEnergy(DynamicVars.Energy.BaseValue, Owner);
+                    await PlayerCmd.LoseEnergy(DynamicVars.Energy.BaseValue, Owner);
+                }
             }
         }
 
@@ -74,7 +83,8 @@ namespace marisamod.Scripts.Cards
                     {
                         SetAmplifyState(false, false);
                     }
-                    else if (Owner.Creature.HasPower<MillisecondPulsarsPower>() || Owner.Creature.HasPower<PulseMagicPower>())
+                    else if (Owner.Creature.HasPower<MillisecondPulsarsPower>() ||
+                             Owner.Creature.HasPower<PulseMagicPower>())
                     {
                         SetAmplifyState(true, true);
                     }
@@ -82,7 +92,8 @@ namespace marisamod.Scripts.Cards
                     {
                         SetAmplifyState(false, false);
                     }
-                    else if (Owner.PlayerCombatState.Energy >= EnergyCost.GetWithModifiers(CostModifiers.All) + KickerCost)
+                    else if (Owner.PlayerCombatState.Energy >=
+                             EnergyCost.GetWithModifiers(CostModifiers.All) + KickerCost)
                     {
                         SetAmplifyState(true, false);
                     }

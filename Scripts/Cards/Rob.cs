@@ -39,10 +39,11 @@ namespace marisamod.Scripts.Cards
         {
             await base.OnPlay(choiceContext, cardPlay);
             ArgumentNullException.ThrowIfNull(cardPlay.Target);
-            var attackCommand = await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this).Targeting(cardPlay.Target)
+            var attackCommand = await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this)
+                .Targeting(cardPlay.Target)
                 .WithHitFx("vfx/vfx_attack_slash")
                 .Execute(choiceContext);
-            var gain = attackCommand.Results.Sum(r => r.UnblockedDamage);
+            var gain = attackCommand.Results.SelectMany(r => r).Sum(r => r.UnblockedDamage);
             if (gain > 0)
             {
                 if (AmplifiedInPlay)
@@ -51,7 +52,8 @@ namespace marisamod.Scripts.Cards
                 var monsterPos = NCombatRoom.Instance?.GetCreatureNode(cardPlay.Target)?.VfxSpawnPosition;
                 if (monsterPos.HasValue)
                 {
-                    VfxCmd.PlayVfx(monsterPos.Value, "vfx/vfx_coin_explosion_regular", NCombatRoom.Instance?.CombatVfxContainer);
+                    VfxCmd.PlayVfx(monsterPos.Value, "vfx/vfx_coin_explosion_regular",
+                        NCombatRoom.Instance?.CombatVfxContainer);
                 }
             }
         }

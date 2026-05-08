@@ -23,7 +23,7 @@ public class CardSwiper : AbstractMarisaCard
 {
     public override string PortraitPath => $"res://marisamod/images/cards/marisamod-test_marisa_card.png";
 
-    public CardSwiper() : base(1, CardType.Skill, CardRarity.Rare, TargetType.AllAllies)
+    public CardSwiper() : base(1, CardType.Skill, CardRarity.Token, TargetType.AllAllies)
     {
     }
 

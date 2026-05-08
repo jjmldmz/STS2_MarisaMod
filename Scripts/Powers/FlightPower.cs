@@ -1,4 +1,5 @@
 using BaseLib.Extensions;
+using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
@@ -13,13 +14,13 @@ public class FlightPower : AbstractMarisaPower
     public override PowerType Type => PowerType.Buff;
     public override PowerStackType StackType => PowerStackType.Counter;
 
-    public override async Task AfterDamageReceived(PlayerChoiceContext choiceContext, Creature target, DamageResult result, ValueProp props, Creature? dealer, CardModel? cardSource)
-    {
-        if (target == Owner && props.IsPoweredAttack_() && result.UnblockedDamage > 0)
-        {
-            await PowerCmd.TickDownDuration(this);
-        }
-    }
+    // public override async Task AfterDamageReceived(PlayerChoiceContext choiceContext, Creature target, DamageResult result, ValueProp props, Creature? dealer, CardModel? cardSource)
+    // {
+    //     if (target == Owner && props.IsPoweredAttack_() && result.UnblockedDamage > 0)
+    //     {
+    //         await PowerCmd.TickDownDuration(this);
+    //     }
+    // }
 
     public override decimal ModifyDamageMultiplicative(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource)
     {
@@ -34,5 +35,13 @@ public class FlightPower : AbstractMarisaPower
         }
 
         return 0.5m;
+    }
+    
+    public override async Task AfterTurnEnd(PlayerChoiceContext choiceContext, CombatSide side)
+    {
+        if (side == CombatSide.Enemy)
+        {
+            await PowerCmd.TickDownDuration(this);
+        }
     }
 }
