@@ -14,6 +14,12 @@ config/name="marisamod"
 config/features=PackedStringArray("4.5", "C#", "GL Compatibility")
 config/icon="res://icon.svg"
 
+[display]
+
+window/size/viewport_width=1920
+window/size/viewport_height=1080
+window/size/initial_position_type=3
+
 [dotnet]
 
 project/assembly_name="marisamod"

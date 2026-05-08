@@ -1,7 +1,7 @@
 using Godot;
+using System;
 
-namespace marisamod.Scenes.Vfx.SparkProjectile;
-public partial class SparkTrail : MeshInstance2D
+public partial class Trail : MeshInstance2D
 {
     struct TrailPoint
     {
@@ -11,11 +11,17 @@ public partial class SparkTrail : MeshInstance2D
 
     [Export] public float Lifetime = 0.4f;
     [Export] public float BaseWidth = 1f;
-    [Export] public float MinDistance = 2f;
+    [Export] public float MinDistance = 10f;
     [Export] public int InterpolationPerSegment = 3;
 
-    public float LifeTime2 = -1;//大于0时代替Lifetime来影响尾迹点更新
+    public float LifeTimeOverwrite = -1;//大于0时代替Lifetime来影响尾迹点更新
     private readonly List<TrailPoint> _points = [];
+
+    public void CleanTrail()
+    {
+        _points.Clear();
+        Mesh = null;
+    }
 
     private void UpdatePoints(float second)
     {
@@ -28,8 +34,8 @@ public partial class SparkTrail : MeshInstance2D
         }
         //2. 删除过期点
         float maxTime = Lifetime;
-        if (LifeTime2 >0)
-            maxTime = LifeTime2;
+        if (LifeTimeOverwrite >0)
+            maxTime = LifeTimeOverwrite;
         _points.RemoveAll(p => second - p.Time > maxTime);
 
         if (_points.Count < 2)

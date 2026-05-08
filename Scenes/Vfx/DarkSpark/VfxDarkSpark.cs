@@ -14,7 +14,6 @@ namespace marisamod.Scenes.Vfx.DarkSpark;
 
 public partial class VfxDarkSpark : Node2D
 {
-    [Export] public ShaderMaterial? DarkMaterial { get; set; }
     private const float FlareTime = 0.3f;
     private const float BeamTime = 0.5f;
     private const float FadeTime = 0.2f;

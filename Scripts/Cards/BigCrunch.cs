@@ -22,7 +22,8 @@ public class BigCrunch : AbstractMarisaCard
         new CalculationExtraVar(1m),
         new CalculatedVar("CalculatedDraw").WithMultiplier((card, _)
             => Mathf.FloorToInt(
-                (Mathf.Floor(PileType.Draw.GetPile(card.Owner).Cards.Count / 2f) + Mathf.Floor(PileType.Discard.GetPile(card.Owner).Cards.Count / 2f))
+                Mathf.Floor((PileType.Draw.GetPile(card.Owner).Cards.Count +
+                              PileType.Discard.GetPile(card.Owner).Cards.Count) / 2f)
                 / card.DynamicVars["Div"].IntValue))
     ];
 
@@ -34,8 +35,10 @@ public class BigCrunch : AbstractMarisaCard
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         var draw = (int)((CalculatedVar)DynamicVars["CalculatedDraw"]).Calculate(cardPlay.Target);
-        await DoExhaust(choiceContext, PileType.Draw.GetPile(Owner));
-        await DoExhaust(choiceContext, PileType.Discard.GetPile(Owner));
+
+        List<CardModel> list = (CardPile.GetCards(Owner, PileType.Draw, PileType.Discard)).ToList();
+        await DoExhaust(choiceContext, list);
+
         if (draw > 0)
         {
             await CardPileCmd.Draw(choiceContext, draw, Owner);
@@ -43,35 +46,40 @@ public class BigCrunch : AbstractMarisaCard
         }
     }
 
-    private async Task DoExhaust(PlayerChoiceContext choiceContext, CardPile pile)
+    private async Task DoExhaust(PlayerChoiceContext choiceContext, List<CardModel> cards)
     {
-        var res = pile.Cards.Count / 2;
+        int res = cards.Count / 2;
         List<CardModel> toExhaust = [];
-        for (var i = 0; i < res; i++)
+        for (var i = 0; i < cards.Count; i++)
         {
-            //await CardPileCmd.ShuffleIfNecessary(choiceContext, base.Owner);
-            var cardModel = Owner.RunState.Rng.CombatCardSelection.NextItem(pile.Cards);
+            var cardModel = Owner.RunState.Rng.CombatCardSelection.NextItem(cards);
             if (cardModel != null)
             {
                 toExhaust.Add(cardModel);
+                cards.Remove(cardModel);
             }
+
+            if (toExhaust.Count >= res) break;
         }
+
         if (toExhaust.Count > 0)
         {
             CardCmd.Preview(toExhaust);
             foreach (var cardModel in toExhaust)
             {
                 await CardCmd.Exhaust(choiceContext, cardModel, skipVisuals: true);
-                
             }
-            pile.InvokeContentsChanged();
-            pile.InvokeCardRemoveFinished();
-            pile.InvokeCardAddFinished();
+            PileType.Draw.GetPile(Owner).InvokeContentsChanged();
+            PileType.Draw.GetPile(Owner).InvokeCardRemoveFinished();
+            PileType.Draw.GetPile(Owner).InvokeCardAddFinished();
+            PileType.Discard.GetPile(Owner).InvokeContentsChanged();
+            PileType.Discard.GetPile(Owner).InvokeCardRemoveFinished();
+            PileType.Discard.GetPile(Owner).InvokeCardAddFinished();
             PileType.Exhaust.GetPile(Owner).InvokeContentsChanged();
             PileType.Exhaust.GetPile(Owner).InvokeCardRemoveFinished();
         }
     }
-
+    
     protected override void OnUpgrade()
     {
         DynamicVars["Div"].UpgradeValueBy(-1);

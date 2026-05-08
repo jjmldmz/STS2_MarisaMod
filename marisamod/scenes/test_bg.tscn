@@ -1,22 +1,9 @@
-[gd_scene load_steps=13 format=3 uid="uid://cejqjeipgqe0n"]
+[gd_scene load_steps=10 format=3 uid="uid://cejqjeipgqe0n"]
 
 [ext_resource type="Texture2D" uid="uid://ddxmxgyyfy8mn" path="res://icon.svg" id="1_c8lhi"]
 [ext_resource type="Texture2D" uid="uid://c8481txgeonie" path="res://marisamod/images/marisaPortrait.jpg" id="1_mr767"]
-[ext_resource type="Shader" uid="uid://bm4b6jkg21kmp" path="res://marisamod/scenes/vfx/Spark.gdshader" id="3_iqxhr"]
-[ext_resource type="Shader" uid="uid://dgviir81nyvbq" path="res://marisamod/scenes/vfx/SparkDark.gdshader" id="4_awaxs"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_awaxs"]
-shader = ExtResource("3_iqxhr")
-shader_parameter/ring_radius = 0.05
-shader_parameter/ring_factor = 0.4
-shader_parameter/ring_brightness = 0.03
-shader_parameter/ray_count = 4.0
-shader_parameter/arm_factor = 1.0
-shader_parameter/arm_factor2 = 0.5
-shader_parameter/glow_factor = 4.0
-shader_parameter/pulse_period = 2.5
-shader_parameter/pulse_amplitude = 0.15
-shader_parameter/Saturation = 0.4
+[ext_resource type="Material" uid="uid://c85rh5jieaaa5" path="res://Materials/Shader/Spark/Spark.tres" id="3_02jiw"]
+[ext_resource type="Material" uid="uid://n0ukp2bxhx6x" path="res://Materials/Shader/Spark/SparkDark.tres" id="4_02jiw"]
 
 [sub_resource type="NoiseTexture2D" id="NoiseTexture2D_02jiw"]
 width = 64
@@ -26,34 +13,9 @@ height = 64
 _data = [Vector2(0, 0.22471917), 0.0, 1.5702244, 0, 0, Vector2(0.12790698, 0.73033714), 5.4756513, 5.4756513, 0, 0, Vector2(1, 1), -1.6274419, 0.0, 0, 0]
 point_count = 3
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_t5sq0"]
-shader = ExtResource("4_awaxs")
-shader_parameter/ring_radius = 0.1
-shader_parameter/ring_factor = 0.545
-shader_parameter/ring_brightness = 0.03
-shader_parameter/ray_count = 4.0
-shader_parameter/arm_factor = 1.0
-shader_parameter/arm_factor2 = 0.5
-shader_parameter/glow_factor = 4.0
-shader_parameter/pulse_period = 3.5
-shader_parameter/pulse_amplitude = 0.25
-
 [sub_resource type="NoiseTexture2D" id="NoiseTexture2D_e5k05"]
 width = 64
 height = 64
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_57rjr"]
-shader = ExtResource("3_iqxhr")
-shader_parameter/ring_radius = 0.05
-shader_parameter/ring_factor = 0.4
-shader_parameter/ring_brightness = 0.03
-shader_parameter/ray_count = 4.0
-shader_parameter/arm_factor = 1.0
-shader_parameter/arm_factor2 = 0.4
-shader_parameter/glow_factor = 4.0
-shader_parameter/pulse_period = 4.5
-shader_parameter/pulse_amplitude = 0.25
-shader_parameter/Saturation = 0.75
 
 [sub_resource type="NoiseTexture2D" id="NoiseTexture2D_6bab5"]
 width = 128
@@ -107,7 +69,7 @@ scale = Vector2(0.5, 0.5)
 texture = ExtResource("1_c8lhi")
 
 [node name="ash1" type="CPUParticles2D" parent="."]
-material = SubResource("ShaderMaterial_awaxs")
+material = ExtResource("3_02jiw")
 position = Vector2(1832, -17)
 amount = 40
 texture = SubResource("NoiseTexture2D_02jiw")
@@ -123,7 +85,7 @@ scale_amount_max = 12.0
 scale_amount_curve = SubResource("Curve_6bab5")
 
 [node name="ash2" type="CPUParticles2D" parent="."]
-material = SubResource("ShaderMaterial_t5sq0")
+material = ExtResource("4_02jiw")
 position = Vector2(1832, -17)
 amount = 40
 texture = SubResource("NoiseTexture2D_e5k05")
@@ -138,7 +100,7 @@ scale_amount_min = 10.0
 scale_amount_max = 10.0
 
 [node name="ash3" type="CPUParticles2D" parent="."]
-material = SubResource("ShaderMaterial_57rjr")
+material = ExtResource("3_02jiw")
 position = Vector2(2288, 1271)
 amount = 40
 texture = SubResource("NoiseTexture2D_6bab5")
