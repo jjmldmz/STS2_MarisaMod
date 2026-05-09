@@ -25,7 +25,7 @@ namespace marisamod.Scripts.Cards
         {
             await base.OnPlay(choiceContext, cardPlay);
             var amount = await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, cardPlay);
-            if (AmplifiedInPreview)
+            if (AmplifiedInPlay)
                 await PowerCmd.Apply<BlockNextTurnPower>(choiceContext, Owner.Creature, amount, Owner.Creature, this);
         }
 

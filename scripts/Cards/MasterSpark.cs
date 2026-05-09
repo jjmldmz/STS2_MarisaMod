@@ -47,7 +47,7 @@ namespace marisamod.Scripts.Cards
             // DynamicVars.CalculationBase.UpgradeValueBy(3m);
             // DynamicVars.ExtraDamage.UpgradeValueBy(2m);
             DynamicVars.Damage.UpgradeValueBy(3);
-            DynamicVars["DamageAmplified"].UpgradeValueBy(2);
+            DynamicVars["DamageAmplified"].UpgradeValueBy(5);
         }
 
         public CardModel GetTranscendenceTransformedCard()
