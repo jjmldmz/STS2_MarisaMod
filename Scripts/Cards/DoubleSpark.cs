@@ -41,7 +41,7 @@ namespace marisamod.Scripts.Cards
             ArgumentNullException.ThrowIfNull(cardPlay.Target);
             await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this).Targeting(cardPlay.Target)
                 //.WithHitFx("vfx/vfx_attack_slash")
-                .WithHitVfxNode((Creature t) => VfxSparkProjectile.Create(this,new(0.4f,0.8f,0.8f,1.0f),NCombatRoom.Instance?.GetCreatureNode(t)))
+                .WithHitVfxNode((Creature t) => VfxSparkProjectile.Create(this,new(0.4f,0.8f,0.8f,1.0f),NCombatRoom.Instance?.GetCreatureNode(t)!))
                 .Execute(choiceContext);
             if (CombatState != null)
             {

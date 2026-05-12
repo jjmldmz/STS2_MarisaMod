@@ -17,15 +17,10 @@ using MegaCrit.Sts2.Core.ValueProps;
 namespace marisamod.Scripts.Powers;
 public class SwipedCardPower : AbstractMarisaPower
 {
-    public override string CustomPackedIconPath => $"res://marisamod/images/powers/marisamod-bound_of_protagonists.png";
-    
-    public override string CustomBigIconPath => $"res://marisamod/images/powers/marisamod-bound_of_protagonists.png";
-
-    public override string CustomBigBetaIconPath => $"res://marisamod/images/powers/marisamod-bound_of_protagonists.png";
     public override PowerType Type => PowerType.Buff;
     public override PowerStackType StackType => PowerStackType.None;
-    public Dictionary<Player,List<CardModel>>  StolenCardsDic = new();
-    public List<CardModel>? MyStolenCards => StolenCardsDic.TryGetValue(Owner.Player, out List<CardModel>? value) ? value : null;  
+    private readonly Dictionary<Player,List<CardModel>>  _stolenCardsDic = new();
+    private List<CardModel>? MyStolenCards => _stolenCardsDic!.GetValueOrDefault(Owner.Player);  
     public override Task AfterCombatEnd(CombatRoom room)
     {
         var player = Owner.Player;
@@ -40,7 +35,7 @@ public class SwipedCardPower : AbstractMarisaPower
             runState.AddCard(card.DeckVersion, player);
             SpecialCardReward specialCardReward = new SpecialCardReward(card.DeckVersion, player);
             specialCardReward.SetCustomDescriptionEncounterSource(ModelDb.Encounter<ThievingHopperWeak>().Id);
-            ((CombatRoom)runState.CurrentRoom).AddExtraReward(player, specialCardReward);
+            ((CombatRoom)runState.CurrentRoom!).AddExtraReward(player, specialCardReward);
         }
         MyStolenCards.Clear();
         return Task.CompletedTask;
@@ -48,13 +43,13 @@ public class SwipedCardPower : AbstractMarisaPower
 
     public async Task Steal(CardModel card) 
     {
-        Player player = card.Owner.Creature.Player;
+        var player = card.Owner.Creature.Player;
         if (player == null) return;
-        StolenCardsDic.TryGetValue(player, out List<CardModel>? stolenCards);
+        _stolenCardsDic.TryGetValue(player, out List<CardModel>? stolenCards);
         if (stolenCards == null)
         {
             stolenCards = new List<CardModel>();
-            StolenCardsDic.Add(player, stolenCards);
+            _stolenCardsDic.Add(player, stolenCards);
         }
         stolenCards.Add(card);
         if (card.DeckVersion != null)

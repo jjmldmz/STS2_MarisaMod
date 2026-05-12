@@ -44,9 +44,9 @@ namespace marisamod.Scripts.Cards
         {
             await base.OnPlay(choiceContext, cardPlay);
             ArgumentNullException.ThrowIfNull(cardPlay.Target);
-            Vector2 enemyPos = (Vector2)NCombatRoom.Instance?.GetCreatureNode(cardPlay.Target).VfxSpawnPosition;
-            var vfx = VfxSparkProjectile.Create(this, new(1f, 1f, 1f, 1.0f),
-                NCombatRoom.Instance?.GetCreatureNode(cardPlay.Target));
+            var enemyPos = (NCombatRoom.Instance?.GetCreatureNode(cardPlay.Target)!).VfxSpawnPosition;
+            var vfx = VfxSparkProjectile.Create(this, new Vector4(1f, 1f, 1f, 1.0f),
+                NCombatRoom.Instance.GetCreatureNode(cardPlay.Target)!);
             var damage = !AmplifiedInPlay ? DynamicVars.Damage.BaseValue : DynamicVars["DamageAmplified"].BaseValue;
             var dmgCmd = await DamageCmd.Attack(damage).FromCard(this).Targeting(cardPlay.Target)
                 .WithHitFx("vfx/vfx_attack_slash")
@@ -62,7 +62,7 @@ namespace marisamod.Scripts.Cards
 
             if (add > 0)
             {
-                NCreature player = NCombatRoom.Instance!.GetCreatureNode(Owner.Creature);
+                NCreature player = NCombatRoom.Instance.GetCreatureNode(Owner.Creature)!;
                 float hue = 0;
                 var cards = Owner.PlayerCombatState!.Hand.Cards.Where(x => x.Tags.Contains(MarisaCardTags.Spark)).ToArray();
                 foreach (var card in cards)
@@ -84,7 +84,7 @@ namespace marisamod.Scripts.Cards
                     Vector2 targetPos = player.VfxSpawnPosition;
                     if (LocalContext.IsMe(Owner))
                     {
-                        NCard targetCardNode = NCombatRoom.Instance?.Ui.Hand.GetCard(card);
+                        NCard targetCardNode = NCombatRoom.Instance?.Ui.Hand.GetCard(card)!;
                         Vector2? local =
                             NCombatRoom.Instance?.CombatVfxContainer.GetGlobalTransformWithCanvas().AffineInverse() *
                             targetCardNode.GetGlobalTransformWithCanvas().Origin;
@@ -104,30 +104,24 @@ namespace marisamod.Scripts.Cards
             {
                 return new Vector4(v, v, v,1);
             }
-            float hue = h * 360f;
+            var hue = h * 360f;
 
-            float huePrime = hue / 60f;
-            int i = Mathf.FloorToInt(huePrime);
-            float f = huePrime - i;
+            var huePrime = hue / 60f;
+            var i = Mathf.FloorToInt(huePrime);
+            var f = huePrime - i;
             
-            float p = v * (1f - s);
-            float q = v * (1f - s * f);
-            float t = v * (1f - s * (1f - f));
-            switch (i)
+            var p = v * (1f - s);
+            var q = v * (1f - s * f);
+            var t = v * (1f - s * (1f - f));
+            return i switch
             {
-                case 0:
-                    return new Vector4(v, t, p,1);
-                case 1:
-                    return new Vector4(q, v, p,1);
-                case 2:
-                    return new Vector4(p, v, t,1);
-                case 3:
-                    return new Vector4(p, q, v,1);
-                case 4:
-                    return new Vector4(t, p, v,1);
-                default: 
-                    return new Vector4(v, p, q,1);
-            }
+                0 => new Vector4(v, t, p, 1),
+                1 => new Vector4(q, v, p, 1),
+                2 => new Vector4(p, v, t, 1),
+                3 => new Vector4(p, q, v, 1),
+                4 => new Vector4(t, p, v, 1),
+                _ => new Vector4(v, p, q, 1)
+            };
         }
         public static VfxSparkProjectile CreatePowerUpSpark(NCreature player,Vector2 enemyPos, Vector2 targetPos,float hue,int damage,float dir)
         {
