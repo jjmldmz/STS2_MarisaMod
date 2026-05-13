@@ -50,18 +50,21 @@ public class BigCrunch : AbstractMarisaCard
     {
         int res = cards.Count / 2;
         List<CardModel> toExhaust = [];
+        List<Orbital> orbitalsToExhaust = [];
         for (var i = 0; i < cards.Count; i++)
         {
             var cardModel = Owner.RunState.Rng.CombatCardSelection.NextItem(cards);
             if (cardModel != null)
             {
-                toExhaust.Add(cardModel);
+                if (cardModel is Orbital orbital)
+                    orbitalsToExhaust.Add(orbital);
+                else
+                    toExhaust.Add(cardModel);
                 cards.Remove(cardModel);
             }
-
             if (toExhaust.Count >= res) break;
         }
-
+        toExhaust.AddRange(orbitalsToExhaust);
         if (toExhaust.Count > 0)
         {
             CardCmd.Preview(toExhaust);
