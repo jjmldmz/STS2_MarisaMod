@@ -41,10 +41,10 @@ namespace marisamod.Scripts.Cards
         protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
         {
             ArgumentNullException.ThrowIfNull(cardPlay.Target, "cardPlay.Target");
-            NCreature? player = NCombatRoom.Instance?.GetCreatureNode(base.Owner.Creature);
+            //NCreature? player = NCombatRoom.Instance?.GetCreatureNode(base.Owner.Creature);
             CleanVfx();
             CreateVfx();
-            await Cmd.Wait(_vfx[0].VfxTime/10f);
+            await Cmd.Wait(0.1f);
             await DamageCmd.Attack(DynamicVars.Damage.BaseValue).WithHitCount(DynamicVars["Repeat"].IntValue).FromCard(this)
                 .Targeting(cardPlay.Target)
                 .WithHitVfxNode(InvokeVfx)
@@ -65,7 +65,7 @@ namespace marisamod.Scripts.Cards
             _vfx = new List<VfxSparkProjectile>(count);
             var color = new Vector4(0.9f, 0.8f, 0.35f, 1.0f);
             var player = NCombatRoom.Instance?.GetCreatureNode(Owner.Creature);
-            if (player != null ) return;
+            if (player == null ) return;
             for (var i = 0; i < count; i++)
             {
                 var vfx = VfxSparkProjectile.Create(player!,color);
