@@ -1,6 +1,8 @@
 {
     "MARISAMOD-SPARK.description": "这张卡是一张火花牌。",
     "MARISAMOD-SPARK.title": "火花",
-    "MARISAMOD-AMPLIFY.description": "当费用足够时，这张牌的费用相应增加来发动其效果",
-    "MARISAMOD-AMPLIFY.title": "增幅"
+    "MARISAMOD-AMPLIFY.description": "当费用足够时，这张牌会额外消耗费用来发动额外效果。",
+    "MARISAMOD-AMPLIFY.title": "增幅",
+    "MARISAMOD-STEAL.description": "从所有其它玩家的[gold]抽牌堆[/gold]中偷窃一张卡。\n衍生卡永远不会被偷，优先选择不带[blue]附魔[/blue]的卡牌。\n各个稀有度的优先级如下：优先偷取[blue]罕见[/blue]卡，其次是[gold]稀有[/gold]/普通/[green]事件[/green]卡，再其次是基础/[purple]任务[/purple]卡，最后是[gold]先古[/gold]或者带[blue]附魔[/blue]的卡。均不满足时会从[gold]抽牌堆[/gold]中所有的非衍生卡中随机选取一张。",
+    "MARISAMOD-STEAL.title": "偷卡"
 }

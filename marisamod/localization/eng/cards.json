@@ -195,6 +195,6 @@
   "MARISAMOD-WITCH_LEYLINE.description": "Deal {Damage:diff()} damage.\nAdd a [gold]Burn[/gold] into your [gold]Hand[/gold].",
   "MARISAMOD-WITCH_OF_GREED.title": "Witch of Greed",
   "MARISAMOD-WITCH_OF_GREED.description": "At the end of combat, gain {Gold:diff()} Gold.\nAmplify {Energy:energyIcons()}:Also obtain a [gold]Potion[/gold].",
-  "MARISAMOD-CARD_SWIPER.description": "Steal card from your teammate.",
+  "MARISAMOD-CARD_SWIPER.description": "Steal cards from other players. Return after combat.",
   "MARISAMOD-CARD_SWIPER.title": "Brazen Borrower"
 }

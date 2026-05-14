@@ -83,7 +83,7 @@
   "MARISAMOD-WALPURGISNACHT_AMP_POWER.title": "Walpurgisnacht",
   "MARISAMOD-WALPURGISNACHT_AMP_POWER.description": "At the start of your turn, [gold]Enchant[/gold] a random card in your hand with [gold]Starlit[/gold].",
   "MARISAMOD-WALPURGISNACHT_AMP_POWER.smartDescription": "At the start of your turn, [gold]Enchant[/gold] [blue]{Amount}[/blue] random {Amount:plural:card|cards} in your hand with [gold]Starlit[/gold].",
-  "MARISAMOD-SWIPED_CARD_POWER.description": "Stolen card",
-  "MARISAMOD-SWIPED_CARD_POWER.smartDescription": "Stolen card",
+  "MARISAMOD-SWIPED_CARD_POWER.description": "Card was stolen. Return after combat",
+  "MARISAMOD-SWIPED_CARD_POWER.smartDescription": "Card was stolen. Return after combat",
   "MARISAMOD-SWIPED_CARD_POWER.title": "Card swiped"
 }

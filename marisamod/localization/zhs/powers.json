@@ -83,7 +83,7 @@
   "MARISAMOD-WALPURGISNACHT_AMP_POWER.title": "魔女之夜",
   "MARISAMOD-WALPURGISNACHT_AMP_POWER.description": "在你回合开始时，为1张你的随机手牌添加[gold]附魔[/gold][gold]星彩[/gold]。",
   "MARISAMOD-WALPURGISNACHT_AMP_POWER.smartDescription": "在你回合开始时，为[blue]{Amount}[/blue]张你的随机手牌添加[gold]附魔[/gold][gold]星彩[/gold]。",
-  "MARISAMOD-SWIPED_CARD_POWER.description": "战斗结束后，被偷窃的卡牌将会归还",
-  "MARISAMOD-SWIPED_CARD_POWER.smartDescription": "战斗结束后，被偷窃的卡牌将会归还",
+  "MARISAMOD-SWIPED_CARD_POWER.description": "有卡牌失窃，战斗结束后拿回。",
+  "MARISAMOD-SWIPED_CARD_POWER.smartDescription": "有卡牌失窃，战斗结束后拿回。",
   "MARISAMOD-SWIPED_CARD_POWER.title": "卡牌失窃"
 }

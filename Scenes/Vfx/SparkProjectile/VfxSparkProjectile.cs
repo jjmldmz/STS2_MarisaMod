@@ -321,8 +321,8 @@ public partial class VfxSparkProjectile : Node2D
 
     public static VfxSparkProjectile Create(CardModel card, Vector4 color)
     {
-        NCreature player = card.Owner.Creature.GetCreatureNode();
-        //if (player == null ) 
+        NCreature? player = card.Owner.Creature.GetCreatureNode();
+        if (player == null) return Create();
         VfxSparkProjectile vfx = Create(player, color);
         vfx.ApplySizeFromDamage(card.DynamicVars.Damage.IntValue);
         return vfx;

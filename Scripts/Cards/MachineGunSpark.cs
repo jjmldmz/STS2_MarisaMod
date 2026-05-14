@@ -41,57 +41,50 @@ namespace marisamod.Scripts.Cards
         protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
         {
             ArgumentNullException.ThrowIfNull(cardPlay.Target, "cardPlay.Target");
-            NCreature? player = NCombatRoom.Instance?.GetCreatureNode(base.Owner.Creature);
+            //NCreature? player = NCombatRoom.Instance?.GetCreatureNode(base.Owner.Creature);
             CleanVfx();
             CreateVfx();
-            await Cmd.Wait(_vfx[0].VfxTime/10f);
+            await Cmd.Wait(0.1f);
             await DamageCmd.Attack(DynamicVars.Damage.BaseValue).WithHitCount(DynamicVars["Repeat"].IntValue).FromCard(this)
                 .Targeting(cardPlay.Target)
-                .WithHitVfxNode((Creature t) => InvokeVfx(t))
+                .WithHitVfxNode(InvokeVfx)
                 .WithHitFx(null, null, "blunt_attack.mp3")
                 .Execute(choiceContext);
             CleanVfx();
         }
-        private List<VfxSparkProjectile> _vfx;
+        private List<VfxSparkProjectile> _vfx = [];
         private void CleanVfx()
         {
-            if (_vfx != null)
-            {
-                foreach (var vfx in _vfx)
-                {
-                    if (GodotObject.IsInstanceValid(vfx))
-                    {
-                        vfx.StartFading();
-                    }
-                }
-                _vfx.Clear();
-            }
+            if (_vfx.Count == 0) return;
+            foreach (var vfx in _vfx.Where(GodotObject.IsInstanceValid)) vfx.StartFading();
+            _vfx.Clear();
         }
         private void CreateVfx()
         {
-            int count = DynamicVars["Repeat"].IntValue;
+            var count = DynamicVars["Repeat"].IntValue;
             _vfx = new List<VfxSparkProjectile>(count);
             var color = new Vector4(0.9f, 0.8f, 0.35f, 1.0f);
-            NCreature? player = NCombatRoom.Instance?.GetCreatureNode(base.Owner.Creature);
-            for (int i = 0; i < count; i++)
+            var player = NCombatRoom.Instance?.GetCreatureNode(Owner.Creature);
+            if (player == null ) return;
+            for (var i = 0; i < count; i++)
             {
-                var vfx = VfxSparkProjectile.Create(player,color);
+                var vfx = VfxSparkProjectile.Create(player!,color);
                 vfx.ApplySizeFromDamage(DynamicVars.Damage.IntValue);
                 _vfx.Add(vfx);
                 NCombatRoom.Instance?.CombatVfxContainer.AddChildSafely(_vfx[i]);
             }
         }
 
-        private Node2D? InvokeVfx(Creature target)
+        private VfxSparkProjectile? InvokeVfx(Creature target)
         {
-            if (_vfx == null || _vfx.Count == 0) return null;
+            if (_vfx is not { Count: not 0 }) return null;
             var vfx = _vfx[0];
             if (!GodotObject.IsInstanceValid(vfx))
             {
                 _vfx.RemoveAt(0);
                 return null;
             }
-            vfx.Target = NCombatRoom.Instance?.GetCreatureNode(target).VfxSpawnPosition;
+            vfx.Target = (NCombatRoom.Instance?.GetCreatureNode(target)!).VfxSpawnPosition;
             vfx.GetParent()?.RemoveChild(vfx);
             vfx.StartChasing();
             _vfx.Remove(vfx);

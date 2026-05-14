@@ -5,12 +5,15 @@ using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.Extensions;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
 
 namespace marisamod.Scripts.Cards
 {
     public class MagicAbsorber : AbstractMarisaCard
     {
+        
         public MagicAbsorber() : base(1, CardType.Skill, CardRarity.Rare, TargetType.Self)
         {
         }
@@ -31,13 +34,16 @@ namespace marisamod.Scripts.Cards
             DynamicVars.Block.UpgradeValueBy(4m);
         }
 
+        private static readonly HashSet<Type> ExcludedTypes =
+        [
+            typeof(EbbPower),
+        ];
         protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
         {
             await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, cardPlay);
-            var pows = Owner.Creature.Powers.Where(p => p.Type == PowerType.Debuff).TakeRandom(1, Owner.RunState.Rng.CombatCardSelection).ToArray();
+            var pows = Owner.Creature.Powers.Where(p => p.Type == PowerType.Debuff && !ExcludedTypes.Contains(p.GetType())).TakeRandom(1, Owner.RunState.Rng.CombatCardSelection).ToArray();
             if (pows.Length > 0)
                 await PowerCmd.Remove(pows[0]);
-
             // if (Owner.PlayerCombatState != null)
             // {
             //     var cards = Owner.PlayerCombatState.Hand.Cards.Where(c => c.Type is CardType.Status).ToArray();
