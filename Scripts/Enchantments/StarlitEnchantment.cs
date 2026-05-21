@@ -30,7 +30,7 @@ public class StarlitEnchantment : AbstractMarisaEnchantment
     {
         var amt = AmplifyCost + cardPlay.Resources.EnergySpent;
         var amtFin = Mathf.RoundToInt(Mathf.Pow(2, amt));
-        if (cardPlay.Card == Card && amt > 0)
+        if (cardPlay.Card == Card && amtFin > 0)
         {
             await PowerCmd.Apply<StarlitPower>(context, Card.Owner.Creature, amtFin, Card.Owner.Creature, Card);
         }

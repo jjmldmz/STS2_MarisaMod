@@ -27,13 +27,15 @@ public class Acceleration : AbstractAmplifiedCard //AbstractMarisaCard
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        var draw = Mathf.Min(Owner.PlayerCombatState!.DrawPile.Cards.Count, DynamicVars.Cards.IntValue);
+        await base.OnPlay(choiceContext, cardPlay);
+
+        var draw = Mathf.Min(Owner.PlayerCombatState!.DrawPile.Cards.Count, AmplifiedInPlay ? DynamicVars.Cards.IntValue + DynamicVars["DrawAmp"].IntValue : DynamicVars.Cards.IntValue);
         if (draw > 0)
             await CardPileCmd.Draw(choiceContext, draw, Owner);
-        if (AmplifiedInPlay)
-        {
-            await CardPileCmd.Draw(choiceContext, DynamicVars["DrawAmp"].BaseValue, Owner);
-        }
+        // if (AmplifiedInPlay)
+        // {
+        //     await CardPileCmd.Draw(choiceContext, DynamicVars["DrawAmp"].BaseValue, Owner);
+        // }
         //await CardPileCmd.AddGeneratedCardToCombat(CombatState!.CreateCard<Burn>(Owner), PileType.Hand, addedByPlayer: true);
     }
 

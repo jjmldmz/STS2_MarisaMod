@@ -34,7 +34,7 @@ namespace marisamod.Scripts.Powers
         {
             if (side == CombatSide.Player)
                 foreach (var item in await CardSelectCmd.FromHand(choiceContext, Owner.Player!,
-                             new CardSelectorPrefs(SelectionScreenPrompt, 0, 2), null, this))
+                             new CardSelectorPrefs(SelectionScreenPrompt, 0, Amount), null, this))
                 {
                     await CardCmd.Discard(choiceContext, item);
                 }

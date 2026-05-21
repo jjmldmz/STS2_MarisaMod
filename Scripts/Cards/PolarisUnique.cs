@@ -1,5 +1,6 @@
 using marisamod.Scripts.Powers;
 using MegaCrit.Sts2.Core.CardSelection;
+using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -22,12 +23,15 @@ namespace marisamod.Scripts.Cards
         {
             DynamicVars.Energy.UpgradeValueBy(1);
         }
+        
+        protected override bool IsPlayable =>
+            !CombatManager.Instance.History.CardPlaysFinished.Any(e => e.HappenedThisTurn(CombatState) && e.CardPlay.Card is PolarisUnique && e.CardPlay.Card.Owner == Owner);
 
         protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
         {
             var card = (await CardSelectCmd.FromHand(choiceContext,
                 Owner,
-                new CardSelectorPrefs(SelectionScreenPrompt, 0, DynamicVars.Cards.IntValue),
+                new CardSelectorPrefs(SelectionScreenPrompt, 0, 1),
                 card => card.EnergyCost.Canonical != -1,
                 this)).FirstOrDefault();
             card?.EnergyCost.AddThisCombat(1);
