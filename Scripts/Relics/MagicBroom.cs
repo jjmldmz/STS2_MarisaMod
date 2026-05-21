@@ -27,19 +27,16 @@ namespace marisamod.Scripts.Relics
             {
                 if (!IsActivating)
                 {
-                    return CardsPlayed % base.DynamicVars.Cards.IntValue;
+                    return CardsPlayed % DynamicVars.Cards.IntValue;
                 }
-                return base.DynamicVars.Cards.IntValue;
+                return DynamicVars.Cards.IntValue;
             }
         }
 
         protected override IEnumerable<DynamicVar> CanonicalVars => [new CardsVar(3)];
         private bool IsActivating
         {
-            get
-            {
-                return _isActivating;
-            }
+            get => _isActivating;
             set
             {
                 AssertMutable();
@@ -51,10 +48,7 @@ namespace marisamod.Scripts.Relics
         [SavedProperty]
         public int CardsPlayed
         {
-            get
-            {
-                return _cardsPlayed;
-            }
+            get => _cardsPlayed;
             set
             {
                 AssertMutable();
@@ -67,26 +61,26 @@ namespace marisamod.Scripts.Relics
         {
             if (IsActivating)
             {
-                base.Status = RelicStatus.Normal;
+                Status = RelicStatus.Normal;
             }
             else
             {
-                int intValue = base.DynamicVars.Cards.IntValue;
-                base.Status = ((CardsPlayed % intValue == intValue - 1) ? RelicStatus.Active : RelicStatus.Normal);
+                int intValue = DynamicVars.Cards.IntValue;
+                Status = ((CardsPlayed % intValue == intValue - 1) ? RelicStatus.Active : RelicStatus.Normal);
             }
             InvokeDisplayAmountChanged();
         }
 
         public override async Task AfterCardPlayed(PlayerChoiceContext context, CardPlay cardPlay)
         {
-            if (cardPlay.Card.Owner == base.Owner && cardPlay.Resources.EnergySpent == 0)
+            if (cardPlay.Card.Owner == Owner && cardPlay.Resources.EnergySpent == 0)
             {
                 CardsPlayed++;
-                int intValue = base.DynamicVars.Cards.IntValue;
+                int intValue = DynamicVars.Cards.IntValue;
                 if (CombatManager.Instance.IsInProgress && CardsPlayed % intValue == 0)
                 {
                     _ = TaskHelper.RunSafely(DoActivateVisuals());
-                    await CardPileCmd.Draw(context, 1m, base.Owner);
+                    await CardPileCmd.Draw(context, 1m, Owner);
                 }
             }
         }
