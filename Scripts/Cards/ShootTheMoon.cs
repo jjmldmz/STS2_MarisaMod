@@ -34,7 +34,7 @@ public class ShootTheMoon : AbstractAmplifiedCard
         DynamicVars.Damage.UpgradeValueBy(3);
         DynamicVars["DamageAmplified"].UpgradeValueBy(5);
     }
-    
+
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         await base.OnPlay(choiceContext, cardPlay);
@@ -46,8 +46,8 @@ public class ShootTheMoon : AbstractAmplifiedCard
 
         if (Owner.RunState.CurrentRoom!.RoomType != MegaCrit.Sts2.Core.Rooms.RoomType.Boss)
         {
-            var pows = cardPlay.Target.Powers.Where(p => p.TypeForCurrentAmount == PowerType.Buff).ToList();
-            
+            var pows = cardPlay.Target.Powers.Where(p => p.TypeForCurrentAmount == PowerType.Buff && p is not ReattachPower).ToList();
+
             if (AmplifiedInPlay)
             {
                 foreach (var pow in pows)
@@ -56,7 +56,7 @@ public class ShootTheMoon : AbstractAmplifiedCard
                 }
             }
             else
-            { 
+            {
                 if (pows.Count != 0)
                 {
                     var pow = pows.TakeRandom(1, Owner.RunState.Rng.CombatCardSelection).FirstOrDefault();
