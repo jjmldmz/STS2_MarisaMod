@@ -63,7 +63,8 @@ public class PropBag : AbstractMarisaCard
         ModelDb.Relic<ArtOfWar>(),
         ModelDb.Relic<RazorTooth>(),
         ModelDb.Relic<TungstenRod>(),
-        ModelDb.Relic<MagicBroom>()
+        ModelDb.Relic<MagicBroom>(),
+        ModelDb.Relic<ExperimentalFamiliar>()
     ];
 
     // public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
