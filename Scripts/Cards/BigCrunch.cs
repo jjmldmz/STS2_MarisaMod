@@ -23,7 +23,7 @@ public class BigCrunch : AbstractMarisaCard
         new CalculatedVar("CalculatedDraw").WithMultiplier((card, _)
             => Mathf.FloorToInt(
                 Mathf.Floor((PileType.Draw.GetPile(card.Owner).Cards.Count +
-                              PileType.Discard.GetPile(card.Owner).Cards.Count) / 2f)
+                             PileType.Discard.GetPile(card.Owner).Cards.Count) / 2f)
                 / card.DynamicVars["Div"].IntValue))
     ];
 
@@ -62,16 +62,19 @@ public class BigCrunch : AbstractMarisaCard
                     toExhaust.Add(cardModel);
                 cards.Remove(cardModel);
             }
+
             if (toExhaust.Count >= res) break;
         }
+
         toExhaust.AddRange(orbitalsToExhaust);
         if (toExhaust.Count > 0)
         {
             CardCmd.Preview(toExhaust);
             foreach (var cardModel in toExhaust)
             {
-                await CardCmd.Exhaust(choiceContext, cardModel, skipVisuals: true);
+                await CardCmd.Exhaust(choiceContext, cardModel, false, cardModel.Pile?.Type != PileType.Hand);
             }
+
             PileType.Draw.GetPile(Owner).InvokeContentsChanged();
             PileType.Draw.GetPile(Owner).InvokeCardRemoveFinished();
             PileType.Draw.GetPile(Owner).InvokeCardAddFinished();
@@ -82,7 +85,7 @@ public class BigCrunch : AbstractMarisaCard
             PileType.Exhaust.GetPile(Owner).InvokeCardRemoveFinished();
         }
     }
-    
+
     protected override void OnUpgrade()
     {
         DynamicVars["Div"].UpgradeValueBy(-1);
