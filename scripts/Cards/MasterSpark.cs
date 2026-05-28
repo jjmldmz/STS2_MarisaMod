@@ -1,7 +1,9 @@
 using BaseLib.Abstracts;
+using marisamod.Scenes.Vfx.HitVfx;
 using marisamod.Scripts.PatchesNModels;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
@@ -34,7 +36,8 @@ namespace marisamod.Scripts.Cards
             ArgumentNullException.ThrowIfNull(cardPlay.Target);
             var damage = !AmplifiedInPlay ? DynamicVars.Damage.BaseValue : DynamicVars["DamageAmplified"].BaseValue;
             await DamageCmd.Attack(damage).FromCard(this).Targeting(cardPlay.Target)
-                .WithHitFx("vfx/vfx_attack_slash").BeforeDamage(async delegate
+                .WithHitVfxNode((Creature t) => SparkHitVfx.Create(NCombatRoom.Instance?.GetCreatureNode(t)!,"BurstSpark"))
+                .BeforeDamage(async delegate
                 {
                     NSweepingBeamVfx nSweepingBeamVfx = NSweepingBeamVfx.Create(Owner.Creature, [cardPlay.Target])!;
                     NCombatRoom.Instance?.CombatVfxContainer.AddChildSafely(nSweepingBeamVfx);

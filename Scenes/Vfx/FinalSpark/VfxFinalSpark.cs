@@ -18,8 +18,6 @@ public partial class VfxFinalSpark : Node2D
     private const float FadeTime = 0.2f;
     public static float VfxTime =>(FlareTime+BeamTime+FadeTime);
     private static readonly string ScenePath = "res://Scenes/Vfx/FinalSpark/VfxFinalSpark.tscn";
-    
-    
     public override void _Ready()
     {
         //TaskHelper.RunSafely(PlaySequence());
@@ -79,7 +77,23 @@ public partial class VfxFinalSpark : Node2D
                 this.QueueFreeSafely();
         }
     }
-    
+    public void SetRainbowRatio(float ratio)
+    {
+        BeamShader.SetShaderParameter("rainbow_ratio",ratio);
+    }
+
+    public void ApplySize(float size)
+    {
+        StarShader.SetShaderParameter("size",size);
+        BeamShader.SetShaderParameter("size",size);
+    }
+    public void ApplySizeFromDamage(int damage,int baseDamage = 40)
+    {
+        if (baseDamage <= 0) baseDamage = 30;
+        if (damage <= 0) damage = 1;
+        float scale = Mathf.Clamp( Mathf.Log(damage)/Mathf.Log(baseDamage), 0.5f, 2f);
+        ApplySize(scale);
+    }
     public static VfxFinalSpark? Create(Creature owner, Creature target)
     {
         if (TestMode.IsOn)
@@ -108,11 +122,7 @@ public partial class VfxFinalSpark : Node2D
         instance.Position =  start;
         return instance;
     }
-    public void SetRainbowRatio(float ratio)
-    {
-        BeamShader.SetShaderParameter("rainbow_ratio",ratio);
-    }
-    
+
     private ShaderMaterial? _beamShader;
     private ShaderMaterial BeamShader => _beamShader  ??= (ShaderMaterial)(GetNode<MeshInstance2D>("beam").Material);
     

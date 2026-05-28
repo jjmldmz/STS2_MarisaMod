@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Godot;
+using marisamod.Scenes.Vfx.HitVfx;
 using marisamod.Scenes.Vfx.SparkProjectile;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -14,6 +15,7 @@ using marisamod.Scripts.PatchesNModels;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Models.Cards;
 using MegaCrit.Sts2.Core.Nodes.Combat;
 using MegaCrit.Sts2.Core.Nodes.Rooms;
 
@@ -31,17 +33,24 @@ namespace marisamod.Scripts.Cards
         [
             new DamageVar(7m, ValueProp.Move)
         ];
-        
+
         protected override HashSet<CardTag> CanonicalTags => [MarisaCardTags.Spark];
 
         protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromCard<Spark>(IsUpgraded)];
-        
+
         protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
         {
             ArgumentNullException.ThrowIfNull(cardPlay.Target);
             await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this).Targeting(cardPlay.Target)
-                //.WithHitFx("vfx/vfx_attack_slash")
-                .WithHitVfxNode((Creature t) => VfxSparkProjectile.Create(this,new(0.4f,0.8f,0.8f,1.0f),NCombatRoom.Instance?.GetCreatureNode(t)!))
+                //.WithHitVfxNode((Creature t) => VfxSparkProjectile.Create(this,new(0.4f,0.8f,0.8f,1.0f),NCombatRoom.Instance?.GetCreatureNode(t)!))
+                .BeforeDamage(async delegate
+                    {
+                        var vfx = VfxSparkProjectile.Create(this, new(0.4f, 0.8f, 0.8f, 1.0f),
+                            NCombatRoom.Instance?.GetCreatureNode(cardPlay.Target)!);
+                        NCombatRoom.Instance?.CombatVfxContainer.AddChildSafely(vfx);
+                        await Cmd.Wait(vfx.VfxTime);
+                    }
+                )
                 .Execute(choiceContext);
             if (CombatState != null)
             {

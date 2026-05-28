@@ -69,7 +69,7 @@ namespace marisamod.Scripts.Cards
             for (var i = 0; i < count; i++)
             {
                 var vfx = VfxSparkProjectile.Create(player!,color);
-                vfx.ApplySizeFromDamage(DynamicVars.Damage.IntValue);
+                vfx.ApplySizeFromDamage((int)DynamicVars.Damage.PreviewValue);
                 _vfx.Add(vfx);
                 NCombatRoom.Instance?.CombatVfxContainer.AddChildSafely(_vfx[i]);
             }

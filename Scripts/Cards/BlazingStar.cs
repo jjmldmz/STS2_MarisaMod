@@ -1,9 +1,12 @@
+using marisamod.Scenes.Vfx.HitVfx;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Cards;
+using MegaCrit.Sts2.Core.Nodes.Rooms;
 using MegaCrit.Sts2.Core.ValueProps;
 
 namespace marisamod.Scripts.Cards
@@ -67,7 +70,8 @@ namespace marisamod.Scripts.Cards
             await base.OnPlay(choiceContext, cardPlay);
             ArgumentNullException.ThrowIfNull(cardPlay.Target);
             await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this).Targeting(cardPlay.Target)
-                .WithHitFx("vfx/vfx_attack_slash")
+                //.WithHitFx("vfx/vfx_attack_slash")
+                .WithHitVfxNode((Creature t) => SparkHitVfx.Create(NCombatRoom.Instance?.GetCreatureNode(t)!,"BurstSpark"))
                 .Execute(choiceContext);
             List<CardModel> cards2Add = [];
             for (var i = 0; i < DynamicVars.Cards.IntValue; i++)

@@ -1,8 +1,8 @@
 [gd_scene load_steps=12 format=3 uid="uid://broc7esm03vky"]
 
 [ext_resource type="Script" uid="uid://dv7nxbfhc2bl4" path="res://Scenes/Vfx/FinalSpark/VfxFinalSpark.cs" id="1_5v5ju"]
-[ext_resource type="Shader" uid="uid://cudbkd68ilvyr" path="res://Scenes/Vfx/FinalSpark/VfxFinalSparkBeam.gdshader" id="2_i6ppn"]
-[ext_resource type="Shader" uid="uid://bws3x0mij8o1i" path="res://Scenes/Vfx/FinalSpark/VfxFinalSparkStar.gdshader" id="3_cp1fi"]
+[ext_resource type="Shader" uid="uid://cudbkd68ilvyr" path="res://Materials/Shader/Beam/VfxFinalSparkBeam.gdshader" id="2_i6ppn"]
+[ext_resource type="Shader" uid="uid://bws3x0mij8o1i" path="res://Materials/Shader/Spark/VfxFinalSparkStar.gdshader" id="3_cp1fi"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_rwbm5"]
 
@@ -17,10 +17,11 @@ shader_parameter/glow_factor = 1.5
 shader_parameter/glow_factor2 = 1.7
 shader_parameter/rainbow_ratio = 0.05
 shader_parameter/beam_color = Color(0.13, 0.4, 0.7, 1)
+shader_parameter/size = 1.0
 shader_parameter/progress = 1.0
 
 [sub_resource type="QuadMesh" id="QuadMesh_6t6qc"]
-subdivide_width = 160
+subdivide_width = 200
 subdivide_depth = 20
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_kdk1l"]
@@ -34,8 +35,8 @@ noise = SubResource("FastNoiseLite_kdk1l")
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_7sipw"]
 shader = ExtResource("3_cp1fi")
 shader_parameter/glow_factor = 4.5
-shader_parameter/test = 0.0
 shader_parameter/progress = 0.0
+shader_parameter/size = 1.0
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_i3lip"]
 

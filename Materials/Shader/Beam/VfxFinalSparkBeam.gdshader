@@ -9,11 +9,12 @@ uniform float glow_factor2 = 1.7;
 uniform float rainbow_ratio = 1.0;//彩虹的情况将其设为1.0
 uniform vec4 beam_color : source_color = vec4(0.13, 0.4, 0.7, 1.0);
 
+uniform float size = 1.0;
 uniform float progress: hint_range(0.0, 1.0) = 1.0;//取值范围0~2，0的时候最小，1的时候最大。
 
 
 void vertex() {
-    float new_x = VERTEX.x;
+    float new_x = VERTEX.x + 0.005* progress*size;
 	float x = 0.0001;
 	float stretch_factor = 0.3;
 	float t = pow(UV.x+x,stretch_factor)-pow(x,stretch_factor);
@@ -25,7 +26,7 @@ void vertex() {
 	//progress = mod(TIME,grow_time) / grow_time;
 	float grow_factor = 1.0/(grow_progress+0.001)-0.85;
 	float width =grow_factor ;
-    float new_y = VERTEX.y/ abs(VERTEX.y) * pow(abs(VERTEX.y),width)*t/2.0;
+    float new_y = size * VERTEX.y/ abs(VERTEX.y) * pow(abs(VERTEX.y),width)*t/2.0;
     VERTEX = vec2(new_x, new_y);
 }
 

@@ -29,7 +29,9 @@ vec3 norm_col(vec3 c){
 	c /= (lum + 1e-4);
 	return c;
 }
-
+void vertex() {
+	VERTEX *= 150.0;
+}
 void fragment()
 {
 	//脉动系数

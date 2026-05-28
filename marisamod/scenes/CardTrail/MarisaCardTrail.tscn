@@ -1,0 +1,123 @@
+[gd_scene load_steps=20 format=3 uid="uid://cb0hk2m1400e7"]
+
+[ext_resource type="Script" uid="uid://b5qndn6t3dxrh" path="res://marisamod/scenes/CardTrail/MarisaCardTrailVfx.cs" id="1_5vydh"]
+[ext_resource type="Texture2D" uid="uid://dil5qelabhvdm" path="res://marisamod/images/card_trail/trail2.png" id="2_ure17"]
+[ext_resource type="Script" uid="uid://kq03d35tjyf6" path="res://marisamod/scenes/CardTrail/MarisaCardTrail.cs" id="3_myp6q"]
+[ext_resource type="Texture2D" uid="uid://cpmjc3cocyfdw" path="res://marisamod/images/card_trail/small_card_silhouette.png" id="4_3r01q"]
+[ext_resource type="Texture2D" uid="uid://ct3aenclvp8ac" path="res://marisamod/images/card_trail/trail.png" id="4_myp6q"]
+[ext_resource type="Shader" uid="uid://bm4b6jkg21kmp" path="res://Materials/Shader/Spark/Spark.gdshader" id="5_ure17"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_ure17"]
+blend_mode = 1
+
+[sub_resource type="Curve" id="Curve_n7yl4"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.8333333, 0.5832536), -3.3935018, -3.3935018, 0, 0, Vector2(0.91791046, 0.9440192), 0.0, 0.0, 0, 0, Vector2(1, 0.5685841), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="Gradient" id="Gradient_vl2yn"]
+offsets = PackedFloat32Array(0.0063091484, 0.21542554, 0.5467033)
+colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 0.27058825, 1, 1, 1, 1)
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_myp6q"]
+blend_mode = 1
+
+[sub_resource type="Curve" id="Curve_i7f8v"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.80845773, 0.5708134), -2.7889943, -2.7889943, 0, 0, Vector2(0.9004975, 0.30334932), 0.0, 0.0, 0, 0, Vector2(0.9477612, 0.9440192), 0.0, 0.0, 0, 0, Vector2(1, 0.6019139), 0.0, 0.0, 0, 0]
+point_count = 5
+
+[sub_resource type="Gradient" id="Gradient_6jvxa"]
+offsets = PackedFloat32Array(0, 0.3598901, 0.8379121)
+colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 0.31764707, 1, 1, 1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_aeals"]
+shader = ExtResource("5_ure17")
+shader_parameter/ring_radius = 0.1
+shader_parameter/ring_factor = 0.4
+shader_parameter/ring_brightness = 0.0
+shader_parameter/ray_count = 4.0
+shader_parameter/arm_factor = 1.0
+shader_parameter/arm_factor2 = 0.5
+shader_parameter/glow_factor = 4.0
+shader_parameter/pulse_period = 3.5
+shader_parameter/pulse_amplitude = 0.25
+shader_parameter/Saturation = 0.2
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_5vydh"]
+
+[sub_resource type="Curve" id="Curve_68fih"]
+_limits = [-200.0, 200.0, 0.0, 1.0]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.3, 0), 0.0, 0.0, 0, 0, Vector2(0.5, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CurveTexture" id="CurveTexture_i7f8v"]
+curve = SubResource("Curve_68fih")
+
+[sub_resource type="Curve" id="Curve_6jvxa"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.42285717, 1), -0.13832784, 0.0, 0, 1, Vector2(0.5914286, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CurveTexture" id="CurveTexture_foj7e"]
+curve = SubResource("Curve_6jvxa")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_qh8ro"]
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(24, 24, 1)
+inherit_velocity_ratio = 0.01
+spread = 180.0
+initial_velocity_min = 1.0
+initial_velocity_max = 1.0
+gravity = Vector3(0, 0, 0)
+linear_accel_min = 49.999996
+linear_accel_max = 49.999996
+linear_accel_curve = SubResource("CurveTexture_i7f8v")
+scale_min = 3.0
+scale_max = 5.0
+scale_curve = SubResource("CurveTexture_foj7e")
+
+[node name="CardTrailMarisa" type="Node2D"]
+script = ExtResource("1_5vydh")
+
+[node name="Trails" type="Node2D" parent="."]
+
+[node name="OuterTrail" type="Line2D" parent="Trails"]
+modulate = Color(0.2509804, 0.22352941, 0.9372549, 1)
+material = SubResource("CanvasItemMaterial_ure17")
+width = 96.0
+width_curve = SubResource("Curve_n7yl4")
+gradient = SubResource("Gradient_vl2yn")
+texture = ExtResource("4_myp6q")
+texture_mode = 2
+joint_mode = 2
+script = ExtResource("3_myp6q")
+
+[node name="InnerTrail" type="Line2D" parent="Trails"]
+modulate = Color(0.33959806, 0.39824414, 0.9733705, 1)
+material = SubResource("CanvasItemMaterial_myp6q")
+width = 64.0
+width_curve = SubResource("Curve_i7f8v")
+gradient = SubResource("Gradient_6jvxa")
+texture = ExtResource("2_ure17")
+texture_mode = 2
+joint_mode = 2
+script = ExtResource("3_myp6q")
+
+[node name="Sprites" type="Node2D" parent="."]
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="Sprites"]
+material = SubResource("ShaderMaterial_aeals")
+amount = 16
+texture = SubResource("CanvasTexture_5vydh")
+lifetime = 0.5
+randomness = 1.0
+process_material = SubResource("ParticleProcessMaterial_qh8ro")
+
+[node name="Sprite2D" type="Sprite2D" parent="Sprites"]
+modulate = Color(0.29411766, 0.1882353, 0.8784314, 0.5647059)
+scale = Vector2(1.1, 1.054)
+texture = ExtResource("4_3r01q")
+
+[node name="Sprite2D2" type="Sprite2D" parent="Sprites"]
+modulate = Color(0.24313726, 0.4, 1, 0.43137255)
+scale = Vector2(0.9, 0.9)
+texture = ExtResource("4_3r01q")

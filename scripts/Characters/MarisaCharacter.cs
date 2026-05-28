@@ -23,7 +23,7 @@ public class MarisaCharacter : PlaceholderCharacterModel
 
     public override string CustomVisualPath => "res://marisamod/scenes/test_character.tscn";
 
-    // public override string CustomTrailPath => "res://scenes/vfx/card_trail_ironclad.tscn";
+    public override string CustomTrailPath => "res://marisamod/scenes/CardTrail/MarisaCardTrail.tscn";
     public override string CustomIconTexturePath => "res://marisamod/images/MarisaButton.png";
 
     // public override string CustomIconPath => "res://scenes/ui/character_icons/ironclad_icon.tscn";

@@ -45,6 +45,7 @@ namespace marisamod.Scripts.Cards
                     var vfx = VfxDarkSpark.Create(Owner.Creature, enemies.Last());
                     if (vfx != null)
                     {
+                        vfx.ApplySizeFromDamage((int)DynamicVars.CalculatedDamage.PreviewValue,20);
                         NCombatRoom.Instance?.CombatVfxContainer.AddChildSafely(vfx);
                         await Cmd.Wait(VfxDarkSpark.VfxTime);
                     }

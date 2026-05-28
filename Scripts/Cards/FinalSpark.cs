@@ -55,6 +55,7 @@ public class FinalSpark : AbstractMarisaCard
                 var vfx = VfxFinalSpark.Create(Owner.Creature, enemies.Last());
                 if (vfx != null)
                 {
+                    vfx.ApplySizeFromDamage((int)DynamicVars.Damage.PreviewValue,40);
                     vfx.SetRainbowRatio(0.05f);
                     NCombatRoom.Instance?.CombatVfxContainer.AddChildSafely(vfx);
                     await Cmd.Wait(VfxFinalSpark.VfxTime);

@@ -45,9 +45,11 @@ namespace marisamod.Scripts.Cards
             AmplifiedInPlay = false;
             if (Owner.Creature.HasPower<OneTimeOffPower>())
             {
+                return;
             }
-            else if (cardPlay.IsAutoPlay || Owner.Creature.HasPower<MillisecondPulsarsPower>() ||
-                     Owner.Creature.HasPower<PulseMagicPower>())
+
+            if (cardPlay.IsAutoPlay || Owner.Creature.HasPower<MillisecondPulsarsPower>() ||
+                Owner.Creature.HasPower<PulseMagicPower>())
             {
                 AmplifiedInPlay = true;
             }
@@ -124,7 +126,6 @@ namespace marisamod.Scripts.Cards
         //     //     EnergyCost.AddThisCombat(-KickerCost);
         //     //     _costModifiedForAmplify = false;
         //     // }
-        //     //TODO CardText update
         // }
 
         public override Task AfterCardEnteredCombat(CardModel card)

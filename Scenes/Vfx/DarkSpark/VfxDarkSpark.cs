@@ -80,7 +80,18 @@ public partial class VfxDarkSpark : Node2D
                 this.QueueFreeSafely();
         }
     }
-    
+    public void ApplySize(float size)
+    {
+        StarShader.SetShaderParameter("size",size);
+        BeamShader.SetShaderParameter("size",size);
+    }
+    public void ApplySizeFromDamage(int damage,int baseDamage = 40)
+    {
+        if (baseDamage <= 0) baseDamage = 30;
+        if (damage <= 0) damage = 1;
+        float scale = Mathf.Clamp( Mathf.Log(damage)/Mathf.Log(baseDamage), 0.5f, 2f);
+        ApplySize(scale);
+    }
     public static VfxDarkSpark? Create(Creature owner, Creature target)
     {
         if (TestMode.IsOn)

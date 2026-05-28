@@ -1,4 +1,5 @@
 using Godot;
+using marisamod.Scenes.Vfx.HitVfx;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Nodes.Cards;
 using MegaCrit.Sts2.Core.Nodes.Combat;
@@ -17,7 +18,7 @@ public partial class VfxSparkProjectile : Node2D
     public float VfxTime => NoIdle ? _chaseDuration : _chaseDuration + _dampingDuration;
     public bool NoIdle;
     public NCard? TargetCard = null;
-
+    public Vector4 Color = new (0.4f, 0.8f, 0.8f, 1.0f);
     #endregion
 
     #region AnimationParament
@@ -50,9 +51,11 @@ public partial class VfxSparkProjectile : Node2D
     private GpuParticles2D? _particles;
     public GpuParticles2D Particles => _particles ??= GetNode<GpuParticles2D>("particles");
     private ParticleProcessMaterial? _particleProcess;
-
     public ParticleProcessMaterial ParticleProcess =>
         _particleProcess ??= (ParticleProcessMaterial)Particles.ProcessMaterial;
+
+    private ShaderMaterial? _particleShader;
+    public  ShaderMaterial ParticleShader => _particleShader ??= (ShaderMaterial)Particles.Material;
     #endregion
 
     #region State
@@ -190,16 +193,22 @@ public partial class VfxSparkProjectile : Node2D
     {
         _state = ProjectileState.FadingOut;
         _fadeTimeLeft = FadingDuration;
+        SparkHitVfx burst = GD.Load<PackedScene>("res://Scenes/Vfx/HitVfx/BurstSpark.tscn").Instantiate<SparkHitVfx>();
+        burst.SetColor(Color);
+        burst.Position = Position;
+        GetParent().AddChild(burst);
     }
 
     private void UpdateFading(double delta)
     {
         _fadeTimeLeft -= (float)delta;
 
-        float alpha = Mathf.Max(0f, 2.0f * (_fadeTimeLeft - 0.5f));
+        var alpha = Mathf.Max(0f, 2.0f * (_fadeTimeLeft - 0.5f));
         SlugShader.SetShaderParameter("visible", alpha);
         TrailShader.SetShaderParameter("visible", alpha);
         SlugShader.SetShaderParameter("projectile_speed", 0f);
+        SlugShader.SetShaderParameter("explosion_progress", Mathf.Clamp(5.0*(1.0f-_fadeTimeLeft), 0.0f, 0.88f));
+        
         if (_fadeTimeLeft < 0f)
         {
             QueueFree();
@@ -213,7 +222,7 @@ public partial class VfxSparkProjectile : Node2D
             return;
         }
 
-        const float particleDensity = 2f;
+        const float particleDensity = 1f;
         float amount = particleDensity * displacement.Length() + 0.5f;
         Particles.Position = -0.5f * displacement;
         Particles.AmountRatio = Mathf.Min(1f, amount / 100f);
@@ -225,8 +234,11 @@ public partial class VfxSparkProjectile : Node2D
     {
         if (Velocity.LengthSquared() > 0.0001f)
         {
-            Slug.Rotation = Velocity.Angle();
-            float speedNormalized = Mathf.Clamp(Velocity.Length() / _startSpeed, 0, 1);
+            if (_state != ProjectileState.FadingOut)
+                Slug.Rotation = Velocity.Angle();
+            else
+                Slug.Rotation = 0;
+            var speedNormalized = Mathf.Clamp(Velocity.Length() / _startSpeed, 0, 1);
             speedNormalized = Mathf.Pow(speedNormalized, 0.4f);
             SlugShader.SetShaderParameter("projectile_speed", speedNormalized);
         }
@@ -268,8 +280,10 @@ public partial class VfxSparkProjectile : Node2D
 
     public void SetColor(Vector4 color)
     {
+        Color = color;
         SlugShader.SetShaderParameter("spark_color", color);
         TrailShader.SetShaderParameter("spark_color", color);
+        ParticleShader.SetShaderParameter("spark_color", color);
     }
 
     public void ApplySize(float scale)
@@ -324,7 +338,7 @@ public partial class VfxSparkProjectile : Node2D
         NCreature? player = card.Owner.Creature.GetCreatureNode();
         if (player == null) return Create();
         VfxSparkProjectile vfx = Create(player, color);
-        vfx.ApplySizeFromDamage(card.DynamicVars.Damage.IntValue);
+        vfx.ApplySizeFromDamage((int)card.DynamicVars.Damage.PreviewValue);
         return vfx;
     }
 
