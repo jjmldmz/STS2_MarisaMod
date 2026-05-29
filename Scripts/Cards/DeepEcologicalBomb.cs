@@ -32,13 +32,15 @@ namespace marisamod.Scripts.Cards
                 return;
             }
 
+            var damage = DynamicVars.Damage.BaseValue;
+
             var repeat = AmplifiedInPlay ? 2 : 1;
             for (var i = 0; i < repeat; i++)
             {
                 var target = Owner.RunState.Rng.CombatTargets.NextItem(combatState.HittableEnemies);
                 if (target == null) continue;
                 await PowerCmd.Apply<DeepEcologicalBombPower>(choiceContext, target, DynamicVars["Power"].BaseValue, Owner.Creature, this);
-                await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this).Targeting(target)
+                await DamageCmd.Attack(damage).FromCard(this).Targeting(target)
                     .WithHitFx("vfx/vfx_attack_blunt")
                     .Execute(choiceContext);
             }
