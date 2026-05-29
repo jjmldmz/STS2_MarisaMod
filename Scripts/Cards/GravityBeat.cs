@@ -16,7 +16,7 @@ public class GravityBeat : AbstractMarisaCard
     }
     
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new DamageVar(5m, ValueProp.Move),
+        new DamageVar(6m, ValueProp.Move),
         new DynamicVar("Div",12),
         new CalculationBaseVar(0),
         new CalculationExtraVar(1),

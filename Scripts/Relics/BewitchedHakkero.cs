@@ -29,10 +29,20 @@ public class BewitchedHakkero : AbstractMarisaRelic
         }
 
         var cnt = DynamicVars["Power"].IntValue;
-        if (cardPlay.Card.Type == CardType.Attack) // && !MehModConfig.NerfHakkero)
-            cnt = DynamicVars["PowerAmp"].IntValue;
+        // if (cardPlay.Card.Type == CardType.Attack) // && !MehModConfig.NerfHakkero)
+        //     cnt = DynamicVars["PowerAmp"].IntValue;
         await PowerCmd.Apply<ChargeUpPower>(context, Owner.Creature, cnt, Owner.Creature, null);
         //return base.AfterCardPlayed(context, cardPlay);
+    }
+
+    public override async Task AfterCardExhausted(PlayerChoiceContext choiceContext, CardModel card, bool causedByEthereal)
+    {
+        //return base.AfterCardExhausted(choiceContext, card, causedByEthereal);
+        if (card.Owner == Owner)
+        {
+            var cnt = DynamicVars["Power"].IntValue;
+            await PowerCmd.Apply<ChargeUpPower>(choiceContext, Owner.Creature, cnt, Owner.Creature, null);
+        }
     }
 
     public override EventModel ModifyNextEvent(EventModel currentEvent)

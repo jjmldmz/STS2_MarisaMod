@@ -1,9 +1,11 @@
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
 
@@ -74,20 +76,52 @@ namespace marisamod.Scripts.Powers
         
         //Version 3
         
-        public override decimal ModifyHpLostAfterOstyLate(Creature target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource)
+        // public override decimal ModifyHpLostAfterOstyLate(Creature target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource)
+        // {
+        //     if (target != Owner)
+        //     {
+        //         return amount;
+        //     }
+        //     return amount * 0.5m;
+        // }
+        //
+        // public override async Task AfterPlayerTurnStart(PlayerChoiceContext choiceContext, Player player)
+        // {
+        //     if (player != Owner.Player)
+        //         return;
+        //     await PowerCmd.TickDownDuration(this);
+        // }
+        
+        //Version 4
+        private bool _shouldTrigger;
+
+        protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<FlightPower>()];
+
+        public override Task BeforeSideTurnStart(PlayerChoiceContext choiceContext, CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
         {
-            if (target != Owner)
+            if (side == Owner.Side)
             {
-                return amount;
+                _shouldTrigger = false;
             }
-            return amount * 0.5m;
+            return base.BeforeSideTurnStart(choiceContext, side, participants, combatState);
         }
 
-        public override async Task AfterPlayerTurnStart(PlayerChoiceContext choiceContext, Player player)
+        public override Task AfterCardExhausted(PlayerChoiceContext choiceContext, CardModel card, bool causedByEthereal)
         {
-            if (player != Owner.Player)
-                return;
-            await PowerCmd.TickDownDuration(this);
+            if (card.Owner == Owner.Player && card.Type is CardType.Curse or CardType.Status)
+            {
+                _shouldTrigger = true;
+            }
+            return base.AfterCardExhausted(choiceContext, card, causedByEthereal);
+        }
+
+        public override async Task BeforeSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
+        {
+            if (_shouldTrigger)
+            {
+                await PowerCmd.Apply<FlightPower>(choiceContext, Owner, Amount, Owner, null);
+            }
+            _shouldTrigger = false;
         }
     }
 }

@@ -29,10 +29,10 @@ namespace marisamod.Scripts.Cards
 
         protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
         {
-            var selection = (await CardSelectCmd.FromHand(prefs: new CardSelectorPrefs(base.SelectionScreenPrompt, 1), context: choiceContext, player: base.Owner, filter: delegate(CardModel c)
+            var selection = (await CardSelectCmd.FromHand(prefs: new CardSelectorPrefs(SelectionScreenPrompt, 1), context: choiceContext, player: Owner, filter: delegate(CardModel c)
             {
-                CardType type = c.Type;
-                return (type == CardType.Attack) ? true : false;
+                var type = c.Type;
+                return type == CardType.Attack;
             }, source: this)).FirstOrDefault();
 
 
@@ -47,6 +47,10 @@ namespace marisamod.Scripts.Cards
                     {
                         energyGain += amplifiedCard.KickerCost;
                     }
+                }
+                if (card.EnergyCost.CostsX)
+                {
+                    energyGain += Owner.PlayerCombatState!.Energy;
                 }
                 if (energyGain > 0)
                 {

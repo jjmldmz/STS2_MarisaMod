@@ -24,8 +24,8 @@ public class FinalMasterSpark : AbstractAmplifiedCard
         // new CalculationBaseVar(16m),
         // new ExtraDamageVar(14m),
         // new CalculatedDamageVar(ValueProp.Move).WithMultiplier((card, _) => card is AbstractAmplifiedCard { IsAmplified: true } ? 1 : 0)
-        new DamageVar(16m, ValueProp.Move),
-        new DamageVar("DamageAmplified", 30, ValueProp.Move)
+        new DamageVar(15m, ValueProp.Move),
+        new DamageVar("DamageAmplified", 28, ValueProp.Move)
     ]);
 
     protected override HashSet<CardTag> CanonicalTags => [MarisaCardTags.Spark];
@@ -64,7 +64,7 @@ public class FinalMasterSpark : AbstractAmplifiedCard
     {
         // DynamicVars.CalculationBase.UpgradeValueBy(6m);
         // DynamicVars.ExtraDamage.UpgradeValueBy(4m);
-        DynamicVars.Damage.UpgradeValueBy(6);
-        DynamicVars["DamageAmplified"].UpgradeValueBy(10);
+        DynamicVars.Damage.UpgradeValueBy(5);
+        DynamicVars["DamageAmplified"].UpgradeValueBy(9);
     }
 }
