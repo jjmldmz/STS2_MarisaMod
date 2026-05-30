@@ -1,6 +1,7 @@
 using marisamod.Scripts.Powers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models.Powers;
@@ -32,17 +33,27 @@ namespace marisamod.Scripts.Cards
                 return;
             }
 
-            var damage = DynamicVars.Damage.BaseValue;
+            //var damage = DynamicVars.Damage.BaseValue;
 
             var repeat = AmplifiedInPlay ? 2 : 1;
-            for (var i = 0; i < repeat; i++)
+            //for (var i = 0; i < repeat; i++)
             {
-                var target = Owner.RunState.Rng.CombatTargets.NextItem(combatState.HittableEnemies);
-                if (target == null) continue;
-                await PowerCmd.Apply<DeepEcologicalBombPower>(choiceContext, target, DynamicVars["Power"].BaseValue, Owner.Creature, this);
-                await DamageCmd.Attack(damage).FromCard(this).Targeting(target)
+                //var target = Owner.RunState.Rng.CombatTargets.NextItem(combatState.HittableEnemies);
+                //if (target == null) continue;
+                //await PowerCmd.Apply<DeepEcologicalBombPower>(choiceContext, target, DynamicVars["Power"].BaseValue, Owner.Creature, this);
+                var dmgCmd = await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this).WithHitCount(repeat)
+                    .TargetingRandomOpponents(CombatState!)
                     .WithHitFx("vfx/vfx_attack_blunt")
                     .Execute(choiceContext);
+
+                var tars = dmgCmd.Results.Select(list => list.Select(x => x.Receiver)).SelectMany(items => items).ToArray();
+                foreach (var creature in tars)
+                {
+                    if (creature.IsAlive)
+                    {
+                        await PowerCmd.Apply<DeepEcologicalBombPower>(choiceContext, creature, DynamicVars["Power"].BaseValue, Owner.Creature, this);
+                    }
+                }
             }
         }
 

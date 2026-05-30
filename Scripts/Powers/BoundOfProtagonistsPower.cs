@@ -18,7 +18,7 @@ namespace marisamod.Scripts.Powers
         public override PowerStackType StackType => PowerStackType.Counter;
 
         //Version 1
-        
+
         // public override decimal ModifyHpLostAfterOstyLate(Creature target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource)
         // {
         //     if (target != Owner)
@@ -34,7 +34,7 @@ namespace marisamod.Scripts.Powers
         // }
 
         //Version 2
-        
+
         // private bool _shouldTrigger;
         //
         // private bool ShouldTrigger
@@ -73,9 +73,9 @@ namespace marisamod.Scripts.Powers
         //         await PowerCmd.Apply<FlightPower>(choiceContext, Owner, 1, Owner, null);
         //     }
         // }
-        
+
         //Version 3
-        
+
         // public override decimal ModifyHpLostAfterOstyLate(Creature target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource)
         // {
         //     if (target != Owner)
@@ -91,37 +91,65 @@ namespace marisamod.Scripts.Powers
         //         return;
         //     await PowerCmd.TickDownDuration(this);
         // }
-        
-        //Version 4
-        private bool _shouldTrigger;
 
-        protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<FlightPower>()];
+        //Version 4
+        // private bool _shouldTrigger;
+        //
+        // protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<FlightPower>()];
+        //
+        // public override Task BeforeSideTurnStart(PlayerChoiceContext choiceContext, CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
+        // {
+        //     if (side == Owner.Side)
+        //     {
+        //         _shouldTrigger = false;
+        //     }
+        //
+        //     return base.BeforeSideTurnStart(choiceContext, side, participants, combatState);
+        // }
+        //
+        // public override Task AfterCardExhausted(PlayerChoiceContext choiceContext, CardModel card, bool causedByEthereal)
+        // {
+        //     if (card.Owner == Owner.Player && card.Type is CardType.Curse or CardType.Status)
+        //     {
+        //         _shouldTrigger = true;
+        //     }
+        //
+        //     return base.AfterCardExhausted(choiceContext, card, causedByEthereal);
+        // }
+        //
+        // public override async Task AfterSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
+        // {
+        //     if (side != Owner.Side)
+        //         return;
+        //     if (_shouldTrigger)
+        //     {
+        //         await PowerCmd.Apply<FlightPower>(choiceContext, Owner, Amount, Owner, null);
+        //     }
+        //     
+        //     _shouldTrigger = false;
+        // }
+
+        //Version 5
+
+        private bool _triggerFlag;
 
         public override Task BeforeSideTurnStart(PlayerChoiceContext choiceContext, CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
         {
             if (side == Owner.Side)
             {
-                _shouldTrigger = false;
+                _triggerFlag = false;
             }
+
             return base.BeforeSideTurnStart(choiceContext, side, participants, combatState);
         }
 
-        public override Task AfterCardExhausted(PlayerChoiceContext choiceContext, CardModel card, bool causedByEthereal)
+        public override async Task AfterCardExhausted(PlayerChoiceContext choiceContext, CardModel card, bool causedByEthereal)
         {
-            if (card.Owner == Owner.Player && card.Type is CardType.Curse or CardType.Status)
+            if (card.Type is CardType.Curse or CardType.Status && !_triggerFlag)
             {
-                _shouldTrigger = true;
-            }
-            return base.AfterCardExhausted(choiceContext, card, causedByEthereal);
-        }
-
-        public override async Task BeforeSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
-        {
-            if (_shouldTrigger)
-            {
+                _triggerFlag = true;
                 await PowerCmd.Apply<FlightPower>(choiceContext, Owner, Amount, Owner, null);
             }
-            _shouldTrigger = false;
         }
     }
 }

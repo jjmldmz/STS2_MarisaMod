@@ -19,6 +19,11 @@ public class UnstableBomb : AbstractAmplifiedCard //AbstractMarisaCard
         base.CanonicalVars.Concat([
             new DamageVar(1, ValueProp.Move),
             new DamageVar("DamageAmplified", 4, ValueProp.Move),
+            new CalculationBaseVar(0),
+            new ExtraDamageVar(1),
+            new CalculatedDamageVar(ValueProp.Move).WithMultiplier((card, _) =>
+                card.RunState!.Rng.CombatCardSelection.NextInt(card.DynamicVars.Damage.IntValue, card.DynamicVars["DamageAmplified"].IntValue + 1)
+            ),
             new DynamicVar("RepeatBase", 2),
             new DynamicVar("RepeatAmp", 1)
         ]);
@@ -37,18 +42,22 @@ public class UnstableBomb : AbstractAmplifiedCard //AbstractMarisaCard
         await base.OnPlay(choiceContext, cardPlay);
         // var hit = DynamicVars["RepeatBase"].IntValue +
         //           RandomPool.TakeRandom(1, RunState!.Rng.CombatCardSelection).FirstOrDefault();
-        var minDmg = DynamicVars.Damage.IntValue;
-        var maxDmg = DynamicVars["DamageAmplified"].IntValue;
+        // var minDmg = DynamicVars.Damage.IntValue;
+        // var maxDmg = DynamicVars["DamageAmplified"].IntValue;
         var hit = DynamicVars["RepeatBase"].IntValue;
         hit += AmplifiedInPlay ? DynamicVars["RepeatAmp"].IntValue : 0;
-        for (var i = 0; i < hit; i++)
-        {
-            var damage = RunState!.Rng.CombatCardSelection.NextInt(minDmg, maxDmg + 1);
-
-            await DamageCmd.Attack(damage).FromCard(this)
-                .TargetingRandomOpponents(CombatState!)
-                .WithHitFx("vfx/vfx_attack_slash")
-                .Execute(choiceContext);
-        }
+        // for (var i = 0; i < hit; i++)
+        // {
+        //     var damage = RunState!.Rng.CombatCardSelection.NextInt(minDmg, maxDmg + 1);
+        //
+        //     await DamageCmd.Attack(damage).FromCard(this)
+        //         .TargetingRandomOpponents(CombatState!)
+        //         .WithHitFx("vfx/vfx_attack_slash")
+        //         .Execute(choiceContext);
+        // }
+        await DamageCmd.Attack(DynamicVars.CalculatedDamage).FromCard(this).WithHitCount(hit)
+            .TargetingRandomOpponents(CombatState!)
+            .WithHitFx("vfx/vfx_attack_slash")
+            .Execute(choiceContext);
     }
 }
