@@ -45,14 +45,18 @@ namespace marisamod.Scripts.Cards
         {
             if (card == this)
             {
-                var prefs = new CardSelectorPrefs(SelectionScreenPrompt, DynamicVars["Add"].IntValue);
-                var pile = PileType.Exhaust.GetPile(Owner).Cards.Where(x => x is not Orbital).ToArray();
-                var cards = (await CardSelectCmd.FromSimpleGrid(choiceContext, pile, Owner, prefs)).ToArray();
-                if (cards.Length > 0)
+                var playCount = await GeneratePlayCount(CombatState!, null);
+                for (var i = 0; i < playCount; i++)
                 {
-                    foreach (CardModel item in cards)
+                    var prefs = new CardSelectorPrefs(SelectionScreenPrompt, DynamicVars["Add"].IntValue);
+                    var pile = PileType.Exhaust.GetPile(Owner).Cards.Where(x => x is not Orbital).ToArray();
+                    var cards = (await CardSelectCmd.FromSimpleGrid(choiceContext, pile, Owner, prefs)).ToArray();
+                    if (cards.Length > 0)
                     {
-                        await CardPileCmd.Add(item, PileType.Hand);
+                        foreach (CardModel item in cards)
+                        {
+                            await CardPileCmd.Add(item, PileType.Hand);
+                        }
                     }
                 }
             }

@@ -42,13 +42,17 @@ public class Perseids : AbstractMarisaCard
     {
         if (card == this)
         {
-            var perseidsCards = CombatState!.CreateCard<SuperPerseids>(Owner);
-            if (IsUpgraded)
+            var playCount = await GeneratePlayCount(CombatState!, null);
+            for (var i = 0; i < playCount; i++)
             {
-                CardCmd.Upgrade(perseidsCards);
-            }
+                var perseidsCards = CombatState!.CreateCard<SuperPerseids>(Owner);
+                if (IsUpgraded)
+                {
+                    CardCmd.Upgrade(perseidsCards);
+                }
 
-            await CardPileCmd.AddGeneratedCardToCombat(perseidsCards, PileType.Hand, Owner);
+                await CardPileCmd.AddGeneratedCardToCombat(perseidsCards, PileType.Hand, Owner);
+            }
         }
     }
 }

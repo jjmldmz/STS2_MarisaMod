@@ -60,6 +60,8 @@ public class DarkMatter : AbstractMarisaCard
             return;
         }
 
-        await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, null);
+        var playCount = await GeneratePlayCount(CombatState!, null);
+        for (var i = 0; i < playCount; i++)
+            await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, null);
     }
 }

@@ -1,4 +1,5 @@
 using marisamod.Scripts.Events;
+using marisamod.Scripts.PatchesNModels;
 using marisamod.Scripts.Powers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -29,28 +30,31 @@ public class BewitchedHakkero : AbstractMarisaRelic
         }
 
         var cnt = DynamicVars["Power"].IntValue;
+        if (cardPlay.Card.Tags.Contains(MarisaCardTags.Spark))
+            cnt = DynamicVars["PowerAmp"].IntValue;
         // if (cardPlay.Card.Type == CardType.Attack) // && !MehModConfig.NerfHakkero)
         //     cnt = DynamicVars["PowerAmp"].IntValue;
         await PowerCmd.Apply<ChargeUpPower>(context, Owner.Creature, cnt, Owner.Creature, null);
         //return base.AfterCardPlayed(context, cardPlay);
-        
-        var newRec = Owner.PlayerCombatState!.ExhaustPile.Cards.Count;
-        if (newRec > _rec)
-        {
-            await PowerCmd.Apply<ChargeUpPower>(context, Owner.Creature, cnt, Owner.Creature, null);
-        }
+
+        // var newRec = Owner.PlayerCombatState!.ExhaustPile.Cards.Count;
+        // if (newRec > _rec)
+        // {
+        //     await PowerCmd.Apply<ChargeUpPower>(context, Owner.Creature, cnt, Owner.Creature, null);
+        // }
     }
 
-    private int _rec;
-
-    public override Task BeforeCardPlayed(CardPlay cardPlay)
-    {
-        if (cardPlay.Card.Owner == Owner)
-        {
-            _rec = Owner.PlayerCombatState!.ExhaustPile.Cards.Count;
-        }
-        return Task.CompletedTask;
-    }
+    // private int _rec;
+    //
+    // public override Task BeforeCardPlayed(CardPlay cardPlay)
+    // {
+    //     if (cardPlay.Card.Owner == Owner)
+    //     {
+    //         _rec = Owner.PlayerCombatState!.ExhaustPile.Cards.Count;
+    //     }
+    //
+    //     return Task.CompletedTask;
+    // }
 
     // public override async Task AfterCardExhausted(PlayerChoiceContext choiceContext, CardModel card, bool causedByEthereal)
     // {
