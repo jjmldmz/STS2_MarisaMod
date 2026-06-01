@@ -5,6 +5,7 @@
 [ext_resource type="Shader" uid="uid://1gfvd7ma8ts7" path="res://Materials/ParticleProcess/DampingParticle.gdshader" id="3_t4b0d"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_qw6vr"]
+resource_local_to_scene = true
 shader = ExtResource("1_qx57d")
 shader_parameter/arm_factor = 1.0
 shader_parameter/arm_factor2 = 0.4
@@ -55,6 +56,7 @@ damping_max = 200.00002
 scale_curve = SubResource("CurveTexture_t4b0d")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_t4b0d"]
+resource_local_to_scene = true
 shader = ExtResource("1_qx57d")
 shader_parameter/arm_factor = 1.0
 shader_parameter/arm_factor2 = 0.4

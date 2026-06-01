@@ -28,6 +28,7 @@ public class CardSwiper : AbstractMarisaCard
     public CardSwiper() : base(1, CardType.Skill, CardRarity.Rare, TargetType.AllAllies)
     {
     }
+    public override bool CanBeGeneratedInCombat => false;
     private static readonly Func<CardModel, bool>[] StealPriorities =
     [
 	    c => c.Enchantment is not Imbued && c.Rarity == CardRarity.Uncommon,//无附魔罕见卡
