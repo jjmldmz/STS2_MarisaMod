@@ -21,7 +21,7 @@ namespace marisamod.Scripts.Cards;
 
 public class PropBag : AbstractMarisaCard
 {
-    public PropBag() : base(0, CardType.Power, CardRarity.Ancient, TargetType.Self)
+    public PropBag() : base(0, CardType.Power, CardRarity.Uncommon, TargetType.Self)
     {
     }
 
@@ -70,7 +70,7 @@ public class PropBag : AbstractMarisaCard
 
     // public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new("relicCount", 3)];
+        [new("relicCount", 1)];
 
     protected override void OnUpgrade()
     {

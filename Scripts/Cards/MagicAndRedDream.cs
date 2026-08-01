@@ -8,7 +8,7 @@ namespace marisamod.Scripts.Cards;
 
 public class MagicAndRedDream : AbstractMarisaCard
 {
-    public MagicAndRedDream() : base(1, CardType.Power, CardRarity.Uncommon, TargetType.Self)
+    public MagicAndRedDream() : base(1, CardType.Power, CardRarity.Ancient, TargetType.Self)
     {
     }
 
