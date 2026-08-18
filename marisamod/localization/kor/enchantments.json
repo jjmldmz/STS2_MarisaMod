@@ -1,0 +1,5 @@
+{
+  "STARLIT_ENCHANTMENT.description": "[blue]1[/blue]의 [gold]별빛[/gold]을 얻습니다. 이 카드를 낼 때 소모한 {energyPrefix:energyIcons(1)}당 얻는 양이 두 배가 됩니다.",
+  "STARLIT_ENCHANTMENT.extraCardText": "별빛.",
+  "STARLIT_ENCHANTMENT.title": "별빛"
+}

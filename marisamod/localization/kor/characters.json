@@ -1,0 +1,17 @@
+{
+  "MARISAMOD-MARISA_CHARACTER.aromaPrinciple": "[sine][blue]...[/blue][/sine]",
+  "MARISAMOD-MARISA_CHARACTER.banter.alive.endTurnPing": "...",
+  "MARISAMOD-MARISA_CHARACTER.banter.dead.endTurnPing": "...",
+  "MARISAMOD-MARISA_CHARACTER.cardsModifierDescription": "마리사 카드가 이제 보상과 상점에 등장합니다.",
+  "MARISAMOD-MARISA_CHARACTER.cardsModifierTitle": "마리사 카드",
+  "MARISAMOD-MARISA_CHARACTER.description": "마법의 숲에 사는 마법사.\n빛과 열의 마법을 특기로 한다.",
+  "MARISAMOD-MARISA_CHARACTER.eventDeathPrevention": "약탈은 하고 죽어야지...",
+  "MARISAMOD-MARISA_CHARACTER.goldMonologue": "[sine]골드다! 다른 보물도 있으려나...[/sine]",
+  "MARISAMOD-MARISA_CHARACTER.possessiveAdjective": "그녀의",
+  "MARISAMOD-MARISA_CHARACTER.pronounObject": "그녀를",
+  "MARISAMOD-MARISA_CHARACTER.pronounPossessive": "그녀의 것",
+  "MARISAMOD-MARISA_CHARACTER.pronounSubject": "그녀",
+  "MARISAMOD-MARISA_CHARACTER.title": "평범한 마법사",
+  "MARISAMOD-MARISA_CHARACTER.titleObject": "평범한 마법사",
+  "MARISAMOD-MARISA_CHARACTER.unlockText": "[pink]{Prerequisite}[/pink](으)로 한 번 플레이하여 이 캐릭터를 잠금 해제하세요."
+}

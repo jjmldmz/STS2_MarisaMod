@@ -1,0 +1,15 @@
+{
+  "MARISAMOD-HUNGRY_FOR_MUSHROOMS_MARISA.loss": "{character}은(는) 너무 [gold]{event}[/gold]한 나머지 먹지 말았어야 할 것을 먹고 말았다.",
+  "MARISAMOD-HUNGRY_FOR_MUSHROOMS_MARISA.pages.BIG_MUSHROOM.description": "[orange]커다란 버섯[/orange]을 한 입 베어 문다. 살이 단단하고 쫀득하며 전분질이라 매우 만족스럽다. 먹으면 먹을수록 더 배가 고파지는 게, 마치 이 버섯이 당신의 배고픔을 먹이 삼아 자라는 것 같다.\n\n[sine]너무 맛있어... [red]식곤증[/red]에 빠져든다.[/sine]\n이 식탐의 대가를 치르게 될 것이다.",
+  "MARISAMOD-HUNGRY_FOR_MUSHROOMS_MARISA.pages.FRAGRANT_MUSHROOM.description": "[green]향기로운 버섯[/green]을 맛본다. 조개 향이 은은하게 감도는 자그마한 목질 버섯이다...\n\n갑자기 힘이 솟구쳐 달리고, 뛰고, [gold]격렬하게 몸을 단련[/gold]하고 싶어진다!\n그러다 갑작스러운 [red][jitter]찌르는 듯한 통증[/jitter][/red]이 덮쳐온다. 살아 있는 균류가 마지막 짧은 순간, 당신의 몸속에서 발버둥치고 있는 것이다.",
+  "MARISAMOD-HUNGRY_FOR_MUSHROOMS_MARISA.pages.INITIAL.description": "[sine]마지막으로 뭘 먹은 게 언제였더라?\n...잠깐, 이 기가 막힌 냄새는 뭐지?[/sine]\n\n냄새를 따라가 보니 아늑한 야영지에 도착했고, 온갖 [green]맛있어 보이는 버섯[/green]들이 구워지고 있다! 너무 배가 고픈 나머지 이 버섯들을 먹어도 안전할지는 생각조차 하지 않는다.\n(너무 배가 고픈 나머지 옆에 죽어 있는 모험가도 눈치채지 못했다)",
+  "MARISAMOD-HUNGRY_FOR_MUSHROOMS_MARISA.pages.INITIAL.options.BIG_MUSHROOM.title": "커다란 버섯",
+  "MARISAMOD-HUNGRY_FOR_MUSHROOMS_MARISA.pages.INITIAL.options.FRAGRANT_MUSHROOM.title": "향기로운 버섯",
+  "MARISAMOD-HUNGRY_FOR_MUSHROOMS_MARISA.pages.MEDLEY.description": "[green]버섯 모둠[/green]이 제일 먹음직스러워 보여서 그쪽으로 손을 뻗는다.\n\n[red][jitter]“내 버섯!!”[/jitter][/red]\n\n죽은 줄 알았던 모험가가 당신을 공격한다! 당신은 그를 기절시키고, 약간의 죄책감을 양념 삼아 남은 진수성찬을 마저 해치운다.",
+  "MARISAMOD-HUNGRY_FOR_MUSHROOMS_MARISA.title": "버섯이 고파서",
+  "MARISAMOD-HUNGRY_FOR_MUSHROOMS_MARISA.pages.PACK_THEM_ALL.description": "전부 챙겨서 길을 떠났다.\n길을 나서자, 정체 모를 그 [sine]배고픔[/sine]이 흔적도 없이 사라졌다.\n입에 넣는 것보다 훨씬 더 근사한 일에 이 버섯들을 쓸 수 있을 것 같다는 확신이 든다.",
+  "MARISAMOD-HUNGRY_FOR_MUSHROOMS_MARISA.options.PACK_THEM_ALL.description": "다 가질 수 있는데 왜 하나만 골라?",
+  "MARISAMOD-HUNGRY_FOR_MUSHROOMS_MARISA.options.PACK_THEM_ALL.title": "전부 챙기기",
+  "MARISAMOD-HUNGRY_FOR_MUSHROOMS_MARISA.options.LOCKED.description": "그 정도로 욕심이 많지는 않다.",
+  "MARISAMOD-HUNGRY_FOR_MUSHROOMS_MARISA.options.LOCKED.title": "잠김"
+}

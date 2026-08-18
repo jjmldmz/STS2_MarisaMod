@@ -1,0 +1,11 @@
+{
+  "MARISAMOD-BOTTLED_SPARK.description": "[gold]패[/gold]에 [gold]스파크[/gold] [blue]3[/blue]장을 추가합니다.",
+  "MARISAMOD-BOTTLED_SPARK.selectionScreenPrompt": "[gold]소멸[/gold]할 카드를 원하는 만큼 선택하세요.",
+  "MARISAMOD-BOTTLED_SPARK.title": "병에 담긴 스파크",
+  "MARISAMOD-LOVE_COLOURED_POTION.description": "[gold]충전[/gold] [blue]8[/blue]을 얻습니다.",
+  "MARISAMOD-LOVE_COLOURED_POTION.selectionScreenPrompt": "[gold]소멸[/gold]할 카드를 원하는 만큼 선택하세요.",
+  "MARISAMOD-LOVE_COLOURED_POTION.title": "사랑빛 물약",
+  "MARISAMOD-SHROOM_BREW.description": "[gold]패[/gold]의 카드 한 장을 [gold]소멸[/gold]시킵니다.\n이 물약의 효과는 [gold]소멸[/gold]시킨 카드의 종류에 따라 달라집니다:\n[gold]공격[/gold]: [blue]3[/blue]의 [gold]힘[/gold]을 얻습니다;\n[gold]스킬[/gold]: [blue]3[/blue]의 [gold]민첩[/gold]을 얻습니다;\n[gold]파워[/gold]: [blue]2[/blue]장을 뽑고 {Energy:energyIcons()}를 얻습니다;\n[gold]상태[/gold]: [blue]5[/blue]의 [gold]재생[/gold]을 얻습니다;\n[gold]저주[/gold]: [blue]1[/blue]의 [gold]버퍼[/gold]를 얻습니다;\n[gold]퀘스트[/gold]: [blue]70[/blue] [gold]골드[/gold]를 얻습니다;",
+  "MARISAMOD-SHROOM_BREW.selectionScreenPrompt": "[gold]소멸[/gold]시킬 카드 한 장을 선택하세요.",
+  "MARISAMOD-SHROOM_BREW.title": "버섯 양조액"
+}
