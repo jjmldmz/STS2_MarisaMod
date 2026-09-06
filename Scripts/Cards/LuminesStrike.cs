@@ -83,7 +83,7 @@ public class LuminesStrike : AbstractMarisaCard
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new CalculationBaseVar(0),
+        new CalculationBaseVar(6),
         new ExtraDamageVar(6),
         new CalculatedDamageVar(ValueProp.Move).WithMultiplier((card, _) => CombatManager.Instance.History.Entries.Count(x => x is CardGeneratedEntry { Card: Burn })),
         new CardsVar(1)
@@ -91,15 +91,15 @@ public class LuminesStrike : AbstractMarisaCard
 
     protected override void OnUpgrade()
     {
-        DynamicVars.ExtraDamage.UpgradeValueBy(2);
+        DynamicVars.ExtraDamage.UpgradeValueBy(2m);
+        DynamicVars.CalculationBase.UpgradeValueBy(2m);
     }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await CardPileCmd.AddGeneratedCardToCombat(CombatState!.CreateCard<Burn>(Owner), PileType.Hand, Owner);
-
         await DamageCmd.Attack(DynamicVars.CalculatedDamage).FromCard(this,cardPlay).TargetingAllOpponents(CombatState!)
             .WithHitFx("vfx/vfx_attack_blunt", null, "heavy_attack.mp3")
             .Execute(choiceContext);
+        await CardPileCmd.AddGeneratedCardToCombat(CombatState!.CreateCard<Burn>(Owner), PileType.Hand, Owner);
     }
 }
